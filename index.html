@@ -47,7 +47,7 @@
         <section class="rail-section model-section">
           <div class="section-label">05 / MODEL</div>
           <div class="model-card"><span class="model-led"></span><div><strong>Gemini</strong><small>Conexão segura pendente</small></div></div>
-          <a class="model-link" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Obter chave do Gemini <span>↗</span></a>
+          <div class="model-steps"><a href="https://console.cloud.google.com/projectcreate" target="_blank" rel="noopener noreferrer"><b>01</b><span>Criar projeto Google Cloud</span><em>↗</em></a><a href="https://console.cloud.google.com/apis/library/generativelanguage.googleapis.com" target="_blank" rel="noopener noreferrer"><b>02</b><span>Ativar Gemini API</span><em>↗</em></a><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer"><b>03</b><span>Gerar chave no AI Studio</span><em>↗</em></a></div>
         </section>
         <section class="rail-section rail-info">
           <div class="section-label">04 / SESSION</div>
@@ -63,7 +63,7 @@
           <div><span class="eyebrow">ACTIVE CHANNEL / <span id="channelMode">LOCAL DEMO</span></span><h1 id="channelTitle">Brown-IA · GPT</h1><p class="channel-subtitle">Conversa contextual com memória local</p></div>
           <button class="icon-btn" id="settingsBtn" title="Configurações">•••</button>
         </div>
-        <div class="notice" id="modeNotice"><span>◆</span><div><strong>Modo local de demonstração</strong><small>Obtenha sua chave no Google AI Studio. Ela será configurada no backend seguro, nunca no navegador.</small></div><a class="notice-link" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Abrir AI Studio ↗</a><button id="dismissNotice" aria-label="Fechar aviso">×</button></div>
+        <div class="notice" id="modeNotice"><span>◆</span><div><strong>Modo local de demonstração</strong><small>O Google exige um projeto: crie-o, ative a API e só então gere sua chave.</small></div><a class="notice-link" href="https://console.cloud.google.com/projectcreate" target="_blank" rel="noopener noreferrer">Criar projeto ↗</a><button id="dismissNotice" aria-label="Fechar aviso">×</button></div>
         <div class="messages" id="messages" aria-live="polite">
           <div class="empty-state" id="emptyState"><div class="empty-glyph">BR</div><div class="empty-kicker">SYSTEM ONLINE · READY FOR INPUT</div><h2>Conversa pronta.</h2><p>Faça uma pergunta, peça um plano ou descreva algo que a Brown-IA deve criar.</p><div class="quick-prompts"><button data-prompt="Explique como você pode me ajudar.">Conhecer a Brown-IA <span>↗</span></button><button data-prompt="Crie um plano profissional para meu projeto.">Criar um plano <span>↗</span></button><button data-prompt="Analise esta ideia e sugira melhorias.">Analisar uma ideia <span>↗</span></button></div></div>
         </div>
