@@ -7,7 +7,7 @@
   <meta name="description" content="Brown — espaço cognitivo modular para conversa, código e pesquisa." />
   <title>Brown · Workspace</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="styles.css?v=reasoning-button-03" />
+  <link rel="stylesheet" href="styles.css?v=reasoning-button-04" />
 </head>
 <body>
   <div class="scanline" aria-hidden="true"></div>
@@ -28,15 +28,6 @@
             <button class="profile-btn active" data-profile="BROWN"><b>01</b><span><strong>BROWN</strong><small>Geral · conversa · análise</small></span><em>↗</em></button>
             <button class="profile-btn" data-profile="CODE"><b>02</b><span><strong>CODE</strong><small>Programação · arquivos</small></span><em>↗</em></button>
             <button class="profile-btn" data-profile="GMINI"><b>03</b><span><strong>GMINI</strong><small>Rápido · objetivo</small></span><em>↗</em></button>
-          </div>
-        </section>
-        <section class="rail-section reasoning-section">
-          <div class="section-label">02 / RACIOCÍNIO</div>
-          <div class="thinking-grid" id="thinkingGrid">
-            <button class="thinking-btn" data-thinking="LEVE"><span>01</span>Leve</button>
-            <button class="thinking-btn active" data-thinking="MEDIO"><span>02</span>Raciocínio</button>
-            <button class="thinking-btn" data-thinking="ALTO"><span>03</span>Alto</button>
-            <button class="thinking-btn" data-thinking="EXTREMO"><span>04</span>Extremo</button>
           </div>
         </section>
         <section class="rail-section language-section">
@@ -71,7 +62,7 @@
         <form class="composer" id="composer">
           <div class="composer-meta"><span id="profileTag">BROWN</span><span>·</span><span id="thinkingTag">RACIOCÍNIO</span><span>·</span><span id="languageTag">PT-BR</span><span class="meta-spacer"></span><span id="latencyLabel">aguardando entrada</span></div>
           <textarea id="promptInput" rows="1" placeholder="Escreva uma mensagem para a Brown..." autocomplete="off"></textarea>
-          <div class="composer-actions"><span class="hint">Enter envia · Shift+Enter quebra linha</span><div class="composer-tools"><button type="button" class="tool-btn" title="Anexos em breve">＋</button><button class="send-btn" type="submit">ENVIAR <span>↗</span></button></div></div>
+          <div class="composer-actions"><span class="hint">Enter envia · Shift+Enter quebra linha</span><div class="composer-tools"><div class="reasoning-picker"><button type="button" class="reasoning-trigger" id="thinkingButton" aria-expanded="false">RACIOCÍNIO <span id="thinkingButtonLabel">RACIOCÍNIO</span>⌄</button><div class="reasoning-menu" id="thinkingMenu" hidden><button type="button" data-thinking="LEVE">Leve</button><button type="button" data-thinking="MEDIO">Raciocínio</button><button type="button" data-thinking="ALTO">Alto</button><button type="button" data-thinking="EXTREMO">Extremo</button></div></div><button type="button" class="tool-btn" title="Anexos em breve">＋</button><button class="send-btn" type="submit">ENVIAR <span>↗</span></button></div></div>
         </form>
         <div class="disclaimer">A Brown pode cometer erros. Verifique informações importantes antes de agir.</div>
       </section>
