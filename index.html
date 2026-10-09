@@ -44,13 +44,18 @@
           <label class="select-wrap"><span>Idioma da resposta</span><select id="languageSelect"><option value="auto">Automático</option><option value="pt-BR" selected>Português · Brasil</option><option value="en">English</option><option value="es">Español</option></select></label>
           <p class="language-note" id="languageNote">A Brown-IA responderá em português.</p>
         </section>
+        <section class="rail-section model-section">
+          <div class="section-label">05 / MODEL</div>
+          <div class="model-card"><span class="model-led"></span><div><strong>Gemini</strong><small>Conexão segura pendente</small></div></div>
+          <a class="model-link" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Obter chave do Gemini <span>↗</span></a>
+        </section>
         <section class="rail-section rail-info">
           <div class="section-label">04 / SESSION</div>
           <div class="session-stat"><span id="messageCount">0</span><small>mensagens salvas localmente</small></div>
           <button class="subtle-btn" id="clearBtn">⌫ Limpar sessão</button>
           <button class="subtle-btn" id="exportBtn">⇩ Exportar sessão</button>
         </section>
-        <div class="rail-footer"><span class="footer-mark">B/</span><br />BROWN-IA / WEB 0.2<br /><span>provider-ready architecture</span></div>
+        <div class="rail-footer"><span class="footer-mark">BR</span><br />BROWN-IA / WEB 0.2<br /><span>provider-ready architecture</span></div>
       </aside>
 
       <section class="chat-panel">
@@ -58,9 +63,9 @@
           <div><span class="eyebrow">ACTIVE CHANNEL / <span id="channelMode">LOCAL DEMO</span></span><h1 id="channelTitle">Brown-IA · GPT</h1><p class="channel-subtitle">Conversa contextual com memória local</p></div>
           <button class="icon-btn" id="settingsBtn" title="Configurações">•••</button>
         </div>
-        <div class="notice" id="modeNotice"><span>◆</span><div><strong>Modo local de demonstração</strong><small>O conector Gemini será ativado por backend seguro, sem expor credenciais no navegador.</small></div><button id="dismissNotice" aria-label="Fechar aviso">×</button></div>
+        <div class="notice" id="modeNotice"><span>◆</span><div><strong>Modo local de demonstração</strong><small>Obtenha sua chave no Google AI Studio. Ela será configurada no backend seguro, nunca no navegador.</small></div><a class="notice-link" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Abrir AI Studio ↗</a><button id="dismissNotice" aria-label="Fechar aviso">×</button></div>
         <div class="messages" id="messages" aria-live="polite">
-          <div class="empty-state" id="emptyState"><div class="empty-glyph">B<span>/</span></div><div class="empty-kicker">SYSTEM ONLINE · READY FOR INPUT</div><h2>Conversa pronta.</h2><p>Faça uma pergunta, peça um plano ou descreva algo que a Brown-IA deve criar.</p><div class="quick-prompts"><button data-prompt="Explique como você pode me ajudar.">Conhecer a Brown-IA <span>↗</span></button><button data-prompt="Crie um plano profissional para meu projeto.">Criar um plano <span>↗</span></button><button data-prompt="Analise esta ideia e sugira melhorias.">Analisar uma ideia <span>↗</span></button></div></div>
+          <div class="empty-state" id="emptyState"><div class="empty-glyph">BR</div><div class="empty-kicker">SYSTEM ONLINE · READY FOR INPUT</div><h2>Conversa pronta.</h2><p>Faça uma pergunta, peça um plano ou descreva algo que a Brown-IA deve criar.</p><div class="quick-prompts"><button data-prompt="Explique como você pode me ajudar.">Conhecer a Brown-IA <span>↗</span></button><button data-prompt="Crie um plano profissional para meu projeto.">Criar um plano <span>↗</span></button><button data-prompt="Analise esta ideia e sugira melhorias.">Analisar uma ideia <span>↗</span></button></div></div>
         </div>
         <form class="composer" id="composer">
           <div class="composer-meta"><span id="profileTag">GPT</span><span>·</span><span id="thinkingTag">MÉDIO</span><span>·</span><span id="languageTag">PT-BR</span><span class="meta-spacer"></span><span id="latencyLabel">aguardando entrada</span></div>
