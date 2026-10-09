@@ -1,6 +1,6 @@
 # Brown-IA Web
 
-Base web leve da Brown-IA. A versão atual é estática, responsiva e não exige servidor para abrir a interface. A conversa funciona em modo de demonstração local; o conector Gemini será adicionado posteriormente por um backend seguro, sem expor a chave no navegador.
+Base web leve da Brown-IA. A versão atual é estática, responsiva e não exige servidor para abrir a interface. A conversa funciona em modo de demonstração local e também aceita uma chave temporária do Gemini somente em memória da aba.
 
 ## Estrutura
 
@@ -26,6 +26,10 @@ Abra `http://localhost:8080`.
 ## Publicação estática
 
 A aplicação não depende do GitHub em tempo de execução. O conteúdo pode ser publicado em qualquer hospedagem estática, incluindo Cloudflare Pages ou GitHub Pages. Nenhuma chave de API deve ser colocada em `app.js`.
+
+### Chave temporária no navegador
+
+O painel oferece um modo opcional **Bring Your Own Key**. A chave digitada é mantida apenas em memória, não é salva no `localStorage`, não é enviada para o repositório e desaparece ao recarregar a página. Para uso público ou permanente, recomenda-se um backend seguro e uma chave restringida no Google AI Studio.
 
 ## Próximas fases
 
