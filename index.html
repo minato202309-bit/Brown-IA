@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0b0d" />
+  <meta name="description" content="Brown-IA — assistente cognitiva modular para conversa, código e pesquisa." />
+  <title>Brown-IA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark" aria-label="Brown-IA">
+        <span class="brand-symbol">B</span>
+        <div><strong>BROWN-IA</strong><small>COGNITIVE WORKSPACE</small></div>
+      </div>
+      <div class="status-pill"><span class="status-dot"></span><span id="statusText">LOCAL READY</span></div>
+    </header>
+
+    <main class="workspace">
+      <aside class="control-rail">
+        <section class="rail-section">
+          <div class="section-label">PROFILE</div>
+          <div class="profile-list" id="profileList">
+            <button class="profile-btn active" data-profile="GPT"><b>01</b><span><strong>GPT</strong><small>Geral e conversa</small></span></button>
+            <button class="profile-btn" data-profile="CODE"><b>02</b><span><strong>CODE</strong><small>Programação e arquivos</small></span></button>
+            <button class="profile-btn" data-profile="GMINI"><b>03</b><span><strong>GMINI</strong><small>Rápido e objetivo</small></span></button>
+          </div>
+        </section>
+        <section class="rail-section">
+          <div class="section-label">THINKING</div>
+          <div class="thinking-grid" id="thinkingGrid">
+            <button class="thinking-btn" data-thinking="LEVE">Leve</button>
+            <button class="thinking-btn active" data-thinking="MEDIO">Médio</button>
+            <button class="thinking-btn" data-thinking="ALTO">Alto</button>
+            <button class="thinking-btn" data-thinking="EXTREMO">Extremo</button>
+          </div>
+        </section>
+        <section class="rail-section rail-info">
+          <div class="section-label">SESSION</div>
+          <p><span id="messageCount">0</span> mensagens</p>
+          <button class="subtle-btn" id="clearBtn">Limpar sessão</button>
+          <button class="subtle-btn" id="exportBtn">Exportar JSON</button>
+        </section>
+        <div class="rail-footer">BROWN-IA / WEB 0.1<br /><span>provider-ready architecture</span></div>
+      </aside>
+
+      <section class="chat-panel">
+        <div class="chat-header">
+          <div><span class="eyebrow">ACTIVE CHANNEL</span><h1 id="channelTitle">Brown-IA · GPT</h1></div>
+          <button class="icon-btn" id="settingsBtn" title="Configurações">⋮</button>
+        </div>
+        <div class="notice" id="modeNotice"><span>◆</span> Modo local de demonstração. O conector Gemini poderá ser ativado depois por um backend seguro.</div>
+        <div class="messages" id="messages" aria-live="polite">
+          <div class="empty-state" id="emptyState">
+            <div class="empty-glyph">B/</div>
+            <h2>Conversa pronta.</h2>
+            <p>Envie uma pergunta, peça um plano ou descreva um arquivo que deseja criar.</p>
+          </div>
+        </div>
+        <form class="composer" id="composer">
+          <div class="composer-meta"><span id="profileTag">GPT</span><span>·</span><span id="thinkingTag">MÉDIO</span><span class="meta-spacer"></span><span id="latencyLabel">aguardando entrada</span></div>
+          <textarea id="promptInput" rows="1" placeholder="Escreva uma mensagem para a Brown-IA..." autocomplete="off"></textarea>
+          <div class="composer-actions"><span class="hint">Enter envia · Shift+Enter quebra linha</span><button class="send-btn" type="submit">ENVIAR <span>↗</span></button></div>
+        </form>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
