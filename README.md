@@ -1,6 +1,6 @@
 # Brown-IA Web
 
-Primeira base web leve da Brown-IA. Esta versão é estática, responsiva e não exige servidor para abrir a interface. A conversa atual funciona em modo de demonstração local; o conector Gemini será adicionado posteriormente por um backend seguro, sem expor a chave no navegador.
+Base web leve da Brown-IA. A versão atual é estática, responsiva e não exige servidor para abrir a interface. A conversa funciona em modo de demonstração local; o conector Gemini será adicionado posteriormente por um backend seguro, sem expor a chave no navegador.
 
 ## Estrutura
 
@@ -8,6 +8,10 @@ Primeira base web leve da Brown-IA. Esta versão é estática, responsiva e não
 - `styles.css` — identidade visual vermelha, branca e verde.
 - `app.js` — conversa local, memória da sessão, perfis, níveis de pensamento e exportação JSON.
 - `docs/` — arquitetura e integração futura.
+
+## Interface atual
+
+A interface inclui perfis GPT, CODE e GMINI, níveis Leve/Médio/Alto/Extremo, memória local, exportação de sessão, mensagens rápidas e seletor persistente de idioma da resposta: Automático, Português do Brasil, English e Español. A escolha fica salva no navegador.
 
 ## Executar localmente
 
