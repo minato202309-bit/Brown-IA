@@ -1,0 +1,37 @@
+PONTOS PRINCIPAIS — RECORTE EXATO DO app.js
+O safetySettings deve ser inserido dentro do objeto body na seção 3.
+
+===== 1. FETCH BASE / VALIDAÇÃO =====
+function fetchWithTimeout(url, options = {}, ms = 30000) { const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), ms); return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(timer)).catch(error => { if (error.name === 'AbortError') throw new Error(`A Gemini demorou mais de ${Math.round(ms / 1000)} segundos para responder.`); throw new Error('Não foi possível alcançar a Gemini. Verifique sua conexão e as permissões da chave.'); }); }
+async function validateGeminiKey(key) { const response = await fetchWithTimeout('https://generativelanguage.googleapis.com/v1beta/models', { headers: { 'x-goog-api-key': key } }, 10000); let payload = {}; try { payload = await response.json(); } catch {} if (!response.ok) { const message = payload?.error?.message || `HTTP ${response.status}`; throw new Error(sanitizeErrorMessage(message)); } const models = (payload.models || []).filter(model => (model.supportedGenerationMethods || []).includes('generateContent')); const names = models.map(model => String(model.name || '').replace(/^models\//, '')); const selected = pickModel(names, 'max'); if (!selected) throw new Error('A chave é válida, mas nenhum modelo de texto compatível foi encontrado.'); const selectedInfo = models.find(model => String(model.name || '').replace(/^models\//, '') === selected) || {}; return { selected, available: names, limits: { input: Number(selectedInfo.inputTokenLimit) || 32768, output: Number(selectedInfo.outputTokenLimit) || 65536 } }; }
+
+===== 2. ENDPOINT =====
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(state.model)}:generateContent`;
+
+===== 3. SYSTEM INSTRUCTION, GENERATION CONFIG, API KEY E FETCH =====
+  const generationConfig = { temperature: visualTask ? 0.15 : state.thinking === 'LEVE' ? 0.75 : state.thinking === 'MEDIO' ? 0.6 : state.thinking === 'ALTO' ? 0.45 : 0.3, topP: visualTask ? 0.8 : 0.95, maxOutputTokens: outputLimit };
+  // Gemini 3 aceita thinkingLevel (low/medium/high). Isso é o que realmente muda a profundidade.
+  if (/^gemini-3/i.test(String(state.model || ''))) generationConfig.thinkingConfig = { thinkingLevel: THINKING_LEVELS[state.thinking] || 'MEDIUM' };
+  const request = async (contents, timeout, streamCallback = null) => {
+    const body = JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents, generationConfig });
+    const headers = { 'Content-Type': 'application/json', 'x-goog-api-key': state.apiKey };
+    const standardRequest = async () => {
+      const requestStarted = performance.now();
+      const response = await fetchWithTimeout(endpoint, { method: 'POST', headers, body }, timeout);
+      let payload = {};
+      try { payload = await response.json(); } catch {}
+      state.metrics = { ...(state.metrics || {}), providerMs: performance.now() - requestStarted };
+      if (!response.ok) { const message = payload?.error?.message || `HTTP ${response.status}`; throw new Error(sanitizeErrorMessage(message)); }
+      const candidate = payload?.candidates?.[0];
+      const text = candidate?.content?.parts?.map(part => part.text || '').join('').trim();
+      if (!text) throw new Error(t('responseEmpty'));
+      return { text, truncated: candidate?.finishReason === 'MAX_TOKENS' };
+    };
+    if (!streamCallback || !window.ReadableStream) return standardRequest();
+    const requestStarted = performance.now();
+    const streamEndpoint = endpoint.replace(':generateContent', ':streamGenerateContent') + '?alt=sse';
+    const response = await fetchWithTimeout(streamEndpoint, { method: 'POST', headers, body }, timeout);
+    if (!response.ok) { let payload = {}; try { payload = await response.json(); } catch {} throw new Error(sanitizeErrorMessage(payload?.error?.message || `HTTP ${response.status}`)); }
+
+===== 4. ESCOLHA GEMINI OU LOCAL =====
+    const answer = state.apiKey ? await geminiReply(messageText, file, updateStreamingMessage) : await Promise.resolve(file ? t('localAttachment', file.name) : localReply(content));
