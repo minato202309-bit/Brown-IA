@@ -50,7 +50,7 @@ async function chatSummary(dropped) {
   const prompt = `Resuma o trecho de conversa abaixo em no máximo 130 palavras, em ${language}. Preserve: assunto principal, decisões já tomadas, preferências do usuário, nomes de arquivos ou projetos, restrições e pendências. Não invente nada e não responda ao conteúdo.${previous ? `\n\nResumo anterior (incorpore e atualize, sem repetir):\n${previous}` : ''}\n\nTrecho:\n${transcript}`;
   try {
     const cheap = pickModel(state.availableModels || [], 'fast') || state.model;
-    const response = await fetchWithTimeout(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(cheap)}:generateContent`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': state.apiKey }, body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig: { temperature: 0.2, maxOutputTokens: 512 } }) }, 25000);
+    const response = await fetchWithTimeout(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(cheap)}:generateContent`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': state.apiKey }, body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig: { temperature: 1.0, maxOutputTokens: 512 } }) }, 25000);
     if (!response.ok) return previous;
     const payload = await response.json();
     const text = (payload?.candidates?.[0]?.content?.parts || []).map(part => part.text || '').join('').trim();
@@ -344,14 +344,8 @@ Links detectados: ${links.join(', ') || 'nenhum'}.`;
   // Gemini 3 aceita thinkingLevel (low/medium/high) sem alterar os parâmetros solicitados.
   if (/^gemini-3/i.test(String(state.model || ''))) generationConfig.thinkingConfig = { thinkingLevel: THINKING_LEVELS[state.thinking] || 'MEDIUM' };
   const request = async (contents, timeout, streamCallback = null) => {
-    const safetySettings = [
-      { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
-      { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
-      { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
-      { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" },
-      { category: "HARM_CATEGORY_CIVIC_INTEGRITY", threshold: "BLOCK_NONE" }
-    ];
-    const body = JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents, generationConfig, safetySettings });
+    // Uma única configuração integrada por requisição; mantém as proteções padrão do provedor.
+    const body = JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents, generationConfig });
     const headers = { 'Content-Type': 'application/json', 'x-goog-api-key': state.apiKey };
     const standardRequest = async () => {
       const requestStarted = performance.now();
