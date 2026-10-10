@@ -126,7 +126,8 @@ async function geminiReply(input, file = null, onChunk = null) {
   const historyBudget = Math.min(110000, Math.max(24000, (modelInput - 7000) * 3.2));
   let used = 0;
   const history = [];
-  for (const message of [...state.messages].reverse()) {
+  const usableMessages = state.messages.filter(message => !(message.role === 'assistant' && message.streaming && !String(message.content || '').trim()));
+  for (const message of [...usableMessages].reverse()) {
     const text = String(message.content || '').slice(0, codeTask ? 24000 : 9000);
     if (history.length && used + text.length > historyBudget) break;
     history.unshift({ role: message.role === 'assistant' ? 'model' : 'user', parts: [{ text }] });

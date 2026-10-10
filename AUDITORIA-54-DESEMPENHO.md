@@ -33,3 +33,7 @@
 - A aplicação continua sendo um frontend estático: a chave BYOK é usada no navegador. Não há chave universal pública.
 - A validação de jogos verifica estrutura HTML e oferece teste em sandbox, mas não pode provar semanticamente que toda lógica de jogo atende à intenção do usuário.
 - Não foi feita chamada real ao Gemini nesta auditoria; os testes de rede usam respostas simuladas para não expor credenciais nem consumir quota.
+
+### Correção posterior — turno final do Gemini
+
+Após a publicação inicial, foi reproduzido um erro `Requests ending with a model turn are not supported`. A causa foi a mensagem provisória vazia criada pelo streaming antes da chamada ao provedor. O histórico agora exclui explicitamente esse placeholder, garantindo que a requisição termine no turno `user`. O caso foi reproduzido no Chromium com payload simulado: último papel enviado `user`, resposta `ok`, duas mensagens finais e `busy: false`.
