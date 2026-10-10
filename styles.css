@@ -560,3 +560,86 @@ button.download-response:hover { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   .context-card { animation: none; }
 }
+
+/* FASE 4 — menu e composição inspirados na referência enviada */
+.topbar { min-height: 74px; padding-bottom: 15px; }
+.brand-symbol { width: 50px; height: 50px; border-radius: 15px; }
+.brand-mark strong { font-size: 22px; letter-spacing: .18em; }
+.brand-mark small { letter-spacing: .22em; }
+.topbar-actions { gap: 10px; }
+.status-pill { min-height: 37px; padding: 8px 15px; }
+.menu-trigger { width: 42px; height: 38px; border-radius: 11px; }
+
+.primary-nav { display: grid; gap: 4px; margin: 0 -5px 16px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.primary-nav-item { position: relative; display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 8px; min-height: 43px; padding: 0 11px; border: 1px solid transparent; border-radius: 10px; color: var(--text-soft); background: transparent; cursor: pointer; text-align: left; font-size: 12px; transition: .2s ease; }
+.primary-nav-item .nav-icon { display: grid; place-items: center; width: 25px; height: 25px; color: var(--text-soft); font: 17px var(--mono); }
+.primary-nav-item b { color: var(--muted-2); font: 9px var(--mono); }
+.primary-nav-item:hover { border-color: rgba(220,62,77,.35); color: var(--text); background: rgba(220,62,77,.08); transform: translateX(2px); }
+.primary-nav-item.active { border-color: rgba(220,62,77,.58); color: var(--text); background: linear-gradient(90deg, rgba(220,62,77,.25), rgba(220,62,77,.045)); box-shadow: inset 3px 0 var(--red-bright), 0 9px 20px rgba(0,0,0,.16); }
+.primary-nav-item.active .nav-icon, .primary-nav-item.active b { color: var(--red-bright); }
+.control-rail > .new-chat-btn { margin-bottom: 3px; }
+
+.assistant-hero { position: relative; margin: 9px 0 13px; padding: 16px 17px 15px; border: 1px solid rgba(220,62,77,.62); border-radius: 17px; background: radial-gradient(circle at 0 0, rgba(220,62,77,.14), transparent 45%), linear-gradient(135deg, rgba(27,17,24,.96), rgba(12,16,22,.98)); box-shadow: 0 15px 38px rgba(0,0,0,.24), inset 0 1px rgba(255,255,255,.04); animation: hero-in .55s cubic-bezier(.2,.8,.2,1) both; }
+.assistant-hero::before, .assistant-hero::after { position: absolute; content: ""; pointer-events: none; }
+.assistant-hero::before { top: -1px; left: 35px; width: 82px; height: 2px; background: var(--red-bright); box-shadow: 0 0 16px rgba(220,62,77,.55); }
+.assistant-hero::after { right: 14px; bottom: 10px; width: 36px; height: 8px; border-right: 1px solid var(--red); border-bottom: 1px solid var(--red); opacity: .7; }
+.assistant-hero-top { display: flex; align-items: center; gap: 12px; }
+.assistant-portrait { display: grid; flex: 0 0 57px; place-items: center; width: 57px; height: 57px; overflow: hidden; border: 1px solid rgba(255,102,113,.78); border-radius: 15px; background: #f8f4df; box-shadow: 0 8px 22px rgba(0,0,0,.3); }
+.assistant-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.hero-kicker, .hero-subtitle { display: block; font-family: var(--mono); }
+.hero-kicker { color: var(--muted); font-size: 8px; letter-spacing: .15em; }
+.assistant-hero h2 { margin: 4px 0 1px; color: var(--text); font-size: 25px; line-height: 1; letter-spacing: -.06em; }
+.hero-subtitle { color: var(--text-soft); font-size: 8px; letter-spacing: .12em; }
+.hero-online { display: inline-flex; align-items: center; gap: 5px; margin-left: auto; padding: 7px 9px; border: 1px solid rgba(112,215,162,.34); border-radius: 999px; color: var(--green); font: 9px var(--mono); letter-spacing: .07em; }
+.hero-online i { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 9px var(--green); }
+.assistant-hero > p { max-width: 570px; margin: 15px 5px 13px; color: var(--text-soft); font-size: 13px; line-height: 1.5; }
+.hero-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.hero-actions button { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 7px; padding: 10px 10px; border: 1px solid rgba(255,255,255,.11); border-radius: 11px; color: var(--text); background: rgba(255,255,255,.035); cursor: pointer; text-align: left; transition: .2s ease; }
+.hero-actions button > span { grid-row: span 2; color: var(--red-bright); font: 18px var(--mono); }
+.hero-actions b { font-size: 11px; font-weight: 700; }
+.hero-actions small { color: var(--muted); font-size: 9px; }
+.hero-actions button:hover { border-color: var(--red); background: var(--red-soft); transform: translateY(-2px); box-shadow: 0 9px 22px rgba(0,0,0,.2); }
+
+.context-rail { gap: 11px; }
+.recent-card, .tools-card { padding: 15px; }
+.context-add { display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--line-strong); border-radius: 50%; color: var(--red-bright); background: transparent; cursor: pointer; font-size: 17px; }
+.context-add:hover { border-color: var(--red); background: var(--red-soft); }
+.recent-list, .tool-list { display: grid; gap: 4px; margin-top: 12px; }
+.recent-item, .tool-list > div { display: flex; align-items: center; gap: 9px; min-width: 0; padding: 9px 7px; border: 1px solid transparent; border-radius: 10px; transition: .18s ease; }
+.recent-item:hover, .recent-item.active, .tool-list > div:hover { border-color: rgba(220,62,77,.32); background: rgba(220,62,77,.08); }
+.recent-icon, .tool-icon { display: grid; flex: 0 0 31px; place-items: center; width: 31px; height: 31px; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; color: var(--text-soft); background: rgba(255,255,255,.025); font: 15px var(--mono); }
+.recent-item.active .recent-icon { border-color: var(--red); color: var(--red-bright); font-size: 24px; }
+.recent-item > div, .tool-list > div > div { min-width: 0; flex: 1; }
+.recent-item strong, .recent-item small, .tool-list strong, .tool-list small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.recent-item strong, .tool-list strong { color: var(--text); font-size: 10px; font-weight: 650; }
+.recent-item small, .tool-list small { margin-top: 3px; color: var(--muted); font-size: 9px; }
+.recent-item > b { color: var(--muted-2); font: 9px var(--mono); }
+.tools-card { border-color: rgba(255,255,255,.13); }
+.context-chevron { color: var(--text-soft); font-size: 20px; line-height: 1; }
+.tool-icon { border-color: rgba(112,215,162,.25); color: var(--green); }
+.brown-signal { display: flex; align-items: center; gap: 10px; min-height: 74px; border-color: rgba(220,62,77,.6); background: linear-gradient(100deg, rgba(220,62,77,.14), rgba(20,15,22,.92)); }
+.brown-signal::before { background: var(--red-bright); }
+.signal-wave { color: var(--red-bright); font: 25px var(--mono); letter-spacing: -7px; text-shadow: 0 0 15px var(--red); }
+.brown-signal strong, .brown-signal small { display: block; }
+.brown-signal strong { color: var(--red-bright); font: 11px var(--mono); letter-spacing: .08em; }
+.brown-signal small { margin-top: 4px; color: var(--text-soft); font-size: 9px; }
+.brown-signal > span:last-child { margin-left: auto; color: var(--red-bright); }
+
+@keyframes hero-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 760px) {
+  .topbar { min-height: 64px; }
+  .brand-mark strong { font-size: 18px; }
+  .brand-mark small { letter-spacing: .12em; }
+  .primary-nav { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+  .primary-nav-item { grid-template-columns: 1fr; justify-items: center; gap: 1px; min-height: 53px; padding: 5px 2px; text-align: center; }
+  .primary-nav-item b { display: none; }
+  .primary-nav-item .nav-icon { height: 22px; }
+  .assistant-hero { padding: 14px; }
+  .assistant-hero-top { align-items: flex-start; }
+  .assistant-portrait { flex-basis: 48px; width: 48px; height: 48px; }
+  .assistant-hero h2 { font-size: 22px; }
+  .hero-online { padding: 6px 7px; font-size: 8px; }
+  .hero-actions { grid-template-columns: 1fr; }
+  .hero-actions button { min-height: 43px; }
+}
+@media (prefers-reduced-motion: reduce) { .assistant-hero { animation: none; } }

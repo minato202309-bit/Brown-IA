@@ -8,7 +8,7 @@
   <meta name="referrer" content="no-referrer" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://generativelanguage.googleapis.com; worker-src 'self' blob:; frame-src 'self' blob:; child-src 'self' blob:; upgrade-insecure-requests" />
   <title>Brown · Workspace</title>
-  <link rel="stylesheet" href="styles.css?v=architecture" />
+  <link rel="stylesheet" href="styles.css?v=reference-pass2" />
 </head>
 <body>
   <div class="scanline" aria-hidden="true"></div>
@@ -24,6 +24,14 @@
     <main class="workspace">
       <aside class="control-rail" id="appMenu" data-i18n-aria-label="menuLabel" aria-label="Menu principal">
         <div class="menu-heading"><div><span class="section-label" data-i18n="menuLabelShort">BROWN / MENU</span><strong data-i18n="workspace">Workspace</strong></div><button class="menu-close" id="menuClose" type="button" data-i18n-aria-label="closeMenu" aria-label="Fechar menu">×</button></div>
+        <nav class="primary-nav" aria-label="Navegação principal">
+          <button type="button" class="primary-nav-item active"><span class="nav-icon">▣</span><span>Chat</span><b>01</b></button>
+          <button type="button" class="primary-nav-item"><span class="nav-icon">□</span><span>Projetos</span><b>02</b></button>
+          <button type="button" class="primary-nav-item"><span class="nav-icon">▦</span><span>Workspace</span><b>03</b></button>
+          <button type="button" class="primary-nav-item"><span class="nav-icon">◈</span><span>Memória</span><b>04</b></button>
+          <button type="button" class="primary-nav-item"><span class="nav-icon">▤</span><span>Arquivos</span><b>05</b></button>
+          <button type="button" class="primary-nav-item"><span class="nav-icon">♙</span><span>Personalidade</span><b>06</b></button>
+        </nav>
         <button class="new-chat-btn" id="newChatBtn" type="button"><span>＋</span> <span data-i18n="newConversation">Nova conversa</span></button>
         <section class="menu-library">
           <div class="library-heading"><span data-i18n="conversations">CONVERSAS</span><small id="chatCount">0</small></div>
@@ -71,6 +79,7 @@
         </div>
         <div class="notice" id="modeNotice"><span>◆</span><div><strong id="modeTitle" data-i18n="checkingConnection">Verificando conexão</strong><small id="modeDescription" data-i18n="loadingProvider">A Brown está carregando o provedor antes de aceitar mensagens.</small></div><button id="dismissNotice" data-i18n-aria-label="closeMenu" aria-label="Fechar aviso">×</button></div>
         <div class="provider-setup" id="providerSetup" hidden><div class="provider-setup-head"><strong data-i18n="connectBrown">Conectar a Brown</strong><small data-i18n="keyDescription">Insira uma chave Gemini para ativar as respostas inteligentes neste navegador.</small></div><div class="provider-setup-row"><input id="initialKeyInput" type="password" data-i18n-aria-label="initialKeyPlaceholder" aria-label="Chave Gemini inicial" data-i18n-placeholder="initialKeyPlaceholder" placeholder="Cole sua chave Gemini" autocomplete="off" spellcheck="false" /><button type="button" id="initialConnectBtn" data-i18n="connect">CONECTAR</button></div><label class="provider-save"><input id="initialSaveKey" type="checkbox" /> <span data-i18n="saveBrowser">Salvar neste navegador</span></label><a data-i18n="getKey" href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener noreferrer">Obter chave no Google AI Studio ↗</a><small class="provider-setup-status" id="initialProviderStatus" data-i18n="noValidated">Nenhuma conexão validada.</small></div>
+        <section class="assistant-hero" aria-label="Apresentação da Brown"><div class="assistant-hero-top"><div class="assistant-portrait"><img src="assets/brown-logo.jpg" alt="Brown" /></div><div><span class="hero-kicker">BROWN / ASSISTENTE DE IA</span><h2>Brown</h2><span class="hero-subtitle">ESPAÇO COGNITIVO AVANÇADO</span></div><span class="hero-online"><i></i> ONLINE</span></div><p>Converse, crie, programe, planeje e analise. Eu estou aqui para ajudar.</p><div class="hero-actions"><button type="button" data-hero-prompt="Crie um plano profissional para meu projeto."><span>✦</span><b>Criar</b><small>conteúdo</small></button><button type="button" data-hero-prompt="Ajude a programar e revisar uma solução."><span>⌘</span><b>Programar</b><small>&amp; debug</small></button><button type="button" data-hero-prompt="Analise esta ideia e sugira melhorias."><span>⌁</span><b>Analisar</b><small>dados e ideias</small></button></div></section>
         <div class="messages" id="messages" aria-live="polite">
           <div class="empty-state" id="emptyState"><div class="empty-glyph"><img src="assets/brown-logo.jpg" alt="" aria-hidden="true" /></div><div class="empty-kicker" data-i18n="systemOnline">SYSTEM ONLINE · READY FOR INPUT</div><h2 data-i18n="ready">Conversa pronta.</h2><p data-i18n="prompt">Faça uma pergunta, peça um plano ou descreva algo que a Brown deve criar.</p><div class="quick-prompts"><button data-prompt-key="promptKnow" data-prompt="Explique como você pode me ajudar."><span data-i18n="quickKnow">Conhecer a Brown</span> <span>↗</span></button><button data-prompt-key="promptPlan" data-prompt="Crie um plano profissional para meu projeto."><span data-i18n="quickPlan">Criar um plano</span> <span>↗</span></button><button data-prompt-key="promptAnalyze" data-prompt="Analise esta ideia e sugira melhorias."><span data-i18n="quickAnalyze">Analisar uma ideia</span> <span>↗</span></button></div></div>
         </div><div class="conversation-nav" id="conversationNav" aria-label="Navegação da conversa"><button class="scroll-nav-btn" id="scrollTopBtn" type="button" title="Ir para o início" aria-label="Ir para o início da conversa"><span aria-hidden="true">↑</span><span>Início</span></button><span class="scroll-position" id="scrollPosition">INÍCIO</span><button class="scroll-nav-btn" id="scrollBottomBtn" type="button" title="Ir para o fim" aria-label="Ir para o fim da conversa"><span>Fim</span><span aria-hidden="true">↓</span></button><button class="scroll-settings-btn" id="scrollSettingsBtn" type="button" hidden data-i18n-title="settings" title="Abrir configurações"><span aria-hidden="true">⚙</span> <span data-i18n="settings">Configurações</span></button></div>
@@ -83,20 +92,10 @@
         <div class="disclaimer" data-i18n="disclaimer">A Brown pode cometer erros. Verifique informações importantes antes de agir.</div>
       </section>
 
-      <aside class="context-rail" aria-label="Contexto da sessão">
-        <section class="context-card context-hero">
-          <div class="context-card-top"><span class="context-kicker">BROWN / CONTEXTO</span><span class="context-live"><i></i> ATIVA</span></div>
-          <div class="context-identity"><span class="context-avatar"><img src="assets/brown-logo.jpg" alt="" aria-hidden="true" /></span><div><strong>Brown</strong><small>espaço cognitivo</small></div></div>
-          <p>Uma área para pensar, construir e revisar sem perder o fio da conversa.</p>
-        </section>
-        <section class="context-card">
-          <div class="context-card-title"><span>PRÓXIMOS PASSOS</span><b>03</b></div>
-          <div class="context-list"><div><span class="context-icon">✦</span><div><strong>Defina o objetivo</strong><small>Comece pela decisão que precisa tomar.</small></div></div><div><span class="context-icon">⌘</span><div><strong>Escolha um perfil</strong><small>Brown para pensar; Code para construir.</small></div></div><div><span class="context-icon">↗</span><div><strong>Envie a primeira mensagem</strong><small>A Brown mantém o contexto local.</small></div></div></div>
-        </section>
-        <section class="context-card context-tools-card">
-          <div class="context-card-title"><span>CAPACIDADES</span><b>LIVE</b></div>
-          <div class="capability-grid"><span><i>✦</i> Análise</span><span><i>⌘</i> Código</span><span><i>◌</i> Arquivos</span><span><i>◈</i> Memória</span></div>
-        </section>
+      <aside class="context-rail" aria-label="Painel contextual">
+        <section class="context-card recent-card"><div class="context-card-title"><span>◷ &nbsp;CONVERSAS RECENTES</span><button type="button" class="context-add">＋</button></div><div class="recent-list"><div class="recent-item active"><span class="recent-icon">＋</span><div><strong>Nova conversa</strong><small>Iniciar um novo chat</small></div><b>agora</b></div><div class="recent-item"><span class="recent-icon">▣</span><div><strong>Projeto de app</strong><small>Código e arquitetura</small></div><b>2h</b></div><div class="recent-item"><span class="recent-icon">▤</span><div><strong>Estudos</strong><small>Resumo e explicações</small></div><b>4h</b></div><div class="recent-item"><span class="recent-icon">⌁</span><div><strong>Análise de dados</strong><small>Planilhas e gráficos</small></div><b>6h</b></div></div></section>
+        <section class="context-card tools-card"><div class="context-card-title"><span>⚒ &nbsp;FERRAMENTAS</span><span class="context-chevron">›</span></div><div class="tool-list"><div><span class="tool-icon">⌘</span><div><strong>Gerador de código</strong><small>Python, JS, HTML e mais</small></div></div><div><span class="tool-icon">◉</span><div><strong>Análise de imagens</strong><small>OCR, edição e interpretação</small></div></div><div><span class="tool-icon">◎</span><div><strong>Pesquisa e síntese</strong><small>Informação organizada</small></div></div><div><span class="tool-icon">◈</span><div><strong>Automação</strong><small>Scripts e fluxos</small></div></div></div></section>
+        <section class="context-card brown-signal"><div class="signal-wave">∿∿∿</div><div><strong>BROWN</strong><small>Sempre ao seu lado.</small></div><span>♥</span></section>
         <section class="context-card context-quote"><span class="quote-mark">“</span><p>Boas perguntas dão forma a ideias melhores.</p><small>— Brown / sistema</small></section>
         <div class="context-footer"><span class="footer-signal"></span><span>SESSÃO LOCAL</span><small>sem rastreadores · controle seu histórico</small></div>
       </aside>
@@ -117,7 +116,7 @@
     <div class="privacy-banner-actions"><button type="button" data-privacy-choice="reject" data-i18n="reject">Rejeitar não necessários</button><button type="button" data-privacy-choice="customize" data-i18n="customize">Personalizar</button><button class="primary-privacy" type="button" data-privacy-choice="accept" data-i18n="accept">Aceitar todos</button></div>
   </section>
 
-  <script src="config.js?v=architecture"></script>
-  <script src="app.js?v=architecture"></script>
+  <script src="config.js?v=reference-pass2"></script>
+  <script src="app.js?v=reference-pass2"></script>
 </body>
 </html>

@@ -24,3 +24,7 @@ O `index.html` mantém os controles funcionais existentes no rail esquerdo, conc
 ## Restrições
 
 Sem dependências ou imagens novas. O redesign não deve gerar overflow horizontal, remover controles, introduzir chamadas de rede ou alterar a persistência/API. A validação deve cobrir sintaxe, carregamento real no Chromium, interação dos menus/configurações, envio local, anexo, exportações, projetos, consentimento e viewport móvel.
+
+## Fase 4 — referência aplicada com organização explícita
+
+A interface agora assume uma navegação principal visível no rail esquerdo (Chat, Projetos, Workspace, Memória, Arquivos e Personalidade), um hero central da Brown com atalhos de Criar, Programar e Analisar, e uma coluna direita dedicada a Conversas recentes e Ferramentas. A referência foi usada como direção de produto e hierarquia, não como cópia literal de conteúdo ou distribuição.
