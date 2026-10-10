@@ -32,3 +32,7 @@ A interface agora assume uma navegação principal visível no rail esquerdo (Ch
 ## Fase 5 — menu premium
 
 A navegação recebeu SVGs inline consistentes, tipografia Space Grotesk/DM Sans, descrições curtas, estados ativo/hover, indicadores luminosos e espaçamento de componente. O menu deixou de ser uma lista de caracteres e passou a funcionar como uma área de produto com identidade própria.
+
+## Fase 6 — leitura e funções inferiores
+
+As áreas inferiores do rail foram transformadas em cartões de sessão, idioma, perfil, privacidade e configurações, com acentos laterais diferentes e estados de hover. A conversa passou a usar DM Sans em tamanho confortável e entrelinha ampla; headings usam Space Grotesk e blocos de código preservam a fonte monoespaçada.

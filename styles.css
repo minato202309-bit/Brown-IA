@@ -687,3 +687,65 @@ body { font-family: var(--sans); }
   .primary-nav-item .nav-copy small { font-size: 8px; }
   .primary-nav-item .nav-arrow { display: none; }
 }
+
+/* FASE 6 — acabamento das áreas inferiores e leitura da conversa */
+.control-rail > .menu-library,
+.control-rail > .rail-section,
+.control-rail > .settings-menu-btn,
+.control-rail > .privacy-actions {
+  position: relative;
+  margin-right: 3px;
+  margin-left: 3px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 13px;
+  background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+  box-shadow: inset 0 1px rgba(255,255,255,.025);
+}
+.control-rail > .menu-library { padding: 14px 11px; }
+.control-rail > .rail-section { padding: 14px 11px 12px; }
+.control-rail > .rail-section::before,
+.control-rail > .privacy-actions::before { position: absolute; top: 13px; left: -1px; width: 2px; height: 28px; content: ""; border-radius: 0 3px 3px 0; background: var(--red); box-shadow: 0 0 13px rgba(220,62,77,.45); }
+.control-rail > .language-section::before { background: #72d7a2; box-shadow: 0 0 13px rgba(114,215,162,.4); }
+.control-rail > .rail-info::before { background: #bf9cff; box-shadow: 0 0 13px rgba(191,156,255,.38); }
+.control-rail > .settings-menu-btn { display: flex; align-items: center; justify-content: flex-start; gap: 9px; width: calc(100% - 6px); padding: 0 13px; border-color: rgba(220,62,77,.3); background: linear-gradient(100deg, rgba(220,62,77,.14), rgba(255,255,255,.025)); }
+.control-rail > .settings-menu-btn:hover { border-color: var(--red-bright); background: rgba(220,62,77,.2); }
+.control-rail > .privacy-actions { display: grid; gap: 7px; padding: 14px 11px; }
+.control-rail > .privacy-actions > span { color: var(--text-soft); font: 600 10px var(--display); letter-spacing: .01em; }
+.control-rail > .privacy-actions > small { color: var(--muted); font-size: 9px; line-height: 1.45; }
+.control-rail > .privacy-actions .settings-choice { min-height: 32px; border-color: rgba(255,255,255,.09); border-radius: 8px; background: rgba(255,255,255,.025); text-align: left; }
+.control-rail > .privacy-actions .settings-choice:hover { border-color: var(--red); background: var(--red-soft); }
+.library-heading { font-family: var(--display); }
+.session-stat { padding-bottom: 9px; }
+.session-stat span { font-family: var(--display); }
+.subtle-btn { min-height: 31px; padding: 0 8px; border-radius: 8px; color: var(--text-soft); background: rgba(255,255,255,.025); font-family: var(--sans); }
+.subtle-btn:hover { border-color: rgba(220,62,77,.48); color: var(--text); background: rgba(220,62,77,.08); }
+.select-wrap select, .settings-field select { font-family: var(--sans); }
+.language-note { font-family: var(--sans); }
+
+.message { padding: 20px 15px; border-radius: 17px; }
+.message-body { min-width: 0; }
+.message-label { font-family: var(--display); font-size: 10px; letter-spacing: .12em; }
+.message-content { font-family: "DM Sans", var(--sans), system-ui, sans-serif; font-size: 15px; font-weight: 450; line-height: 1.78; letter-spacing: -.012em; color: #e8ecf3; }
+.message.user .message-content { color: #f0dfe2; }
+.message-content p { margin: 0 0 13px; }
+.message-content p:last-child { margin-bottom: 0; }
+.message-content strong { color: #fff; font-weight: 700; }
+.message-content h1, .message-content h2, .message-content h3 { margin: 18px 0 8px; color: #fff; font-family: var(--display); line-height: 1.2; }
+.message-content ul, .message-content ol { margin: 9px 0 13px; padding-left: 22px; }
+.message-content li { margin: 5px 0; }
+.message-content blockquote { margin: 14px 0; padding: 10px 14px; border-left: 2px solid var(--red); color: #cbd2dd; background: rgba(220,62,77,.06); }
+.message-content pre, .message-content code, .generated-file, .file-ready-message { font-family: var(--mono); }
+.message-content pre { margin: 15px 0; padding: 15px; overflow: auto; border: 1px solid rgba(255,255,255,.1); border-radius: 11px; color: #d8f6e7; background: #080b10; font-size: 12px; line-height: 1.65; }
+.message-content code { padding: 2px 5px; border: 1px solid rgba(255,255,255,.08); border-radius: 5px; color: #f0b7bd; background: rgba(255,255,255,.055); font-size: .88em; }
+.message-content pre code { padding: 0; border: 0; color: inherit; background: transparent; }
+.message-actions { margin-top: 17px; padding-top: 11px; border-top-color: rgba(255,255,255,.075); }
+.message-action-btn { font-family: var(--sans); }
+.composer textarea { font-family: "DM Sans", var(--sans), system-ui, sans-serif; font-size: 15px; line-height: 1.55; }
+.composer-meta, .hint, .disclaimer { font-family: var(--mono); }
+.empty-state h2 { font-family: var(--display); }
+.empty-state p { font-family: "DM Sans", var(--sans), system-ui, sans-serif; font-size: 14px; line-height: 1.7; }
+@media (max-width: 760px) {
+  .control-rail > .menu-library, .control-rail > .rail-section, .control-rail > .settings-menu-btn, .control-rail > .privacy-actions { margin-right: 0; margin-left: 0; }
+  .message { padding: 16px 10px; }
+  .message-content { font-size: 14px; line-height: 1.68; }
+}
