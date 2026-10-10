@@ -28,3 +28,7 @@ Sem dependências ou imagens novas. O redesign não deve gerar overflow horizont
 ## Fase 4 — referência aplicada com organização explícita
 
 A interface agora assume uma navegação principal visível no rail esquerdo (Chat, Projetos, Workspace, Memória, Arquivos e Personalidade), um hero central da Brown com atalhos de Criar, Programar e Analisar, e uma coluna direita dedicada a Conversas recentes e Ferramentas. A referência foi usada como direção de produto e hierarquia, não como cópia literal de conteúdo ou distribuição.
+
+## Fase 5 — menu premium
+
+A navegação recebeu SVGs inline consistentes, tipografia Space Grotesk/DM Sans, descrições curtas, estados ativo/hover, indicadores luminosos e espaçamento de componente. O menu deixou de ser uma lista de caracteres e passou a funcionar como uma área de produto com identidade própria.
