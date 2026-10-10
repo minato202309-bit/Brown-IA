@@ -307,3 +307,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 @media (prefers-reduced-motion: reduce) {
   .brand-symbol, .empty-glyph { animation: none; }
 }
+
+/* AUDITORIA 57 — entrega de arquivos sem ruído */
+.generated-files { margin: 16px 0 4px; padding: 0; overflow: hidden; border: 1px solid rgba(230,56,70,.42); border-radius: 8px; background: linear-gradient(145deg, rgba(29,19,24,.96), rgba(10,13,18,.98)); box-shadow: 0 12px 34px rgba(0,0,0,.24), inset 0 1px rgba(255,255,255,.04); }
+.generated-files-head { display:flex; align-items:center; justify-content:space-between; min-height:38px; padding:0 12px; color:var(--text); border-bottom:1px solid rgba(255,255,255,.08); font:600 10px var(--mono); letter-spacing:.08em; text-transform:uppercase; }
+.generated-files-head > span { color:var(--green); }
+.generated-file-row { display:flex; align-items:center; justify-content:space-between; gap:14px; margin:0; padding:12px; border:0; border-bottom:1px solid rgba(255,255,255,.06); background:transparent; }
+.generated-file-row:last-child { border-bottom:0; }
+.generated-file { display:flex; align-items:center; gap:10px; min-width:0; }
+.file-type-mark { display:grid; place-items:center; flex:0 0 34px; height:30px; border:1px solid rgba(91,211,149,.38); border-radius:5px; color:var(--green); background:rgba(91,211,149,.08); font:700 9px var(--mono); }
+.generated-file strong { display:block; overflow:hidden; max-width:min(42vw,260px); color:var(--text); font:600 12px var(--mono); text-overflow:ellipsis; white-space:nowrap; }
+.generated-file small { display:block; margin-top:3px; color:var(--muted-2); font:9px var(--mono); }
+.primary-file-download, .zip-download-btn { border:1px solid rgba(230,56,70,.72); border-radius:5px; color:#fff; background:linear-gradient(135deg, #b92839, #7e1728); box-shadow:0 5px 16px rgba(230,56,70,.2); cursor:pointer; font:700 10px var(--mono); letter-spacing:.02em; white-space:nowrap; transition:transform .18s ease, filter .18s ease, box-shadow .18s ease; }
+.primary-file-download { padding:9px 12px; }
+.zip-download-btn { padding:6px 9px; }
+.primary-file-download:hover, .zip-download-btn:hover { filter:brightness(1.18); transform:translateY(-1px); box-shadow:0 8px 20px rgba(230,56,70,.28); }
+.file-ready-message { margin:8px 0 2px; color:var(--muted); font:10px var(--mono); }
+@media (max-width: 620px) { .generated-file-row { align-items:stretch; flex-direction:column; gap:10px; } .generated-file strong { max-width:65vw; } .primary-file-download { width:100%; min-height:38px; } }
