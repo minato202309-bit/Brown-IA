@@ -1,0 +1,120 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Política de privacidade e proteção de dados da Brown-IA"><title>Brown-IA · Política de Privacidade</title><style>:root{--bg:#08090b;--panel:#101519;--line:#29362f;--white:#eef3ee;--muted:#aab7af;--green:#55d68b;--red:#ff5961}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% 0%,#32171c,transparent 35%),var(--bg);color:var(--white);font:16px/1.7 system-ui,-apple-system,Segoe UI,sans-serif}main{width:min(920px,calc(100% - 32px));margin:36px auto 70px;padding:28px 32px;background:rgba(16,21,25,.94);border:1px solid var(--line);box-shadow:0 20px 70px #0008}h1,h2,h3{line-height:1.2}h1{font-size:clamp(26px,5vw,42px);margin-top:0;color:var(--white)}h2{margin-top:2em;color:var(--green);font-size:23px}h3{color:#dce7df}p,li{color:var(--muted)}strong{color:var(--white)}a{color:var(--green)}code{color:#ffd4d6;background:#191215;padding:2px 5px;border-radius:3px}blockquote{border-left:3px solid var(--red);padding-left:14px}.back{display:inline-block;margin-bottom:24px;color:var(--green);font:12px monospace;text-decoration:none;border-bottom:1px solid var(--green)}ul{padding-left:25px}@media(max-width:600px){main{width:calc(100% - 20px);margin:10px auto 30px;padding:20px 17px;font-size:15px}}</style></head><body><main><a class="back" href="index.html">← Voltar para Brown-IA</a><h1>Política de Privacidade e Proteção de Dados — Brown-IA</h1>
+<p><strong>Versão:</strong> 10 de outubro de 2026<br />
+<strong>Status:</strong> modelo operacional para completar pelo responsável pelo serviço; não constitui parecer jurídico nem declaração de conformidade.</p>
+<h2>1. Quem controla o tratamento</h2>
+<p>O controlador, a razão social, o CNPJ, o endereço e o contato oficial da Brown-IA <strong>ainda não foram informados</strong>. Esses campos devem ser preenchidos pelo responsável antes de apresentar esta política como documento final:</p>
+<ul>
+<li><strong>Controlador:</strong> <code>[PREENCHER NOME OU RAZÃO SOCIAL]</code></li>
+<li><strong>CNPJ ou identificador aplicável:</strong> <code>[PREENCHER]</code></li>
+<li><strong>Endereço:</strong> <code>[PREENCHER]</code></li>
+<li><strong>Contato de privacidade:</strong> <code>[PREENCHER E-MAIL OU CANAL]</code></li>
+<li><strong>Encarregado/DPO e contato:</strong> <code>[PREENCHER OU INFORMAR A DISPENSA, SE APLICÁVEL]</code></li>
+</ul>
+<p>Não inventamos esses dados. A identidade e o contato do encarregado devem ser divulgados quando exigidos pelo regime aplicável; a LGPD prevê a divulgação pública dessas informações no art. 41. Consulte a avaliação jurídica do responsável para confirmar a aplicação e eventual dispensa.</p>
+<h2>2. Escopo e funcionamento</h2>
+<p>A Brown-IA é uma interface web estática. Ela pode funcionar em modo local ou enviar uma solicitação ao provedor Gemini quando o usuário configura e valida uma chave BYOK. O navegador não recebe uma chave universal da aplicação.</p>
+<p>A interface não carrega, no código atual, analytics, pixel de marketing, publicidade, SDK de rastreamento ou cookie opcional. A escolha do banner de privacidade é registrada no <code>localStorage</code> do próprio navegador para que o banner não reapareça após a escolha. Isso é armazenamento local, não um cookie HTTP.</p>
+<h2>3. Dados que podem ser tratados</h2>
+<p>Dependendo do uso, o navegador pode armazenar localmente:</p>
+<ul>
+<li>mensagens enviadas e respostas recebidas;</li>
+<li>nomes, tamanhos e metadados de anexos; o conteúdo do anexo pode ser usado na solicitação, mas o aplicativo não promete manter seu conteúdo após a recarga;</li>
+<li>projetos, associações de conversas, perfil, idioma e nível de raciocínio;</li>
+<li>feedback de uma mensagem;</li>
+<li>consentimento de privacidade;</li>
+<li>a chave BYOK, <strong>somente se o usuário marcar “Salvar neste navegador”</strong>. Caso contrário, ela fica apenas na memória da aba e desaparece ao recarregar.</li>
+</ul>
+<p>O aplicativo não pretende coletar nome, CPF, endereço, contatos ou dados de publicidade. O usuário pode, contudo, inserir essas informações em prompts ou arquivos. Por isso, não envie dados sensíveis, confidenciais, segredos, credenciais ou documentos de terceiros sem autorização e sem avaliar o risco.</p>
+<p>O servidor de hospedagem e o provedor de internet podem ter logs próprios de acesso, como IP, data, user-agent e requisições. A Brown-IA não controla esses logs. A política do serviço de hospedagem deve ser identificada pelo controlador.</p>
+<h2>4. Finalidades</h2>
+<p>Os dados locais são usados para:</p>
+<ol>
+<li>manter a conversa e permitir alternância entre chats;</li>
+<li>restaurar preferências escolhidas no navegador;</li>
+<li>enviar o pedido e os anexos ao provedor de IA quando o usuário solicita uma resposta conectada;</li>
+<li>permitir exportação, download e exclusão solicitados pelo usuário;</li>
+<li>corrigir erros, limitar arquivos e impedir envios duplicados dentro da interface.</li>
+</ol>
+<p>Não há finalidade de marketing ou estatística no código atual.</p>
+<h2>5. O que é enviado ao provedor de IA</h2>
+<p>Quando há uma chave Gemini válida e o usuário envia uma mensagem, a Brown-IA pode enviar ao endpoint do Google:</p>
+<ul>
+<li>a mensagem atual;</li>
+<li>o histórico necessário da conversa;</li>
+<li>instruções de sistema para o comportamento da Brown;</li>
+<li>perfil, idioma e nível de raciocínio refletidos nessas instruções;</li>
+<li>conteúdo textual de TXT, CSV, Markdown, JSON, XML, HTML, CSS, JavaScript, TypeScript, Python e SVG;</li>
+<li>imagens e PDFs como dados binários no corpo da requisição;</li>
+<li>nome, MIME e tamanho do arquivo anexado.</li>
+</ul>
+<p>A chave é enviada no cabeçalho da requisição ao endpoint, não é incluída na exportação de dados nem nos arquivos públicos do repositório. Ainda assim, uma chave usada diretamente no navegador pode ser extraída por código malicioso na mesma origem ou por inspeção do navegador. Para publicação pública, prefira um backend com controle de acesso, limites e segredo no servidor.</p>
+<p>Conteúdo de anexos, links e respostas é tratado pelo modelo como dado não confiável. A interface adiciona instruções para não seguir comandos inseridos em documentos ou páginas como se fossem instruções do sistema. Essa defesa não substitui revisão humana nem uma arquitetura de backend.</p>
+<h2>6. Compartilhamento e provedores</h2>
+<p>O provedor Gemini é um terceiro necessário para respostas conectadas. A Brown-IA não afirma que o Google apaga prompts, respostas ou anexos quando o usuário apaga dados do navegador. A exclusão local <strong>não exclui cópias, logs ou dados de segurança mantidos pelo provedor</strong>.</p>
+<p>Os termos da Gemini API diferenciam serviços pagos e não pagos. Nos serviços não pagos, os termos do Google informam que conteúdo enviado e respostas podem ser usados para fornecer, melhorar e desenvolver produtos e tecnologias, e que revisores humanos podem processar entradas e saídas em determinados contextos. Nos serviços pagos, os termos descrevem tratamento diferente, mas ainda podem existir logs limitados para segurança e exigências legais. A conta, o projeto, a região, o tipo de quota e a configuração do usuário precisam ser verificados antes de prometer tratamento específico.</p>
+<p><strong>Regra prática:</strong> não envie dados pessoais, sensíveis, confidenciais, proprietários ou segredos aos serviços gratuitos/não pagos. Verifique os termos vigentes do Google e o projeto utilizado.</p>
+<p>Não são usados outros provedores, redes de publicidade ou ferramentas de analytics no código atual.</p>
+<h2>7. Transferências internacionais</h2>
+<p>O uso do Gemini pode envolver transferência ou acesso internacional de dados. O país, a entidade do Google, os subcontratados e o mecanismo jurídico aplicável dependem do produto, projeto, região, conta e modalidade de serviço. Essa informação <strong>não pode ser determinada apenas pelo frontend atual</strong> e deve ser preenchida e validada pelo controlador.</p>
+<p>A ANPD regulamentou transferências internacionais pela Resolução CD/ANPD nº 19/2024, com mecanismos como decisões de adequação, cláusulas-padrão contratuais, cláusulas específicas e normas corporativas globais. O controlador deve documentar o mecanismo efetivamente utilizado e informar os titulares de forma adequada.</p>
+<h2>8. Armazenamento e retenção</h2>
+<h3>No navegador</h3>
+<p>As conversas, projetos, configurações e consentimentos permanecem no <code>localStorage</code> até que o usuário os exclua, limpe os dados do site ou use os controles da Brown-IA. A chave BYOK permanece somente enquanto a sessão estiver aberta, salvo se o usuário autorizar seu armazenamento local.</p>
+<p>O aplicativo oferece:</p>
+<ul>
+<li>exclusão de conversas e histórico;</li>
+<li>remoção da chave BYOK;</li>
+<li>exportação dos dados locais, sem incluir a chave;</li>
+<li>exclusão de todos os dados locais, incluindo consentimento e configurações.</li>
+</ul>
+<h3>No provedor</h3>
+<p>O aplicativo não define nem controla a retenção do Google. Termos, logs de segurança, abuse monitoring, File API, cache, grounding, modalidade paga/não paga e configurações do projeto podem alterar a retenção. Não prometemos anonimato, criptografia ponta a ponta, zero retenção ou exclusão de terceiros.</p>
+<h2>9. Cookies e tecnologias semelhantes</h2>
+<p>O código atual não usa cookies próprios opcionais. As categorias exibidas pelo banner são:</p>
+<ul>
+<li><strong>Necessários:</strong> registro local da escolha de privacidade e funcionamento da aplicação;</li>
+<li><strong>Preferências:</strong> nenhum cookie atualmente utilizado;</li>
+<li><strong>Estatísticas:</strong> nenhum analytics atualmente utilizado;</li>
+<li><strong>Marketing:</strong> nenhum rastreador atualmente utilizado.</li>
+</ul>
+<p>“ Aceitar todos” não ativa rastreadores inexistentes. “Rejeitar não necessários” produz o mesmo efeito no código atual, pois só a categoria necessária é usada. “Personalizar” permite revisar essa informação. A escolha pode ser revogada em Configurações → Privacidade e dados.</p>
+<p>Se uma futura versão adicionar analytics, publicidade, mapas, vídeos incorporados ou outros cookies, ela deverá atualizar esta política, separar as categorias e bloquear a tecnologia não necessária até consentimento válido.</p>
+<h2>10. Segurança</h2>
+<p>Medidas presentes no código:</p>
+<ul>
+<li>nenhuma chave universal no frontend ou no workflow;</li>
+<li>BYOK opcional e removível;</li>
+<li>erros da API limitados e com padrões de credenciais mascarados;</li>
+<li>escaping de HTML antes da renderização Markdown;</li>
+<li>links aceitos apenas com <code>http</code>/<code>https</code>, usando <code>noopener noreferrer</code>;</li>
+<li>limites para anexos e conteúdo textual;</li>
+<li>bloqueio de envios simultâneos;</li>
+<li>exportação sem a chave BYOK;</li>
+<li>nenhum log deliberado de chave, prompt ou conversa no código da aplicação.</li>
+</ul>
+<p>Limitações importantes:</p>
+<ul>
+<li><code>localStorage</code> não é um cofre criptográfico;</li>
+<li>qualquer script executado com acesso à origem pode ler dados locais;</li>
+<li>a chave BYOK no navegador não é adequada para uma aplicação pública sem backend;</li>
+<li>a conexão HTTPS protege o transporte quando disponível, mas não garante como o provedor trata o conteúdo após recebê-lo;</li>
+<li>segurança da hospedagem, navegador, dispositivo e extensões não é controlada pela Brown-IA.</li>
+</ul>
+<h2>11. Direitos do titular</h2>
+<p>Nos termos aplicáveis da LGPD, o titular pode solicitar confirmação da existência de tratamento, acesso, correção, anonimização, bloqueio, eliminação quando cabível, portabilidade conforme regulamentação, informação sobre compartilhamentos, informação sobre consentimento e revogação do consentimento. O art. 18 da LGPD reúne esses direitos, observadas as exceções legais.</p>
+<p>Na interface, o titular pode exportar e excluir dados armazenados neste navegador. Para um pedido formal ao controlador, envie:</p>
+<ul>
+<li><strong>Canal:</strong> <code>[PREENCHER CONTATO OFICIAL]</code>;</li>
+<li><strong>Assunto:</strong> “Solicitação LGPD — Brown-IA”;</li>
+<li><strong>Pedido:</strong> acesso, correção, exclusão, revogação ou informação sobre compartilhamento;</li>
+<li><strong>Identificação mínima necessária:</strong> <code>[O CONTROLADOR DEVE DEFINIR O PROCEDIMENTO]</code>.</li>
+</ul>
+<p>Não envie uma chave de API ou dados sensíveis por e-mail. Caso o controlador não esteja identificado, esse fluxo ainda está pendente de preenchimento.</p>
+<h2>12. Crianças e adolescentes</h2>
+<p>Os termos atuais da Gemini API informam requisitos próprios de idade e uso profissional. A Brown-IA não concluiu uma avaliação específica de público infantil ou adolescente. O responsável deve definir o público, verificar os termos do provedor e implementar salvaguardas antes de disponibilizar o serviço a menores.</p>
+<h2>13. Alterações e contato</h2>
+<p>Esta política deve ser atualizada quando houver novo provedor, analytics, cookies, backend, finalidade, retenção, transferência ou mudança de controlador. A data, a versão e um resumo das alterações devem ser atualizados.</p>
+<p><strong>Responsável por aprovar esta política:</strong> <code>[PREENCHER]</code><br />
+<strong>Última revisão técnica:</strong> 10 de outubro de 2026<br />
+<strong>Contato de privacidade:</strong> <code>[PREENCHER]</code></p>
+<h2>Referências oficiais</h2></main></body></html>

@@ -6,8 +6,7 @@
   <meta name="theme-color" content="#08090b" />
   <meta name="description" content="Brown — espaço cognitivo modular para conversa, código e pesquisa." />
   <title>Brown · Workspace</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="styles.css?v=audit-50" />
+  <link rel="stylesheet" href="styles.css?v=audit-51" />
 </head>
 <body>
   <div class="scanline" aria-hidden="true"></div>
@@ -59,6 +58,7 @@
           <div class="settings-field"><span>Raciocínio</span><div class="settings-choice-row reasoning-settings"><button type="button" class="settings-choice" data-settings-thinking="LEVE">Leve</button><button type="button" class="settings-choice active" data-settings-thinking="MEDIO">Médio</button><button type="button" class="settings-choice" data-settings-thinking="ALTO">Alto</button><button type="button" class="settings-choice" data-settings-thinking="EXTREMO">Extremo</button></div></div>
           <div class="settings-field provider-settings"><span>Provedor Gemini</span><small id="providerSettingsStatus">Não conectado. A Brown usará o modo local até validar uma chave.</small><input id="providerKeyInput" type="password" aria-label="Chave Gemini para este navegador" placeholder="Cole uma chave Gemini para este navegador" autocomplete="off" spellcheck="false" /><label class="provider-save"><input id="providerSaveKey" type="checkbox" /> Salvar neste navegador</label><div class="provider-actions"><button type="button" class="settings-choice" id="providerApplyBtn">Validar e usar</button><button type="button" class="settings-choice" id="providerClearBtn">Remover</button></div></div>
         </div>
+        <div class="settings-field privacy-actions"><span>Privacidade e dados</span><small>Sem cookies opcionais ou rastreadores neste app. Controle seus dados locais.</small><button class="settings-choice" id="privacySettingsBtn" type="button">Gerenciar privacidade</button><button class="settings-choice" id="exportAllDataBtn" type="button">Exportar meus dados</button><button class="settings-choice danger-choice" id="deleteConversationsBtn" type="button">Excluir conversas e histórico</button><button class="settings-choice danger-choice" id="deleteAllLocalBtn" type="button">Excluir todos os dados locais</button></div>
         <div class="rail-footer"><span class="footer-mark">BR</span><br />BROWN / WEB 0.2<br /><span>provider-ready architecture</span></div>
       </aside>
 
@@ -82,7 +82,22 @@
       </section>
     </main>
   </div>
-  <script src="config.js?v=audit-50"></script>
-  <script src="app.js?v=audit-50"></script>
+
+  <section class="privacy-panel" id="privacyPanel" role="dialog" aria-modal="true" aria-labelledby="privacyPanelTitle" aria-hidden="true" hidden>
+    <div class="privacy-card">
+      <div class="privacy-card-head"><div><span class="section-label">BROWN / PRIVACIDADE</span><h2 id="privacyPanelTitle">Privacidade e dados</h2></div><button id="privacyCloseBtn" type="button" aria-label="Fechar privacidade">×</button></div>
+      <p>Este app não usa cookies opcionais, publicidade, analytics ou pixels. As preferências e a conversa são armazenadas no navegador usando armazenamento local. A chave BYOK só é gravada quando você marca essa opção.</p>
+      <div class="privacy-categories"><div><strong>Necessário</strong><span>Consentimento, funcionamento e segurança local.</span><b>Ativo</b></div><div><strong>Preferências</strong><span>Nenhum cookie desta categoria é usado.</span><b>Não utilizado</b></div><div><strong>Estatísticas</strong><span>Nenhum analytics ou medição é carregado.</span><b>Não utilizado</b></div><div><strong>Marketing</strong><span>Nenhum rastreador ou publicidade é carregado.</span><b>Não utilizado</b></div></div>
+      <div class="privacy-rights"><strong>Seus controles</strong><p>Você pode exportar, excluir conversas, remover a chave e apagar todos os dados locais. Para solicitações formais de acesso, correção ou exclusão perante o controlador, use os contatos indicados na política. Eles ainda precisam ser preenchidos pelo responsável pelo serviço.</p><div class="privacy-actions-row"><button type="button" data-privacy-choice="revoke">Revogar consentimento</button><button type="button" data-privacy-choice="save-custom">Salvar preferências</button><a href="privacidade.html" target="_blank" rel="noopener noreferrer">Ler política completa ↗</a></div></div>
+    </div>
+  </section>
+
+  <section class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-labelledby="privacyBannerTitle">
+    <div><strong id="privacyBannerTitle">Privacidade e cookies</strong><p>Usamos armazenamento local para manter sua conversa e registrar sua escolha. Este app não utiliza cookies opcionais, analytics, marketing ou rastreadores. <a href="privacidade.html" target="_blank" rel="noopener noreferrer">Saiba mais</a></p></div>
+    <div class="privacy-banner-actions"><button type="button" data-privacy-choice="reject">Rejeitar não necessários</button><button type="button" data-privacy-choice="customize">Personalizar</button><button class="primary-privacy" type="button" data-privacy-choice="accept">Aceitar todos</button></div>
+  </section>
+
+  <script src="config.js?v=audit-51"></script>
+  <script src="app.js?v=audit-51"></script>
 </body>
 </html>

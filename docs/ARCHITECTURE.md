@@ -7,7 +7,8 @@ A interface não executa modelos pesados e não contém segredos. O frontend dev
 ```text
 Browser
   ├── interface e estado local
-  ├── IndexedDB/localStorage para sessão
+  ├── localStorage para sessão, preferências e consentimento
+  ├── IndexedDB opcional para limpeza futura de anexos
   └── Provider client
           ↓ HTTPS
 Secure backend /api
@@ -59,3 +60,10 @@ A chave do Gemini ficará somente no ambiente do backend. O navegador jamais rec
 - `MEDIO`: comportamento equilibrado.
 - `ALTO`: análise e verificação ampliadas.
 - `EXTREMO`: fluxo de planejamento, produção e revisão.
+
+
+## Privacidade e limites
+
+O frontend não contém chave universal nem segredo de publicação. BYOK é mantida somente em memória por padrão ou no `localStorage` mediante consentimento explícito. A interface não carrega rastreadores opcionais e oferece exportação e exclusão locais. A política completa está em `POLITICA-DE-PRIVACIDADE.md` e a página navegável em `privacidade.html`.
+
+A conexão direta com o Gemini permite que o provedor receba o conteúdo da solicitação e dos anexos; apagar o histórico local não controla a retenção de terceiros. Para um produto público, o contrato recomendado continua sendo um backend seguro, com autenticação, limites, rate limiting e chave mantida no servidor.
