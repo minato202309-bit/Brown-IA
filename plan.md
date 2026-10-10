@@ -1,17 +1,21 @@
-# Redesign da Brown-IA — Interface moderna e profissional
+# Redesign da Brown-IA — Workspace editorial em três zonas
 
 ## Direção visual
 
-- **Movimento:** produto premium de IA com estética dark editorial/command center, substituindo o terminal rígido por uma estação de trabalho refinada.
+- **Movimento:** produto premium de IA com estética dark editorial/command center, inspirado na referência enviada sem reproduzir sua composição literal.
 - **Princípios:** clareza antes de decoração; superfícies em camadas; ações com hierarquia evidente; densidade confortável e foco central na conversa.
 - **Paleta:** carvão quase preto como base; grafite e azul-chumbo para superfícies; vermelho escarlate como ação e marca; verde suave somente para conexão; âmbar para avisos.
-- **Layout:** rail lateral com navegação + painel de conversa amplo, com bordas suaves e mais respiro; no celular, o rail vira a mesma gaveta existente.
+- **Layout:** três zonas com funções explícitas — navegação e sessão à esquerda, conversa no centro, contexto/capacidades à direita. A terceira zona some abaixo de 1240px e o rail vira gaveta no celular.
 - **Assinaturas:** monograma B em cápsula angular, linha de status superior, marcadores técnicos e detalhes de grade muito discretos.
 - **Interação:** botões arredondados, foco visível, hover com elevação curta e estados ativos por borda/brilho controlado; `prefers-reduced-motion` desativa animações.
 - **Tipografia:** sans de sistema para leitura; monospace para metadados, status, ações técnicas e arquivos.
 - **Essência:** uma estação de trabalho de IA com opinião e capacidade de execução. Personalidade: precisa, confiante, humana.
 - **Voz visual:** headlines curtas e CTAs objetivos. Exemplos: “Conversa pronta.” e “Escolha um ponto de partida e vamos construir.”
 - **Marca:** B em moldura arredondada com cantos técnicos, BROWN em tracking amplo e subtítulo de sistema.
+
+## Organização estrutural
+
+O `index.html` mantém os controles funcionais existentes no rail esquerdo, concentra a conversa e o composer no canal central, e adiciona um `context-rail` independente para identidade, próximos passos, capacidades e sessão. O `styles.css` define a hierarquia, estados, animações e responsividade; `app.js` continua responsável apenas pelo estado e comportamento, sem depender do conteúdo decorativo da nova coluna.
 
 ## Implementação
 
