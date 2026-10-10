@@ -48,7 +48,8 @@
           <div class="section-label">04 / SESSION</div>
           <div class="session-stat"><span id="messageCount">0</span><small>mensagens salvas localmente</small></div>
           <button class="subtle-btn" id="clearBtn">⌫ Limpar sessão</button>
-          <button class="subtle-btn" id="exportBtn">⇩ Exportar sessão</button>
+          <button class="subtle-btn" id="exportBtn">⇩ Exportar JSON</button>
+          <button class="subtle-btn" id="exportMarkdownBtn">⇩ Exportar Markdown</button>
         </section>
         <button class="settings-menu-btn" id="settingsMenuBtn" type="button"><span>⚙</span> Configurações</button>
         <div class="settings-panel" id="settingsPanel" hidden>
@@ -67,7 +68,7 @@
           <button class="icon-btn" id="settingsBtn" title="Configurações">•••</button>
         </div>
         <div class="notice" id="modeNotice"><span>◆</span><div><strong id="modeTitle">Verificando conexão</strong><small id="modeDescription">A Brown está carregando o provedor antes de aceitar mensagens.</small></div><button id="dismissNotice" aria-label="Fechar aviso">×</button></div>
-        <div class="provider-setup" id="providerSetup" hidden><div class="provider-setup-head"><strong>Conectar a Brown</strong><small>Insira uma chave Gemini para ativar as respostas inteligentes neste navegador.</small></div><div class="provider-setup-row"><input id="initialKeyInput" type="password" placeholder="Cole sua chave Gemini" autocomplete="off" spellcheck="false" /><button type="button" id="initialConnectBtn">CONECTAR</button></div><a href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener noreferrer">Obter chave no Google AI Studio ↗</a><small class="provider-setup-status" id="initialProviderStatus">Nenhuma conexão validada.</small></div>
+        <div class="provider-setup" id="providerSetup" hidden><div class="provider-setup-head"><strong>Conectar a Brown</strong><small>Insira uma chave Gemini para ativar as respostas inteligentes neste navegador.</small></div><div class="provider-setup-row"><input id="initialKeyInput" type="password" placeholder="Cole sua chave Gemini" autocomplete="off" spellcheck="false" /><button type="button" id="initialConnectBtn">CONECTAR</button></div><label class="provider-save"><input id="initialSaveKey" type="checkbox" /> Salvar neste navegador</label><a href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener noreferrer">Obter chave no Google AI Studio ↗</a><small class="provider-setup-status" id="initialProviderStatus">Nenhuma conexão validada.</small></div>
         <div class="messages" id="messages" aria-live="polite">
           <div class="empty-state" id="emptyState"><div class="empty-glyph">BR</div><div class="empty-kicker">SYSTEM ONLINE · READY FOR INPUT</div><h2>Conversa pronta.</h2><p>Faça uma pergunta, peça um plano ou descreva algo que a Brown deve criar.</p><div class="quick-prompts"><button data-prompt="Explique como você pode me ajudar.">Conhecer a Brown <span>↗</span></button><button data-prompt="Crie um plano profissional para meu projeto.">Criar um plano <span>↗</span></button><button data-prompt="Analise esta ideia e sugira melhorias.">Analisar uma ideia <span>↗</span></button></div></div>
         </div><button class="scroll-settings-btn" id="scrollSettingsBtn" type="button" hidden title="Abrir configurações">⚙ Configurações</button>
@@ -81,7 +82,7 @@
       </section>
     </main>
   </div>
-  <script src="config.js?v=universal-key-05"></script>
-  <script src="app.js?v=audit-48"></script>
+  <script src="config.js?v=audit-49"></script>
+  <script src="app.js?v=audit-49"></script>
 </body>
 </html>
