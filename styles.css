@@ -260,3 +260,50 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
+
+/* AUDITORIA 54 — interface terminal premium e arquivos acionáveis */
+.app-shell { position: relative; isolation: isolate; }
+.app-shell::before { position: absolute; inset: 74px 20px 18px; z-index: -1; pointer-events: none; content: ""; border: 1px solid rgba(230,56,70,.12); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%); }
+.topbar { padding: 0 10px 0 2px; background: linear-gradient(90deg, rgba(230,56,70,.035), transparent 42%, rgba(91,211,149,.025)); }
+.topbar::before { position: absolute; top: 0; left: 0; width: 46px; height: 1px; content: ""; background: var(--green); box-shadow: 0 0 12px var(--green); }
+.brand-symbol { transform: skew(-6deg); animation: brand-scan 5s ease-in-out infinite; }
+.brand-mark strong { text-shadow: 0 0 18px rgba(255,88,100,.14); }
+.workspace { gap: 18px; }
+.control-rail { border-color: rgba(230,56,70,.27); background: linear-gradient(180deg, rgba(21,24,32,.98), rgba(10,12,17,.98)); }
+.control-rail::after { position: absolute; right: 10px; bottom: 10px; width: 6px; height: 42px; content: ""; border-right: 1px solid rgba(91,211,149,.25); border-bottom: 1px solid rgba(91,211,149,.25); }
+.chat-panel { position: relative; padding: 0 13px 0 17px; border-right: 1px solid rgba(230,56,70,.12); border-left: 1px solid rgba(255,255,255,.035); }
+.chat-panel::before { position: absolute; top: 10px; bottom: 0; left: 0; width: 2px; content: ""; background: linear-gradient(var(--red), transparent 22%, transparent 78%, var(--green)); opacity: .55; }
+.chat-header h1 { font-weight: 760; letter-spacing: -.07em; text-shadow: 0 0 24px rgba(230,56,70,.12); }
+.chat-header { background: linear-gradient(180deg, rgba(230,56,70,.025), transparent); }
+.notice, .provider-setup, .composer { border-radius: 3px; box-shadow: 0 18px 50px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.025); }
+.messages { padding-right: 14px; padding-left: 14px; }
+.message { position: relative; border-radius: 2px; }
+.message::after { position: absolute; right: 10px; top: 0; width: 24px; height: 1px; content: ""; background: var(--line); opacity: .6; }
+.message.assistant::after { background: var(--green); }
+.message-content { font-size: 14px; }
+.composer { border-color: rgba(230,56,70,.3); background: linear-gradient(135deg, rgba(25,23,29,.98), rgba(10,13,18,.98)); }
+.composer:focus-within { border-color: var(--red-bright); box-shadow: 0 0 0 1px rgba(230,56,70,.28), 0 0 35px rgba(230,56,70,.1), var(--shadow-md); }
+.generated-files { border-color: rgba(230,56,70,.55); background: linear-gradient(135deg, rgba(230,56,70,.1), rgba(10,12,16,.8)); }
+.generated-file-row { display: grid; gap: 6px; margin-top: 7px; padding: 8px; border: 1px solid rgba(255,255,255,.05); border-radius: 3px; background: rgba(0,0,0,.2); }
+.generated-file-row:first-of-type { margin-top: 0; }
+.generated-file { display: grid; grid-template-columns: 20px 1fr auto; gap: 7px; align-items: center; min-width: 0; color: var(--text); }
+.generated-file > span { color: var(--green); }
+.generated-file strong { overflow: hidden; font: 11px var(--mono); text-overflow: ellipsis; white-space: nowrap; }
+.generated-file small { color: var(--muted-2); font: 9px var(--mono); }
+.generated-file-actions { display: flex; flex-wrap: wrap; gap: 5px; padding-left: 27px; }
+.generated-file-actions button { padding: 5px 7px; border: 1px solid var(--line); border-radius: 3px; color: var(--muted); background: rgba(255,255,255,.025); cursor: pointer; font: 9px var(--mono); transition: .18s ease; }
+.generated-file-actions button:hover { border-color: var(--green); color: var(--green); background: var(--green-soft); transform: translateY(-1px); }
+.generated-file-actions button:last-child:hover { border-color: var(--red); color: var(--red-bright); background: var(--red-soft); }
+.empty-glyph { animation: glyph-flicker 4.5s ease-in-out infinite; }
+.status-pill { box-shadow: inset 0 0 15px rgba(91,211,149,.05); }
+@keyframes brand-scan { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.3); box-shadow: inset 0 0 24px rgba(230,56,70,.2), 0 0 26px rgba(230,56,70,.16); } }
+@keyframes glyph-flicker { 0%, 92%, 100% { opacity: 1; } 94% { opacity: .55; } 96% { opacity: .95; } }
+@media (max-width: 980px) {
+  .app-shell::before { inset: 72px 10px 10px; }
+  .chat-panel { padding-right: 4px; padding-left: 4px; border-right: 0; }
+  .chat-panel::before { display: none; }
+  .messages { padding-right: 4px; padding-left: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-symbol, .empty-glyph { animation: none; }
+}
