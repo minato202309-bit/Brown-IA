@@ -340,16 +340,15 @@ Links detectados: ${links.join(', ') || 'nenhum'}.`;
   const expandedOutput = codeTask ? 65536 : 24576;
   const desiredOutput = expansion ? expandedOutput : standardOutput;
   const outputLimit = Math.min(desiredOutput, Number(state.modelLimits?.output) || 8192);
-  const generationConfig = { temperature: visualTask ? 0.15 : state.thinking === 'LEVE' ? 0.75 : state.thinking === 'MEDIO' ? 0.6 : state.thinking === 'ALTO' ? 0.45 : 0.3, topP: visualTask ? 0.8 : 0.95, maxOutputTokens: outputLimit };
-  // Gemini 3 aceita thinkingLevel (low/medium/high). Isso é o que realmente muda a profundidade.
+  const generationConfig = { temperature: 0.9, maxOutputTokens: 8192 };
+  // Gemini 3 aceita thinkingLevel (low/medium/high) sem alterar os parâmetros solicitados.
   if (/^gemini-3/i.test(String(state.model || ''))) generationConfig.thinkingConfig = { thinkingLevel: THINKING_LEVELS[state.thinking] || 'MEDIUM' };
   const request = async (contents, timeout, streamCallback = null) => {
     const safetySettings = [
       { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
       { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
       { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
-      { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" },
-      { category: "HARM_CATEGORY_CIVIC_INTEGRITY", threshold: "BLOCK_NONE" }
+      { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
     ];
     const body = JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents, generationConfig, safetySettings });
     const headers = { 'Content-Type': 'application/json', 'x-goog-api-key': state.apiKey };
