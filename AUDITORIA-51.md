@@ -26,6 +26,7 @@
 - Chromium real, exportação: dados de conversa presentes, ausência de campo/valor da chave — aprovado.
 - Chromium real, exclusão: todas as conversas removidas e exclusão total deixou `localStorage` vazio após recarga — aprovado.
 - Chromium real em viewport móvel de 390×844: sem rolagem horizontal, banner dentro da tela, menu e rótulos acessíveis presentes — aprovado. Não foi executado um dispositivo Android físico nesta sessão.
+- GitHub Pages: workflow do commit `27ff739` concluído com `success`; `index.html` público contém a versão de asset gerada pelo SHA e `privacidade.html` público contém a política — aprovado.
 
 ## Riscos e pendências honestas
 
