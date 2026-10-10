@@ -11,7 +11,9 @@ Base web leve da Brown-IA. A versão atual é estática, responsiva e não exige
 
 ## Interface atual
 
-A interface inclui os perfis Brown e Code, níveis Leve/Médio/Alto/Extremo, memória local, exportação de sessão, mensagens rápidas e seletor persistente de idioma da resposta: Automático, Português do Brasil, English e Español. A escolha fica salva no navegador quando a aplicação consegue usar armazenamento local.
+A interface usa uma estética de terminal cyber-industrial premium: vermelho escarlate para ações e foco, superfícies em preto/grafite, indicadores monoespaçados e brilho controlado. O redesign preserva os perfis Brown e Code, níveis Leve/Médio/Alto/Extremo, memória local, exportação de sessão, mensagens rápidas, anexos, projetos, arquivos gerados e seletor persistente de idioma da resposta: Automático, Português do Brasil, English e Español. A escolha fica salva no navegador quando a aplicação consegue usar armazenamento local.
+
+O menu lateral vira uma gaveta no celular, com transições leves e suporte a `prefers-reduced-motion`. O CSS não usa fontes remotas nem dependências novas. Os detalhes da revisão visual e os testes executados estão em `AUDITORIA-52-REDESIGN.md`.
 
 ## Executar localmente
 
