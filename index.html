@@ -7,7 +7,7 @@
   <meta name="description" content="Brown — espaço cognitivo modular para conversa, código e pesquisa." />
   <title>Brown · Workspace</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="styles.css?v=provider-setup-41" />
+  <link rel="stylesheet" href="styles.css?v=vision-actions-42" />
 </head>
 <body>
   <div class="scanline" aria-hidden="true"></div>
@@ -70,7 +70,7 @@
         <div class="provider-setup" id="providerSetup" hidden><div class="provider-setup-head"><strong>Conectar a Brown</strong><small>Insira uma chave Gemini para ativar as respostas inteligentes neste navegador.</small></div><div class="provider-setup-row"><input id="initialKeyInput" type="password" placeholder="Cole sua chave Gemini" autocomplete="off" spellcheck="false" /><button type="button" id="initialConnectBtn">CONECTAR</button></div><a href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener noreferrer">Obter chave no Google AI Studio ↗</a><small class="provider-setup-status" id="initialProviderStatus">Nenhuma conexão validada.</small></div>
         <div class="messages" id="messages" aria-live="polite">
           <div class="empty-state" id="emptyState"><div class="empty-glyph">BR</div><div class="empty-kicker">SYSTEM ONLINE · READY FOR INPUT</div><h2>Conversa pronta.</h2><p>Faça uma pergunta, peça um plano ou descreva algo que a Brown deve criar.</p><div class="quick-prompts"><button data-prompt="Explique como você pode me ajudar.">Conhecer a Brown <span>↗</span></button><button data-prompt="Crie um plano profissional para meu projeto.">Criar um plano <span>↗</span></button><button data-prompt="Analise esta ideia e sugira melhorias.">Analisar uma ideia <span>↗</span></button></div></div>
-        </div>
+        </div><button class="scroll-settings-btn" id="scrollSettingsBtn" type="button" hidden title="Abrir configurações">⚙ Configurações</button>
         <form class="composer" id="composer">
           <div class="composer-meta"><span id="profileTag">BROWN</span><span>·</span><span id="thinkingTag">RACIOCÍNIO</span><span>·</span><span id="languageTag">PT-BR</span><span class="meta-spacer"></span><span id="latencyLabel">aguardando entrada</span></div>
           <textarea id="promptInput" rows="1" placeholder="Escreva uma mensagem para a Brown..." autocomplete="off"></textarea>
@@ -82,6 +82,6 @@
     </main>
   </div>
   <script src="config.js?v=universal-key-05"></script>
-  <script src="app.js?v=provider-setup-41"></script>
+  <script src="app.js?v=vision-actions-42"></script>
 </body>
 </html>
