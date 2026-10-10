@@ -81,9 +81,28 @@ function formatContent(value) {
 function escapeText(value) { return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function validateGeneratedFile(file) { const ext = String(file.name).split('.').pop().toLowerCase(); if (!file.name || !file.content || file.content.length > 2 * 1024 * 1024) return false; if (ext === 'json') { try { JSON.parse(file.content); } catch { return false; } } if (ext === 'html' || ext === 'htm') { const source = String(file.content); if (!/<html\b/i.test(source) || !/<body\b/i.test(source) || !/<\/html>/i.test(source)) return false; } return /^[\w .()\-À-ɏ]+$/.test(file.name); }
 function extractCodeFiles(content) {
-  const files = []; const source = String(content || ''); const pattern = /(?:^|\n)\s*(?:FILE|ARQUIVO)\s*:\s*([^\n]+)\n\s*```([^\n]*)\n([\s\S]*?)```|```([^\n]*)\n([\s\S]*?)```/gi; let match; let index = 0;
-  const extensions = { html: 'html', htm: 'html', css: 'css', javascript: 'js', js: 'js', typescript: 'ts', ts: 'ts', python: 'py', py: 'py', json: 'json', xml: 'xml', svg: 'svg', bash: 'sh', shell: 'sh', sh: 'sh', markdown: 'md', md: 'md', text: 'txt', txt: 'txt', yaml: 'yml', yml: 'yml' };
-  while ((match = pattern.exec(source))) { const explicit = (match[1] || '').trim(); const language = (match[2] || match[4] || '').trim().toLowerCase(); const body = match[3] ?? match[5] ?? ''; if (!body.trim()) continue; const ext = extensions[language] || 'txt'; const filename = explicit || `brown-arquivo-${++index}.${ext}`; files.push({ name: filename.replace(/[\\/:*?"<>|]/g, '-'), type: mimeForExtension(filename), content: body.replace(/^\n+|\n+$/g, '') }); }
+  const files = []; const source = String(content || '');
+  const extensions = { html: 'html', htm: 'html', css: 'css', javascript: 'js', js: 'js', jsx: 'jsx', typescript: 'ts', ts: 'ts', tsx: 'tsx', python: 'py', py: 'py', java: 'java', c: 'c', cpp: 'cpp', 'c++': 'cpp', json: 'json', xml: 'xml', svg: 'svg', bash: 'sh', shell: 'sh', sh: 'sh', markdown: 'md', md: 'md', text: 'txt', txt: 'txt', yaml: 'yml', yml: 'yml', sql: 'sql', php: 'php', vue: 'vue' };
+  const validExt = 'html|htm|css|js|jsx|ts|tsx|py|java|c|cpp|h|hpp|json|xml|svg|sh|md|txt|yml|yaml|sql|php|vue';
+  const cleanName = value => String(value || '').replace(/^[`*_\s]+|[`*_\s:]+$/g, '').replace(/[\\/:*?"<>|]/g, '-').trim();
+  const filenameFrom = (value, language, index) => {
+    const text = String(value || '').replace(/\r/g, ' ');
+    const fileExt = /\.(?:html?|css|js|jsx|ts|tsx|py|java|c|cpp|h|hpp|json|xml|svg|sh|md|txt|yml|yaml|sql|php|vue)$/i;
+    const token = String(language || '').split(/\s+/).find(item => fileExt.test(item));
+    const headingMatches = [...text.matchAll(/^\s*#{1,6}\s*([^\n]+\.(?:html?|css|js|jsx|ts|tsx|py|java|c|cpp|h|hpp|json|xml|svg|sh|md|txt|yml|yaml|sql|php|vue))\s*$/gim)]; const heading = headingMatches.at(-1) || null;
+    const explicit = text.match(/(?:FILE|ARQUIVO|FILENAME|NOME DO ARQUIVO)\s*[:=\-]?\s*[`"']?([^`"'\s]+\.(?:html?|css|js|jsx|ts|tsx|py|java|c|cpp|h|hpp|json|xml|svg|sh|md|txt|yml|yaml|sql|php|vue))/i);
+    const trailing = text.match(/([A-Za-z0-9_ .()\-À-ɏ]+\.(?:html?|css|js|jsx|ts|tsx|py|java|c|cpp|h|hpp|json|xml|svg|sh|md|txt|yml|yaml|sql|php|vue))\s*$/i);
+    const match = token ? [token, token] : (heading || explicit || trailing);
+    if (match) return cleanName(match[1]);
+    const ext = extensions[String(language || '').toLowerCase()] || 'txt'; return `brown-arquivo-${index}.${ext}`;
+  };
+  const pattern = /```([^\n]*)\n([\s\S]*?)```/g; let match; let index = 0;
+  while ((match = pattern.exec(source))) {
+    const languageHeader = String(match[1] || '').trim(); const body = String(match[2] || '').replace(/^\n+|\n+$/g, ''); if (!body.trim()) continue;
+    const context = source.slice(Math.max(0, match.index - 320), match.index) + '\n' + languageHeader;
+    const filename = filenameFrom(context, languageHeader, ++index);
+    files.push({ name: filename, type: mimeForExtension(filename), content: body });
+  }
   return files.filter(validateGeneratedFile);
 }
 function mimeForExtension(name) { const ext = String(name).split('.').pop().toLowerCase(); return ({ html: 'text/html', htm: 'text/html', css: 'text/css', js: 'text/javascript', ts: 'text/typescript', json: 'application/json', xml: 'application/xml', svg: 'image/svg+xml', md: 'text/markdown', txt: 'text/plain', py: 'text/x-python', sh: 'text/x-shellscript', yml: 'text/yaml', yaml: 'text/yaml' })[ext] || 'application/octet-stream'; }
