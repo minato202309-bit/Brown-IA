@@ -66,3 +66,18 @@ html,body{background-color:#080a0c;color:#edf3ee}.control-rail{background:#0b101
 }
 @media(min-width:761px){.menu-trigger{display:inline-flex}.control-rail{background:#0b1011}}
 @media(prefers-reduced-motion:reduce){.control-rail{transition:none}}
+
+/* Keep the complete workspace menu on mobile; do not collapse functional sections. */
+@media(max-width:760px){
+  .control-rail .rail-section{display:block;padding:0 0 18px;margin:0 0 18px;border-bottom:1px solid var(--line)}
+  .control-rail .rail-info{display:block;padding:0 0 18px;margin:0 0 18px;border-bottom:1px solid var(--line)}
+  .control-rail .rail-info .section-label{display:block;margin-bottom:8px}
+  .control-rail .rail-info .subtle-btn{display:inline-block}
+  .control-rail .rail-footer{display:block;margin-top:auto;padding-top:12px;color:#849089;font-size:10px;line-height:1.7}
+  .control-rail .profile-list{display:grid;gap:7px}
+  .control-rail .profile-btn{display:flex;flex:initial;padding:10px;min-height:42px}
+  .control-rail .profile-btn b{display:block}
+  .control-rail .profile-btn small{display:block}
+  .control-rail .language-note{display:block}
+  .control-rail .session-stat{display:flex;align-items:baseline;gap:7px;margin-bottom:8px}
+}
