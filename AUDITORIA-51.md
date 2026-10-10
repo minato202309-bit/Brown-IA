@@ -1,6 +1,6 @@
 # Brown-IA — Auditoria 51: Segurança e privacidade
 
-**Data:** 10 de outubro de 2026  
+**Data:** 10 de outubro de 2026
 **Escopo:** consentimento, privacidade, retenção, exclusão local, exportação e tráfego inicial da aplicação.
 
 ## Correções realizadas

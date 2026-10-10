@@ -22,7 +22,7 @@ Secure backend /api
 
 ```json
 {
-  "profile": "GPT",
+  "profile": "BROWN",
   "thinking": "MEDIO",
   "messages": [
     {"role": "user", "content": "Olá"}
@@ -50,16 +50,15 @@ A chave do Gemini ficará somente no ambiente do backend. O navegador jamais rec
 
 ## Perfis
 
-- `GPT`: conversa geral e planejamento.
-- `CODE`: programação, criação e edição de arquivos.
-- `GMINI`: respostas rápidas e resumos.
+- `BROWN`: conversa geral, análise, pesquisa e planejamento.
+- `CODE`: programação, criação, validação e edição de arquivos.
 
 ## Níveis
 
 - `LEVE`: resposta rápida.
 - `MEDIO`: comportamento equilibrado.
 - `ALTO`: análise e verificação ampliadas.
-- `EXTREMO`: fluxo de planejamento, produção e revisão.
+- `EXTREMO`: revisão rigorosa de requisitos e completude; não cria ferramentas que não existem.
 
 
 ## Privacidade e limites

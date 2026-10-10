@@ -1,6 +1,6 @@
 # Política de Privacidade e Proteção de Dados — Brown-IA
 
-**Versão:** 10 de outubro de 2026  
+**Versão:** 10 de outubro de 2026
 **Status:** modelo operacional para completar pelo responsável pelo serviço; não constitui parecer jurídico nem declaração de conformidade.
 
 ## 1. Quem controla o tratamento
@@ -153,8 +153,8 @@ Os termos atuais da Gemini API informam requisitos próprios de idade e uso prof
 
 Esta política deve ser atualizada quando houver novo provedor, analytics, cookies, backend, finalidade, retenção, transferência ou mudança de controlador. A data, a versão e um resumo das alterações devem ser atualizados.
 
-**Responsável por aprovar esta política:** `[PREENCHER]`  
-**Última revisão técnica:** 10 de outubro de 2026  
+**Responsável por aprovar esta política:** `[PREENCHER]`
+**Última revisão técnica:** 10 de outubro de 2026
 **Contato de privacidade:** `[PREENCHER]`
 
 ## Referências oficiais

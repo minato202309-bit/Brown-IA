@@ -324,3 +324,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .primary-file-download:hover, .zip-download-btn:hover { filter:brightness(1.18); transform:translateY(-1px); box-shadow:0 8px 20px rgba(230,56,70,.28); }
 .file-ready-message { margin:8px 0 2px; color:var(--muted); font:10px var(--mono); }
 @media (max-width: 620px) { .generated-file-row { align-items:stretch; flex-direction:column; gap:10px; } .generated-file strong { max-width:65vw; } .primary-file-download { width:100%; min-height:38px; } }
+
+/* Validação de código gerado — camada funcional, sem alterar o layout base */
+.generated-file-actions { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:5px; }
+.compact-file-action { padding:7px 8px; border:1px solid rgba(255,255,255,.12); border-radius:4px; color:var(--muted); background:rgba(255,255,255,.035); cursor:pointer; font:9px var(--mono); transition:color .18s ease,border-color .18s ease,background .18s ease; }
+.compact-file-action:hover:not(:disabled) { border-color:var(--green); color:var(--green); background:var(--green-soft); }
+.compact-file-action:disabled { cursor:wait; opacity:.55; }
+.generated-validation { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px; margin:9px 0 0 44px; padding:7px 8px; border-left:2px solid var(--muted-2); color:var(--muted); background:rgba(255,255,255,.025); font:9px var(--mono); }
+.generated-validation strong { letter-spacing:.06em; }
+.generated-validation span { flex-basis:100%; color:var(--muted-2); white-space:pre-wrap; overflow-wrap:anywhere; }
+.generated-validation.valid { border-left-color:var(--green); color:var(--green); }
+.generated-validation.invalid { border-left-color:var(--red-bright); color:var(--red-bright); }
+.generated-validation.unavailable { border-left-color:#d7a94d; color:#d7a94d; }
+.validation-fix { flex-basis:100%; width:max-content; padding:5px 7px; border:1px solid rgba(230,56,70,.55); border-radius:4px; color:var(--red-bright); background:var(--red-soft); cursor:pointer; font:9px var(--mono); }
+.validation-fix:hover { border-color:var(--red-bright); background:rgba(230,56,70,.18); }
+@media (max-width:620px) { .generated-file-actions { justify-content:stretch; } .compact-file-action { flex:1 1 auto; min-height:34px; } .generated-validation { margin-left:0; } }
+
+/* Fase 1 — botão de download de resposta (substitui link data:) */
+button.download-response { background:none; border:0; color:inherit; font:inherit; cursor:pointer; padding:0; opacity:.7; }
+button.download-response:hover { opacity:1; }
