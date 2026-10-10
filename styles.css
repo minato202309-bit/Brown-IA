@@ -35,3 +35,5 @@ body{background:radial-gradient(ellipse at 82% -10%,rgba(150,31,40,.3),transpare
 .save-key-option{display:flex;align-items:center;gap:6px;margin:7px 0 0;color:#a8aea9;font-size:10px;cursor:pointer}.save-key-option input{accent-color:var(--green);margin:0}.save-key-option:hover{color:var(--green)}
 
 .file-glyph{display:inline-flex;align-items:center;justify-content:center;width:34px;height:26px;border:1px solid #34734e;color:var(--green);font:9px 'IBM Plex Mono';letter-spacing:.04em}.attachment-preview span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.download-response{display:inline-block;margin-top:9px;color:var(--green);font:10px 'IBM Plex Mono';text-decoration:none;border-bottom:1px solid #34734e}.download-response:hover{color:#c2f7d5}
