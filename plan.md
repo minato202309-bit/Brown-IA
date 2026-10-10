@@ -36,3 +36,7 @@ A navegação recebeu SVGs inline consistentes, tipografia Space Grotesk/DM Sans
 ## Fase 6 — leitura e funções inferiores
 
 As áreas inferiores do rail foram transformadas em cartões de sessão, idioma, perfil, privacidade e configurações, com acentos laterais diferentes e estados de hover. A conversa passou a usar DM Sans em tamanho confortável e entrelinha ampla; headings usam Space Grotesk e blocos de código preservam a fonte monoespaçada.
+
+## Fase 7 — presença de marca
+
+O logo da Brown foi ampliado no cabeçalho, hero, contexto, avatar das respostas e estado vazio. A arte Charlie Brown Jr. foi adicionada como marca d’água de baixo contraste no fundo da conversa e como textura sutil em um card lateral, preservando contraste e legibilidade.

@@ -749,3 +749,30 @@ body { font-family: var(--sans); }
   .message { padding: 16px 10px; }
   .message-content { font-size: 14px; line-height: 1.68; }
 }
+
+/* FASE 7 — identidade visual maior e marca d'água de fundo */
+.brand-symbol { width: 64px; height: 64px; border-radius: 17px; box-shadow: inset 0 0 25px rgba(220,62,77,.12), 0 12px 30px rgba(0,0,0,.34); }
+.brand-mark { gap: 13px; }
+.brand-mark strong { font-size: 24px; }
+.assistant-portrait { flex-basis: 78px; width: 78px; height: 78px; border-radius: 19px; }
+.assistant-hero { padding: 19px 21px 18px; }
+.assistant-hero h2 { font-size: 30px; }
+.context-avatar { width: 60px; height: 60px; border-radius: 16px; }
+.avatar.brown-avatar { flex-basis: 46px; width: 46px; height: 46px; border-radius: 12px; }
+.empty-glyph { width: 122px; height: 122px; border-radius: 29px; }
+.chat-panel { position: relative; isolation: isolate; }
+.chat-panel > :not(.brand-watermark) { position: relative; z-index: 1; }
+.brand-watermark { position: absolute; right: 6%; bottom: 88px; z-index: 0; width: min(390px, 58%); pointer-events: none; opacity: .075; mix-blend-mode: screen; transform: rotate(-4deg); filter: contrast(1.1) brightness(1.2); }
+.brand-watermark img { display: block; width: 100%; height: auto; border-radius: 35px; }
+.context-quote { overflow: hidden; }
+.context-quote::after { position: absolute; right: -15px; bottom: -24px; width: 145px; height: 145px; content: ""; background: url("assets/charlie-wordmark.jpg") center / cover no-repeat; border-radius: 50%; opacity: .07; mix-blend-mode: screen; transform: rotate(-12deg); pointer-events: none; }
+@media (max-width: 760px) {
+  .brand-symbol { width: 50px; height: 50px; border-radius: 14px; }
+  .brand-mark strong { font-size: 19px; }
+  .assistant-portrait { flex-basis: 62px; width: 62px; height: 62px; }
+  .assistant-hero { padding: 16px; }
+  .assistant-hero h2 { font-size: 24px; }
+  .avatar.brown-avatar { flex-basis: 38px; width: 38px; height: 38px; }
+  .empty-glyph { width: 92px; height: 92px; }
+  .brand-watermark { right: 5%; bottom: 110px; width: 80%; opacity: .055; }
+}
