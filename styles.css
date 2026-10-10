@@ -423,3 +423,64 @@ button.download-response:hover { opacity: 1; }
   .conversation-nav, .composer, .provider-setup, .notice, .generated-files, .privacy-card, .empty-state h2, .empty-state p, .quick-prompts { animation: none; }
   .message:hover, .message-action-btn:hover { transform: none; }
 }
+
+/* Identidade visual Brown — imagem fornecida pelo usuário */
+.brand-symbol {
+  overflow: hidden;
+  padding: 0;
+  background: #f8f4df;
+}
+.brand-symbol img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: skew(5deg) scale(1.08);
+  filter: saturate(.92) contrast(1.04);
+}
+.brand-symbol::before, .brand-symbol::after { z-index: 2; pointer-events: none; }
+.empty-glyph {
+  width: 92px;
+  height: 92px;
+  overflow: hidden;
+  border: 2px solid rgba(255,102,113,.78);
+  border-radius: 25px;
+  background: #f8f4df;
+  box-shadow: 0 16px 38px rgba(0,0,0,.35), 0 0 28px rgba(220,62,77,.22);
+  letter-spacing: normal;
+  text-shadow: none;
+  animation: glyph-flicker 5s ease-in-out infinite, logo-float 5s ease-in-out infinite;
+}
+.empty-glyph img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.92) contrast(1.04);
+}
+.footer-mark {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  border: 1px solid rgba(255,102,113,.6);
+  border-radius: 8px;
+  background: #f8f4df;
+  vertical-align: middle;
+}
+.footer-mark img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.avatar.brown-avatar {
+  overflow: hidden;
+  padding: 0;
+  border-color: rgba(112,215,162,.55);
+  background: #f8f4df;
+}
+.avatar.brown-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.9) contrast(1.03); }
+.message:hover .avatar.brown-avatar { transform: translateY(-2px) rotate(3deg); }
+@keyframes logo-float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-4px) rotate(-1deg); } }
+@media (max-width: 760px) {
+  .empty-glyph { width: 72px; height: 72px; border-radius: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .empty-glyph { animation: none; }
+}
