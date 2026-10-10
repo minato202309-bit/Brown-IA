@@ -7,7 +7,7 @@
   <meta name="description" content="Brown — espaço cognitivo modular para conversa, código e pesquisa." />
   <title>Brown · Workspace</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="styles.css?v=visual-polish-38" />
+  <link rel="stylesheet" href="styles.css?v=provider-settings-40" />
 </head>
 <body>
   <div class="scanline" aria-hidden="true"></div>
@@ -56,6 +56,7 @@
           <label class="settings-field"><span>Idioma da resposta</span><select id="settingsLanguageSelect"><option value="auto">Automático</option><option value="pt-BR">Português · Brasil</option><option value="en">English</option><option value="es">Español</option></select></label>
           <div class="settings-field"><span>Perfil de trabalho</span><div class="settings-choice-row"><button type="button" class="settings-choice active" data-settings-profile="BROWN">Brown<small>geral</small></button><button type="button" class="settings-choice" data-settings-profile="CODE">Code<small>programação</small></button></div></div>
           <div class="settings-field"><span>Raciocínio</span><div class="settings-choice-row reasoning-settings"><button type="button" class="settings-choice" data-settings-thinking="LEVE">Leve</button><button type="button" class="settings-choice active" data-settings-thinking="MEDIO">Médio</button><button type="button" class="settings-choice" data-settings-thinking="ALTO">Alto</button><button type="button" class="settings-choice" data-settings-thinking="EXTREMO">Extremo</button></div></div>
+          <div class="settings-field provider-settings"><span>Provedor Gemini</span><small id="providerSettingsStatus">Não conectado. A Brown usará o modo local até validar uma chave.</small><input id="providerKeyInput" type="password" placeholder="Cole uma chave Gemini para este navegador" autocomplete="off" spellcheck="false" /><label class="provider-save"><input id="providerSaveKey" type="checkbox" /> Salvar neste navegador</label><div class="provider-actions"><button type="button" class="settings-choice" id="providerApplyBtn">Validar e usar</button><button type="button" class="settings-choice" id="providerClearBtn">Remover</button></div></div>
         </div>
         <div class="rail-footer"><span class="footer-mark">BR</span><br />BROWN / WEB 0.2<br /><span>provider-ready architecture</span></div>
       </aside>
@@ -80,6 +81,6 @@
     </main>
   </div>
   <script src="config.js?v=universal-key-05"></script>
-  <script src="app.js?v=provider-preflight-39"></script>
+  <script src="app.js?v=provider-settings-40"></script>
 </body>
 </html>
