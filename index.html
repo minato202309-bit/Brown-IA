@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#08090b" />
   <meta name="description" content="Brown — espaço cognitivo modular para conversa, código e pesquisa." />
   <title>Brown · Workspace</title>
-  <link rel="stylesheet" href="styles.css?v=redesign-52" />
+  <link rel="stylesheet" href="styles.css?v=i18n-53" />
 </head>
 <body>
   <div class="scanline" aria-hidden="true"></div>
@@ -14,90 +14,90 @@
     <header class="topbar">
       <div class="brand-mark" aria-label="Brown">
         <span class="brand-symbol">B</span>
-        <div><strong>BROWN</strong><small>COGNITIVE WORKSPACE <i>•</i> 01</small></div>
+        <div><strong>BROWN</strong><small data-i18n="brandSub">COGNITIVE WORKSPACE · 01</small></div>
       </div>
-      <div class="topbar-actions"><span class="secure-label">SECURE LOCAL CHANNEL</span><div class="status-pill"><span class="status-dot"></span><span id="statusText">LOCAL READY</span></div><button class="menu-trigger" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button></div>
+      <div class="topbar-actions"><span class="secure-label" data-i18n="secureChannel">SECURE LOCAL CHANNEL</span><div class="status-pill"><span class="status-dot"></span><span id="statusText">LOCAL READY</span></div><button class="menu-trigger" id="menuToggle" type="button" data-i18n-aria-label="openMenu" aria-label="Abrir menu" aria-expanded="false">☰</button></div>
     </header>
 
     <main class="workspace">
-      <aside class="control-rail" id="appMenu" aria-label="Menu principal">
-        <div class="menu-heading"><div><span class="section-label">BROWN / MENU</span><strong>Workspace</strong></div><button class="menu-close" id="menuClose" type="button" aria-label="Fechar menu">×</button></div>
-        <button class="new-chat-btn" id="newChatBtn" type="button"><span>＋</span> Nova conversa</button>
+      <aside class="control-rail" id="appMenu" data-i18n-aria-label="menuLabel" aria-label="Menu principal">
+        <div class="menu-heading"><div><span class="section-label" data-i18n="menuLabelShort">BROWN / MENU</span><strong data-i18n="workspace">Workspace</strong></div><button class="menu-close" id="menuClose" type="button" data-i18n-aria-label="closeMenu" aria-label="Fechar menu">×</button></div>
+        <button class="new-chat-btn" id="newChatBtn" type="button"><span>＋</span> <span data-i18n="newConversation">Nova conversa</span></button>
         <section class="menu-library">
-          <div class="library-heading"><span>CONVERSAS</span><small id="chatCount">0</small></div>
+          <div class="library-heading"><span data-i18n="conversations">CONVERSAS</span><small id="chatCount">0</small></div>
           <div class="chat-list" id="chatList"></div>
         </section>
         <section class="menu-library projects-library">
-          <div class="library-heading"><span>PROJETOS</span><button id="newProjectBtn" type="button" aria-label="Novo projeto">＋</button></div>
-          <div class="project-list" id="projectList"><small>Nenhum projeto criado</small></div>
+          <div class="library-heading"><span data-i18n="projects">PROJETOS</span><button id="newProjectBtn" type="button" data-i18n-aria-label="newProject" aria-label="Novo projeto">＋</button></div>
+          <div class="project-list" id="projectList"><small data-i18n="noProjects">Nenhum projeto criado</small></div>
         </section>
         <section class="rail-section">
-          <div class="section-label">01 / PROFILE</div>
+          <div class="section-label" data-i18n="profileSection">01 / PROFILE</div>
           <div class="profile-list" id="profileList">
-            <button class="profile-btn active" data-profile="BROWN"><b>01</b><span><strong>BROWN</strong><small>Geral · conversa · análise</small></span><em>↗</em></button>
-            <button class="profile-btn" data-profile="CODE"><b>02</b><span><strong>CODE</strong><small>Programação · arquivos</small></span><em>↗</em></button>
+            <button class="profile-btn active" data-profile="BROWN"><b>01</b><span><strong>BROWN</strong><small><span data-i18n="brownDesc">Geral · conversa · análise</span></small></span><em>↗</em></button>
+            <button class="profile-btn" data-profile="CODE"><b>02</b><span><strong>CODE</strong><small><span data-i18n="codeDesc">Programação · arquivos</span></small></span><em>↗</em></button>
           </div>
         </section>
         <section class="rail-section language-section">
-          <div class="section-label">03 / LANGUAGE</div>
-          <label class="select-wrap"><span>Idioma da resposta</span><select id="languageSelect"><option value="auto">Automático</option><option value="pt-BR" selected>Português · Brasil</option><option value="en">English</option><option value="es">Español</option></select></label>
+          <div class="section-label" data-i18n="languageSection">03 / LANGUAGE</div>
+          <label class="select-wrap"><span data-i18n="responseLanguage">Idioma da resposta</span><select id="languageSelect"><option value="auto" data-i18n="auto">Automático</option><option value="pt-BR" selected data-i18n="ptBR">Português · Brasil</option><option value="en" data-i18n="english">English</option><option value="es" data-i18n="spanish">Español</option></select></label>
           <p class="language-note" id="languageNote">A Brown responderá em português.</p>
         </section>
         <section class="rail-section rail-info">
-          <div class="section-label">04 / SESSION</div>
-          <div class="session-stat"><span id="messageCount">0</span><small>mensagens salvas localmente</small></div>
-          <button class="subtle-btn" id="clearBtn">⌫ Limpar sessão</button>
-          <button class="subtle-btn" id="exportBtn">⇩ Exportar JSON</button>
-          <button class="subtle-btn" id="exportMarkdownBtn">⇩ Exportar Markdown</button>
+          <div class="section-label" data-i18n="sessionSection">04 / SESSION</div>
+          <div class="session-stat"><span id="messageCount">0</span><small data-i18n="savedMessages">mensagens salvas localmente</small></div>
+          <button class="subtle-btn" id="clearBtn"><span aria-hidden="true">⌫</span> <span data-i18n="clearSession">Limpar sessão</span></button>
+          <button class="subtle-btn" id="exportBtn"><span aria-hidden="true">⇩</span> <span data-i18n="exportJSON">Exportar JSON</span></button>
+          <button class="subtle-btn" id="exportMarkdownBtn"><span aria-hidden="true">⇩</span> <span data-i18n="exportMarkdown">Exportar Markdown</span></button>
         </section>
-        <button class="settings-menu-btn" id="settingsMenuBtn" type="button"><span>⚙</span> Configurações</button>
+        <button class="settings-menu-btn" id="settingsMenuBtn" type="button"><span>⚙</span> <span data-i18n="settings">Configurações</span></button>
         <div class="settings-panel" id="settingsPanel" hidden>
-          <div class="settings-panel-head"><strong>Configurações</strong><button id="settingsClose" type="button" aria-label="Fechar configurações">×</button></div>
-          <label class="settings-field"><span>Idioma da resposta</span><select id="settingsLanguageSelect"><option value="auto">Automático</option><option value="pt-BR">Português · Brasil</option><option value="en">English</option><option value="es">Español</option></select></label>
-          <div class="settings-field"><span>Perfil de trabalho</span><div class="settings-choice-row"><button type="button" class="settings-choice active" data-settings-profile="BROWN">Brown<small>geral</small></button><button type="button" class="settings-choice" data-settings-profile="CODE">Code<small>programação</small></button></div></div>
-          <div class="settings-field"><span>Raciocínio</span><div class="settings-choice-row reasoning-settings"><button type="button" class="settings-choice" data-settings-thinking="LEVE">Leve</button><button type="button" class="settings-choice active" data-settings-thinking="MEDIO">Médio</button><button type="button" class="settings-choice" data-settings-thinking="ALTO">Alto</button><button type="button" class="settings-choice" data-settings-thinking="EXTREMO">Extremo</button></div></div>
-          <div class="settings-field provider-settings"><span>Provedor Gemini</span><small id="providerSettingsStatus">Não conectado. A Brown usará o modo local até validar uma chave.</small><input id="providerKeyInput" type="password" aria-label="Chave Gemini para este navegador" placeholder="Cole uma chave Gemini para este navegador" autocomplete="off" spellcheck="false" /><label class="provider-save"><input id="providerSaveKey" type="checkbox" /> Salvar neste navegador</label><div class="provider-actions"><button type="button" class="settings-choice" id="providerApplyBtn">Validar e usar</button><button type="button" class="settings-choice" id="providerClearBtn">Remover</button></div></div>
+          <div class="settings-panel-head"><strong data-i18n="settings">Configurações</strong><button id="settingsClose" type="button" data-i18n-aria-label="closeMenu" aria-label="Fechar configurações">×</button></div>
+          <label class="settings-field"><span data-i18n="responseLanguage">Idioma da resposta</span><select id="settingsLanguageSelect"><option value="auto" data-i18n="auto">Automático</option><option value="pt-BR" data-i18n="ptBR">Português · Brasil</option><option value="en" data-i18n="english">English</option><option value="es" data-i18n="spanish">Español</option></select></label>
+          <div class="settings-field"><span data-i18n="workProfile">Perfil de trabalho</span><div class="settings-choice-row"><button type="button" class="settings-choice active" data-settings-profile="BROWN">Brown<small data-i18n="general">geral</small></button><button type="button" class="settings-choice" data-settings-profile="CODE">Code<small data-i18n="programming">programação</small></button></div></div>
+          <div class="settings-field"><span data-i18n="reasoning">Raciocínio</span><div class="settings-choice-row reasoning-settings"><button type="button" class="settings-choice" data-settings-thinking="LEVE" data-i18n="light">Leve</button><button type="button" class="settings-choice active" data-settings-thinking="MEDIO" data-i18n="medium">Médio</button><button type="button" class="settings-choice" data-settings-thinking="ALTO" data-i18n="high">Alto</button><button type="button" class="settings-choice" data-settings-thinking="EXTREMO" data-i18n="extreme">Extremo</button></div></div>
+          <div class="settings-field provider-settings"><span data-i18n="provider">Provedor Gemini</span><small id="providerSettingsStatus" data-i18n="providerDisconnected">Não conectado. A Brown usará o modo local até validar uma chave.</small><input id="providerKeyInput" type="password" data-i18n-aria-label="keyPlaceholder" aria-label="Chave Gemini para este navegador" data-i18n-placeholder="keyPlaceholder" placeholder="Cole uma chave Gemini para este navegador" autocomplete="off" spellcheck="false" /><label class="provider-save"><input id="providerSaveKey" type="checkbox" /> <span data-i18n="saveBrowser">Salvar neste navegador</span></label><div class="provider-actions"><button type="button" class="settings-choice" id="providerApplyBtn" data-i18n="validateUse">Validar e usar</button><button type="button" class="settings-choice" id="providerClearBtn" data-i18n="remove">Remover</button></div></div>
         </div>
-        <div class="settings-field privacy-actions"><span>Privacidade e dados</span><small>Sem cookies opcionais ou rastreadores neste app. Controle seus dados locais.</small><button class="settings-choice" id="privacySettingsBtn" type="button">Gerenciar privacidade</button><button class="settings-choice" id="exportAllDataBtn" type="button">Exportar meus dados</button><button class="settings-choice danger-choice" id="deleteConversationsBtn" type="button">Excluir conversas e histórico</button><button class="settings-choice danger-choice" id="deleteAllLocalBtn" type="button">Excluir todos os dados locais</button></div>
-        <div class="rail-footer"><span class="footer-mark">BR</span><br />BROWN / WEB 0.2<br /><span>provider-ready architecture</span></div>
+        <div class="settings-field privacy-actions"><span data-i18n="privacyData">Privacidade e dados</span><small data-i18n="privacyHint">Sem cookies opcionais ou rastreadores neste app. Controle seus dados locais.</small><button class="settings-choice" id="privacySettingsBtn" type="button" data-i18n="managePrivacy">Gerenciar privacidade</button><button class="settings-choice" id="exportAllDataBtn" type="button" data-i18n="exportData">Exportar meus dados</button><button class="settings-choice danger-choice" id="deleteConversationsBtn" type="button" data-i18n="deleteHistory">Excluir conversas e histórico</button><button class="settings-choice danger-choice" id="deleteAllLocalBtn" type="button" data-i18n="deleteAll">Excluir todos os dados locais</button></div>
+        <div class="rail-footer"><span class="footer-mark">BR</span><br />BROWN / WEB 0.2<br /><span data-i18n="footer">provider-ready architecture</span></div>
       </aside>
 
       <section class="chat-panel">
         <div class="chat-header">
-          <div><span class="eyebrow">ACTIVE CHANNEL / <span id="channelMode">LOCAL DEMO</span></span><h1 id="channelTitle">Brown</h1><p class="channel-subtitle">Conversa contextual com memória local</p></div>
-          <button class="icon-btn" id="settingsBtn" type="button" title="Configurações" aria-label="Abrir configurações">•••</button>
+          <div><span class="eyebrow"><span data-i18n="activeChannel">ACTIVE CHANNEL</span> / <span id="channelMode" data-i18n="localDemo">LOCAL DEMO</span></span><h1 id="channelTitle">Brown</h1><p class="channel-subtitle" data-i18n="chatSubtitle">Conversa contextual com memória local</p></div>
+          <button class="icon-btn" id="settingsBtn" type="button" data-i18n-title="settings" title="Configurações" data-i18n-aria-label="openSettings" aria-label="Abrir configurações">•••</button>
         </div>
-        <div class="notice" id="modeNotice"><span>◆</span><div><strong id="modeTitle">Verificando conexão</strong><small id="modeDescription">A Brown está carregando o provedor antes de aceitar mensagens.</small></div><button id="dismissNotice" aria-label="Fechar aviso">×</button></div>
-        <div class="provider-setup" id="providerSetup" hidden><div class="provider-setup-head"><strong>Conectar a Brown</strong><small>Insira uma chave Gemini para ativar as respostas inteligentes neste navegador.</small></div><div class="provider-setup-row"><input id="initialKeyInput" type="password" aria-label="Chave Gemini inicial" placeholder="Cole sua chave Gemini" autocomplete="off" spellcheck="false" /><button type="button" id="initialConnectBtn">CONECTAR</button></div><label class="provider-save"><input id="initialSaveKey" type="checkbox" /> Salvar neste navegador</label><a href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener noreferrer">Obter chave no Google AI Studio ↗</a><small class="provider-setup-status" id="initialProviderStatus">Nenhuma conexão validada.</small></div>
+        <div class="notice" id="modeNotice"><span>◆</span><div><strong id="modeTitle" data-i18n="checkingConnection">Verificando conexão</strong><small id="modeDescription" data-i18n="loadingProvider">A Brown está carregando o provedor antes de aceitar mensagens.</small></div><button id="dismissNotice" data-i18n-aria-label="closeMenu" aria-label="Fechar aviso">×</button></div>
+        <div class="provider-setup" id="providerSetup" hidden><div class="provider-setup-head"><strong data-i18n="connectBrown">Conectar a Brown</strong><small data-i18n="keyDescription">Insira uma chave Gemini para ativar as respostas inteligentes neste navegador.</small></div><div class="provider-setup-row"><input id="initialKeyInput" type="password" data-i18n-aria-label="initialKeyPlaceholder" aria-label="Chave Gemini inicial" data-i18n-placeholder="initialKeyPlaceholder" placeholder="Cole sua chave Gemini" autocomplete="off" spellcheck="false" /><button type="button" id="initialConnectBtn" data-i18n="connect">CONECTAR</button></div><label class="provider-save"><input id="initialSaveKey" type="checkbox" /> <span data-i18n="saveBrowser">Salvar neste navegador</span></label><a data-i18n="getKey" href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener noreferrer">Obter chave no Google AI Studio ↗</a><small class="provider-setup-status" id="initialProviderStatus" data-i18n="noValidated">Nenhuma conexão validada.</small></div>
         <div class="messages" id="messages" aria-live="polite">
-          <div class="empty-state" id="emptyState"><div class="empty-glyph">BR</div><div class="empty-kicker">SYSTEM ONLINE · READY FOR INPUT</div><h2>Conversa pronta.</h2><p>Faça uma pergunta, peça um plano ou descreva algo que a Brown deve criar.</p><div class="quick-prompts"><button data-prompt="Explique como você pode me ajudar.">Conhecer a Brown <span>↗</span></button><button data-prompt="Crie um plano profissional para meu projeto.">Criar um plano <span>↗</span></button><button data-prompt="Analise esta ideia e sugira melhorias.">Analisar uma ideia <span>↗</span></button></div></div>
-        </div><button class="scroll-settings-btn" id="scrollSettingsBtn" type="button" hidden title="Abrir configurações">⚙ Configurações</button>
+          <div class="empty-state" id="emptyState"><div class="empty-glyph">BR</div><div class="empty-kicker" data-i18n="systemOnline">SYSTEM ONLINE · READY FOR INPUT</div><h2 data-i18n="ready">Conversa pronta.</h2><p data-i18n="prompt">Faça uma pergunta, peça um plano ou descreva algo que a Brown deve criar.</p><div class="quick-prompts"><button data-prompt-key="promptKnow" data-prompt="Explique como você pode me ajudar."><span data-i18n="quickKnow">Conhecer a Brown</span> <span>↗</span></button><button data-prompt-key="promptPlan" data-prompt="Crie um plano profissional para meu projeto."><span data-i18n="quickPlan">Criar um plano</span> <span>↗</span></button><button data-prompt-key="promptAnalyze" data-prompt="Analise esta ideia e sugira melhorias."><span data-i18n="quickAnalyze">Analisar uma ideia</span> <span>↗</span></button></div></div>
+        </div><button class="scroll-settings-btn" id="scrollSettingsBtn" type="button" hidden data-i18n-title="settings" title="Abrir configurações"><span aria-hidden="true">⚙</span> <span data-i18n="settings">Configurações</span></button>
         <form class="composer" id="composer">
           <div class="composer-meta"><span id="profileTag">BROWN</span><span>·</span><span id="thinkingTag">RACIOCÍNIO</span><span>·</span><span id="languageTag">PT-BR</span><span class="meta-spacer"></span><span id="latencyLabel">aguardando entrada</span></div>
-          <textarea id="promptInput" rows="1" aria-label="Mensagem para a Brown" placeholder="Escreva uma mensagem para a Brown..." autocomplete="off"></textarea>
+          <textarea id="promptInput" rows="1" data-i18n-aria-label="promptInput" aria-label="Mensagem para a Brown" data-i18n-placeholder="promptPlaceholder" placeholder="Escreva uma mensagem para a Brown..." autocomplete="off"></textarea>
           <div id="attachmentPreview" class="attachment-preview" hidden></div>
-          <div class="composer-actions"><span class="hint">Enter envia · Shift+Enter quebra linha</span><div class="composer-tools"><div class="reasoning-picker"><button type="button" class="reasoning-trigger" id="thinkingButton" aria-expanded="false" aria-haspopup="menu">RACIOCÍNIO <span id="thinkingButtonLabel">MÉDIO</span>⌄</button><div class="reasoning-menu" id="thinkingMenu" role="menu" hidden><button type="button" data-thinking="LEVE">Leve</button><button type="button" data-thinking="MEDIO">Médio</button><button type="button" data-thinking="ALTO">Alto</button><button type="button" data-thinking="EXTREMO">Extremo</button></div></div><input id="fileInput" type="file" accept="*/*" aria-label="Anexar documento ou arquivo" hidden /><button type="button" class="tool-btn" id="fileButton" title="Anexar documento ou arquivo" aria-label="Anexar documento ou arquivo">＋</button><button class="send-btn" type="submit">ENVIAR <span>↗</span></button></div></div>
+          <div class="composer-actions"><span class="hint" data-i18n="shortcut">Enter envia · Shift+Enter quebra linha</span><div class="composer-tools"><div class="reasoning-picker"><button type="button" class="reasoning-trigger" id="thinkingButton" aria-expanded="false" aria-haspopup="menu"><span data-i18n="thinkingLabel">RACIOCÍNIO</span> <span id="thinkingButtonLabel">MÉDIO</span>⌄</button><div class="reasoning-menu" id="thinkingMenu" role="menu" hidden><button type="button" data-thinking="LEVE" data-i18n="light">Leve</button><button type="button" data-thinking="MEDIO" data-i18n="medium">Médio</button><button type="button" data-thinking="ALTO" data-i18n="high">Alto</button><button type="button" data-thinking="EXTREMO" data-i18n="extreme">Extremo</button></div></div><input id="fileInput" type="file" accept="*/*" data-i18n-aria-label="attach" aria-label="Anexar documento ou arquivo" hidden /><button type="button" class="tool-btn" id="fileButton" data-i18n-title="attach" title="Anexar documento ou arquivo" data-i18n-aria-label="attach" aria-label="Anexar documento ou arquivo">＋</button><button class="send-btn" type="submit"><span data-i18n="send">ENVIAR</span> <span>↗</span></button></div></div>
         </form>
-        <div class="disclaimer">A Brown pode cometer erros. Verifique informações importantes antes de agir.</div>
+        <div class="disclaimer" data-i18n="disclaimer">A Brown pode cometer erros. Verifique informações importantes antes de agir.</div>
       </section>
     </main>
   </div>
 
   <section class="privacy-panel" id="privacyPanel" role="dialog" aria-modal="true" aria-labelledby="privacyPanelTitle" aria-hidden="true" hidden>
     <div class="privacy-card">
-      <div class="privacy-card-head"><div><span class="section-label">BROWN / PRIVACIDADE</span><h2 id="privacyPanelTitle">Privacidade e dados</h2></div><button id="privacyCloseBtn" type="button" aria-label="Fechar privacidade">×</button></div>
-      <p>Este app não usa cookies opcionais, publicidade, analytics ou pixels. As preferências e a conversa são armazenadas no navegador usando armazenamento local. A chave BYOK só é gravada quando você marca essa opção.</p>
-      <div class="privacy-categories"><div><strong>Necessário</strong><span>Consentimento, funcionamento e segurança local.</span><b>Ativo</b></div><div><strong>Preferências</strong><span>Nenhum cookie desta categoria é usado.</span><b>Não utilizado</b></div><div><strong>Estatísticas</strong><span>Nenhum analytics ou medição é carregado.</span><b>Não utilizado</b></div><div><strong>Marketing</strong><span>Nenhum rastreador ou publicidade é carregado.</span><b>Não utilizado</b></div></div>
-      <div class="privacy-rights"><strong>Seus controles</strong><p>Você pode exportar, excluir conversas, remover a chave e apagar todos os dados locais. Para solicitações formais de acesso, correção ou exclusão perante o controlador, use os contatos indicados na política. Eles ainda precisam ser preenchidos pelo responsável pelo serviço.</p><div class="privacy-actions-row"><button type="button" data-privacy-choice="revoke">Revogar consentimento</button><button type="button" data-privacy-choice="save-custom">Salvar preferências</button><a href="privacidade.html" target="_blank" rel="noopener noreferrer">Ler política completa ↗</a></div></div>
+      <div class="privacy-card-head"><div><span class="section-label" data-i18n="privacyLabel">BROWN / PRIVACIDADE</span><h2 id="privacyPanelTitle" data-i18n="privacyTitle">Privacidade e dados</h2></div><button id="privacyCloseBtn" type="button" data-i18n-aria-label="closeMenu" aria-label="Fechar privacidade">×</button></div>
+      <p data-i18n="privacyIntro">Este app não usa cookies opcionais, publicidade, analytics ou pixels. As preferências e a conversa são armazenadas no navegador usando armazenamento local. A chave BYOK só é gravada quando você marca essa opção.</p>
+      <div class="privacy-categories"><div><strong data-i18n="necessary">Necessário</strong><span data-i18n="consent">Consentimento, funcionamento e segurança local.</span><b data-i18n="active">Ativo</b></div><div><strong data-i18n="preferences">Preferências</strong><span data-i18n="unused">Nenhum cookie desta categoria é usado.</span><b data-i18n="unused">Não utilizado</b></div><div><strong data-i18n="statistics">Estatísticas</strong><span data-i18n="noAnalytics">Nenhum analytics ou medição é carregado.</span><b data-i18n="unused">Não utilizado</b></div><div><strong data-i18n="marketing">Marketing</strong><span data-i18n="noTrackers">Nenhum rastreador ou publicidade é carregado.</span><b data-i18n="unused">Não utilizado</b></div></div>
+      <div class="privacy-rights"><strong data-i18n="privacyControls">Seus controles</strong><p data-i18n="privacyRights">Você pode exportar, excluir conversas, remover a chave e apagar todos os dados locais. Para solicitações formais de acesso, correção ou exclusão perante o controlador, use os contatos indicados na política. Eles ainda precisam ser preenchidos pelo responsável pelo serviço.</p><div class="privacy-actions-row"><button type="button" data-privacy-choice="revoke" data-i18n="revoke">Revogar consentimento</button><button type="button" data-privacy-choice="save-custom" data-i18n="savePrefs">Salvar preferências</button><a data-i18n="readPolicy" href="privacidade.html" target="_blank" rel="noopener noreferrer">Ler política completa ↗</a></div></div>
     </div>
   </section>
 
   <section class="privacy-banner" id="privacyBanner" role="dialog" aria-live="polite" aria-labelledby="privacyBannerTitle">
-    <div><strong id="privacyBannerTitle">Privacidade e cookies</strong><p>Usamos armazenamento local para manter sua conversa e registrar sua escolha. Este app não utiliza cookies opcionais, analytics, marketing ou rastreadores. <a href="privacidade.html" target="_blank" rel="noopener noreferrer">Saiba mais</a></p></div>
-    <div class="privacy-banner-actions"><button type="button" data-privacy-choice="reject">Rejeitar não necessários</button><button type="button" data-privacy-choice="customize">Personalizar</button><button class="primary-privacy" type="button" data-privacy-choice="accept">Aceitar todos</button></div>
+    <div><strong id="privacyBannerTitle" data-i18n="bannerTitle">Privacidade e cookies</strong><p><span data-i18n="bannerText">Usamos armazenamento local para manter sua conversa e registrar sua escolha. Este app não utiliza cookies opcionais, analytics, marketing ou rastreadores.</span> <a data-i18n="learnMore" href="privacidade.html" target="_blank" rel="noopener noreferrer">Saiba mais</a></p></div>
+    <div class="privacy-banner-actions"><button type="button" data-privacy-choice="reject" data-i18n="reject">Rejeitar não necessários</button><button type="button" data-privacy-choice="customize" data-i18n="customize">Personalizar</button><button class="primary-privacy" type="button" data-privacy-choice="accept" data-i18n="accept">Aceitar todos</button></div>
   </section>
 
-  <script src="config.js?v=redesign-52"></script>
-  <script src="app.js?v=redesign-52"></script>
+  <script src="config.js?v=i18n-53"></script>
+  <script src="app.js?v=i18n-53"></script>
 </body>
 </html>

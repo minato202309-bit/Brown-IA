@@ -15,6 +15,8 @@ A interface usa uma estética de terminal cyber-industrial premium: vermelho esc
 
 O menu lateral vira uma gaveta no celular, com transições leves e suporte a `prefers-reduced-motion`. O CSS não usa fontes remotas nem dependências novas. Os detalhes da revisão visual e os testes executados estão em `AUDITORIA-52-REDESIGN.md`.
 
+O idioma agora é global e reativo: PT-BR, English, Español e Automático atualizam a interface sem recarregar, incluindo componentes dinâmicos, acessibilidade, placeholders, estados, anexos, projetos, exportações e mensagens de erro. Os testes da revisão estão em `AUDITORIA-53-I18N.md`.
+
 ## Executar localmente
 
 Pode abrir `index.html` no navegador. Para uma execução local mais compatível:
