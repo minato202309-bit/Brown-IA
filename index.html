@@ -35,12 +35,6 @@
           <label class="select-wrap"><span>Idioma da resposta</span><select id="languageSelect"><option value="auto">Automático</option><option value="pt-BR" selected>Português · Brasil</option><option value="en">English</option><option value="es">Español</option></select></label>
           <p class="language-note" id="languageNote">A Brown responderá em português.</p>
         </section>
-        <section class="rail-section model-section">
-          <div class="section-label">05 / MODEL</div>
-          <div class="model-card"><span class="model-led" id="modelLed"></span><div><strong>Gemini</strong><small id="modelStatus">Conexão segura pendente</small></div></div>
-          <div class="key-entry" id="keyPanel" hidden><label for="apiKeyInput">Chave alternativa</label><div class="key-row"><input id="apiKeyInput" type="password" placeholder="Cole uma chave alternativa" autocomplete="off" spellcheck="false" /><button id="connectBtn" type="button">CONECTAR</button></div><label class="save-key-option"><input id="saveKeyInput" type="checkbox" /> Salvar neste navegador</label><small>Usada somente se a conexão compartilhada falhar.</small></div>
-          <a class="model-link" id="apiKeyLink" hidden href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener noreferrer">Obter chave alternativa no AI Studio <span>↗</span></a>
-        </section>
         <section class="rail-section rail-info">
           <div class="section-label">04 / SESSION</div>
           <div class="session-stat"><span id="messageCount">0</span><small>mensagens salvas localmente</small></div>
@@ -56,6 +50,7 @@
           <button class="icon-btn" id="settingsBtn" title="Configurações">•••</button>
         </div>
         <div class="notice" id="modeNotice"><span>◆</span><div><strong id="modeTitle">Modo local de demonstração</strong><small id="modeDescription">Canal local pronto para conversa.</small></div><a class="notice-link" id="noticeKeyLink" hidden href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener noreferrer">Obter chave alternativa ↗</a><button id="dismissNotice" aria-label="Fechar aviso">×</button></div>
+        <div class="key-fallback" id="keyFallback" hidden><strong>Conexão alternativa</strong><small>Use uma chave própria somente se a conexão compartilhada falhar.</small><div class="key-row"><input id="apiKeyInput" type="password" placeholder="Cole uma chave alternativa" autocomplete="off" spellcheck="false" /><button id="connectBtn" type="button">CONECTAR</button></div><label class="save-key-option"><input id="saveKeyInput" type="checkbox" /> Salvar neste navegador</label><a class="model-link" id="apiKeyLink" hidden href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener noreferrer">Obter chave alternativa no AI Studio <span>↗</span></a></div>
         <div class="messages" id="messages" aria-live="polite">
           <div class="empty-state" id="emptyState"><div class="empty-glyph">BR</div><div class="empty-kicker">SYSTEM ONLINE · READY FOR INPUT</div><h2>Conversa pronta.</h2><p>Faça uma pergunta, peça um plano ou descreva algo que a Brown deve criar.</p><div class="quick-prompts"><button data-prompt="Explique como você pode me ajudar.">Conhecer a Brown <span>↗</span></button><button data-prompt="Crie um plano profissional para meu projeto.">Criar um plano <span>↗</span></button><button data-prompt="Analise esta ideia e sugira melhorias.">Analisar uma ideia <span>↗</span></button></div></div>
         </div>
@@ -70,6 +65,6 @@
     </main>
   </div>
   <script src="config.js?v=universal-key-01"></script>
-  <script src="app.js?v=hidden-key-25"></script>
+  <script src="app.js?v=no-model-section-26"></script>
 </body>
 </html>
