@@ -51,9 +51,9 @@ A auditoria foi executada sobre o código atual e no Chromium local. Foi encontr
 | Tabela, listas e bloco de código | passou; tabela, `ul`, `ol` e `pre` presentes |
 | Cópia sem permissão | passou; não exibiu sucesso falso |
 | Exportação Markdown/JSON | passou; conteúdo presente |
-| ZIP com acento, arquivo vazio e JSON inválido | passou; somente arquivo válido entrou e o ZIP começou com `PK` |
+| ZIP com acento, arquivo vazio e JSON inválido | passou; somente arquivo válido entrou, o ZIP foi validado com `unzip -t` e o nome Unicode foi preservado |
 | Responsividade em viewport 390 px | passou; sem overflow horizontal, composer e raciocínio presentes |
-| Deploy anterior do Pages | sucesso no commit anterior; novo workflow será validado no próximo deploy |
+| Deploy do Pages no commit `3afd03b` | passou; workflow concluído e assets publicados com versão SHA |
 
 Os testes de Gemini utilizaram respostas simuladas para não consumir chaves. Nenhuma chave foi inserida no código, no pacote ou no relatório.
 
