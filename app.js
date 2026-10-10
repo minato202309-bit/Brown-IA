@@ -96,12 +96,18 @@ function extractCodeFiles(content) {
     if (match) return cleanName(match[1]);
     const ext = extensions[String(language || '').toLowerCase()] || 'txt'; return `brown-arquivo-${index}.${ext}`;
   };
-  const pattern = /```([^\n]*)\n([\s\S]*?)```/g; let match; let index = 0;
+  const pattern = /```([^\n]*)\n([\s\S]*?)(?:```|$)/g; let match; let index = 0;
   while ((match = pattern.exec(source))) {
     const languageHeader = String(match[1] || '').trim(); const body = String(match[2] || '').replace(/^\n+|\n+$/g, ''); if (!body.trim()) continue;
     const context = source.slice(Math.max(0, match.index - 320), match.index) + '\n' + languageHeader;
     const filename = filenameFrom(context, languageHeader, ++index);
     files.push({ name: filename, type: mimeForExtension(filename), content: body });
+  }
+  if (!files.length) {
+    const htmlStart = source.search(/<!doctype\s+html|<html\b/i); const htmlEnd = source.search(/<\/html>\s*$/i);
+    if (htmlStart >= 0 && htmlEnd > htmlStart) {
+      const html = source.slice(htmlStart, htmlEnd + 7); files.push({ name: filenameFrom(source, 'html', ++index), type: 'text/html', content: html });
+    }
   }
   return files.filter(validateGeneratedFile);
 }
