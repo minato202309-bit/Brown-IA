@@ -17,11 +17,21 @@
         <span class="brand-symbol">B</span>
         <div><strong>BROWN</strong><small>COGNITIVE WORKSPACE <i>•</i> 01</small></div>
       </div>
-      <div class="topbar-actions"><span class="secure-label">SECURE LOCAL CHANNEL</span><div class="status-pill"><span class="status-dot"></span><span id="statusText">LOCAL READY</span></div></div>
+      <div class="topbar-actions"><span class="secure-label">SECURE LOCAL CHANNEL</span><div class="status-pill"><span class="status-dot"></span><span id="statusText">LOCAL READY</span></div><button class="menu-trigger" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button></div>
     </header>
 
     <main class="workspace">
-      <aside class="control-rail">
+      <aside class="control-rail" id="appMenu" aria-label="Menu principal">
+        <div class="menu-heading"><div><span class="section-label">BROWN / MENU</span><strong>Workspace</strong></div><button class="menu-close" id="menuClose" type="button" aria-label="Fechar menu">×</button></div>
+        <button class="new-chat-btn" id="newChatBtn" type="button"><span>＋</span> Nova conversa</button>
+        <section class="menu-library">
+          <div class="library-heading"><span>CONVERSAS</span><small id="chatCount">0</small></div>
+          <div class="chat-list" id="chatList"></div>
+        </section>
+        <section class="menu-library projects-library">
+          <div class="library-heading"><span>PROJETOS</span><button id="newProjectBtn" type="button" aria-label="Novo projeto">＋</button></div>
+          <div class="project-list" id="projectList"><small>Nenhum projeto criado</small></div>
+        </section>
         <section class="rail-section">
           <div class="section-label">01 / PROFILE</div>
           <div class="profile-list" id="profileList">
@@ -41,6 +51,8 @@
           <button class="subtle-btn" id="clearBtn">⌫ Limpar sessão</button>
           <button class="subtle-btn" id="exportBtn">⇩ Exportar sessão</button>
         </section>
+        <button class="settings-menu-btn" id="settingsMenuBtn" type="button"><span>⚙</span> Configurações</button>
+        <div class="settings-panel" id="settingsPanel" hidden><strong>Configurações locais</strong><small>Idioma, perfil, raciocínio, sessão e exportação ficam disponíveis neste menu.</small><button id="settingsClose" type="button">Fechar</button></div>
         <div class="rail-footer"><span class="footer-mark">BR</span><br />BROWN / WEB 0.2<br /><span>provider-ready architecture</span></div>
       </aside>
 
@@ -65,6 +77,6 @@
     </main>
   </div>
   <script src="config.js?v=universal-key-01"></script>
-  <script src="app.js?v=no-model-section-26"></script>
+  <script src="app.js?v=workspace-menu-27"></script>
 </body>
 </html>
