@@ -27,6 +27,20 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Versionar assets sem segredos
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import os, re
+          version = os.environ['GITHUB_SHA'][:12]
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          text = re.sub(r'(config\.js\?v=)[^"\']+', rf'\g<1>{version}', text)
+          text = re.sub(r'(app\.js\?v=)[^"\']+', rf'\g<1>{version}', text)
+          text = re.sub(r'(styles\.css\?v=)[^"\']+', rf'\g<1>{version}', text)
+          path.write_text(text, encoding='utf-8')
+          print(f'Asset cache version: {version}')
+          PY
       - name: Preparar site
         uses: actions/upload-pages-artifact@v3
         with:
