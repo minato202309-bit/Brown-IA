@@ -776,3 +776,51 @@ body { font-family: var(--sans); }
   .empty-glyph { width: 92px; height: 92px; }
   .brand-watermark { right: 5%; bottom: 110px; width: 80%; opacity: .055; }
 }
+
+/* FASE 8 — acabamento de produto */
+.topbar { min-height: 86px; padding-top: 5px; padding-bottom: 17px; border-bottom-color: rgba(255,255,255,.09); }
+.topbar-actions { align-items: center; }
+.topbar-icon-group { display: flex; align-items: center; gap: 5px; padding: 0 9px; border-right: 1px solid rgba(255,255,255,.1); border-left: 1px solid rgba(255,255,255,.1); }
+.topbar-icon { position: relative; display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid transparent; border-radius: 10px; color: var(--muted); background: transparent; cursor: pointer; transition: .2s ease; }
+.topbar-icon svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.55; }
+.topbar-icon:hover { border-color: rgba(220,62,77,.5); color: var(--red-bright); background: rgba(220,62,77,.1); transform: translateY(-2px); }
+.topbar-icon.has-dot::after { position: absolute; top: 5px; right: 5px; width: 5px; height: 5px; border-radius: 50%; content: ""; background: var(--red-bright); box-shadow: 0 0 8px var(--red); }
+.account-chip { display: flex; align-items: center; gap: 9px; min-width: 164px; padding: 6px 10px 6px 6px; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; background: linear-gradient(100deg, rgba(255,255,255,.05), rgba(255,255,255,.015)); }
+.account-avatar { display: grid; place-items: center; width: 38px; height: 38px; overflow: hidden; border: 1px solid rgba(255,102,113,.75); border-radius: 11px; background: #f8f4df; }
+.account-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.account-chip strong, .account-chip small { display: block; }
+.account-chip strong { color: var(--text); font: 600 11px var(--display); letter-spacing: .08em; }
+.account-chip small { margin-top: 3px; color: var(--muted); font-size: 9px; }
+.account-chevron { margin-left: auto; color: var(--muted); font-size: 19px; }
+
+.message { position: relative; margin-bottom: 12px; padding: 23px 18px; border: 1px solid rgba(255,255,255,.08); background: linear-gradient(145deg, rgba(18,23,30,.78), rgba(9,12,17,.72)); box-shadow: 0 14px 30px rgba(0,0,0,.13); }
+.message.user { border-color: rgba(220,62,77,.31); background: linear-gradient(145deg, rgba(42,21,29,.72), rgba(12,14,20,.8)); }
+.message.assistant { border-color: rgba(112,215,162,.24); background: linear-gradient(145deg, rgba(15,29,27,.62), rgba(9,13,18,.82)); }
+.message::before { position: absolute; top: 17px; left: -1px; width: 2px; height: 32px; border-radius: 0 3px 3px 0; content: ""; background: var(--red); box-shadow: 0 0 12px rgba(220,62,77,.45); }
+.message.assistant::before { background: var(--green); box-shadow: 0 0 12px rgba(112,215,162,.4); }
+.message-content { max-width: 760px; font-size: 15.5px; line-height: 1.82; }
+.message-label { margin-bottom: 7px; color: var(--muted); }
+.message.user .message-label { color: var(--red-bright); }.message.assistant .message-label { color: var(--green); }
+.avatar.brown-avatar { box-shadow: 0 0 0 3px rgba(112,215,162,.06), 0 8px 20px rgba(0,0,0,.3); }
+.message.user .avatar { border-color: rgba(220,62,77,.55); }
+.message-actions { opacity: .8; transition: opacity .2s ease; }.message:hover .message-actions { opacity: 1; }
+
+.composer { position: relative; margin-top: 10px; padding: 15px 17px 13px; border: 1px solid rgba(220,62,77,.55); border-radius: 19px; background: linear-gradient(145deg, rgba(22,20,28,.97), rgba(9,13,18,.98)); box-shadow: 0 18px 40px rgba(0,0,0,.28), 0 0 28px rgba(220,62,77,.06); }
+.composer::before { position: absolute; top: -1px; left: 26px; width: 76px; height: 2px; content: ""; background: var(--red-bright); box-shadow: 0 0 15px rgba(220,62,77,.55); }
+.composer textarea { min-height: 54px; padding: 7px 4px; font-size: 16px; }
+.composer-actions { margin-top: 7px; }
+.tool-btn { width: 42px; height: 38px; border-radius: 11px; }.send-btn { min-width: 98px; height: 42px; border-radius: 12px; font-family: var(--display); box-shadow: 0 8px 18px rgba(220,62,77,.25); }
+
+.privacy-banner { right: 50%; bottom: 16px; left: auto; width: min(920px, calc(100% - 32px)); padding: 12px 15px; border-radius: 14px; transform: translateX(50%); backdrop-filter: blur(22px); }
+.privacy-banner strong { font-family: var(--display); }.privacy-banner p { margin-top: 4px; font-size: 10px; }.privacy-banner-actions { gap: 5px; }.privacy-banner button { padding: 8px 10px; font-family: var(--sans); font-size: 10px; }
+@media (max-width: 930px) { .secure-label, .topbar-icon-group { display: none; }.account-chip { min-width: 0; }.account-chip small { display: none; } }
+@media (max-width: 760px) {
+  .topbar { min-height: 72px; }
+  .account-chip { padding-right: 6px; border-color: transparent; background: transparent; }
+  .account-chip strong, .account-chevron { display: none; }
+  .account-avatar { width: 36px; height: 36px; }
+  .message { padding: 18px 13px; }
+  .message-content { font-size: 14.5px; line-height: 1.72; }
+  .composer { padding: 12px; }.send-btn { min-width: 78px; }
+  .privacy-banner { bottom: 10px; width: calc(100% - 20px); display: block; }.privacy-banner-actions { justify-content: flex-start; margin-top: 8px; }
+}

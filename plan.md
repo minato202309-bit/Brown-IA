@@ -40,3 +40,7 @@ As áreas inferiores do rail foram transformadas em cartões de sessão, idioma,
 ## Fase 7 — presença de marca
 
 O logo da Brown foi ampliado no cabeçalho, hero, contexto, avatar das respostas e estado vazio. A arte Charlie Brown Jr. foi adicionada como marca d’água de baixo contraste no fundo da conversa e como textura sutil em um card lateral, preservando contraste e legibilidade.
+
+## Fase 8 — acabamento de produto
+
+O cabeçalho ganhou ações de configurações, notificações e conquistas, além de uma conta Brown visual. Mensagens de operador e Brown agora têm contraste, borda e acento próprios; o composer recebeu presença de produto; e o banner de privacidade ficou compacto e menos intrusivo.
