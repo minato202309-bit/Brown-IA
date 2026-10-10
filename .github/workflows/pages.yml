@@ -27,6 +27,16 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Injetar configuração pública da Brown
+        env:
+          BROWN_UNIVERSAL_KEY: ${{ secrets.BROWN_UNIVERSAL_KEY }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          key = os.environ.get('BROWN_UNIVERSAL_KEY', '')
+          with open('config.js', 'w', encoding='utf-8') as f:
+              f.write('window.BROWN_CONFIG = { universalKey: ' + json.dumps(key) + ' };\n')
+          PY
       - name: Preparar site
         uses: actions/upload-pages-artifact@v3
         with:
