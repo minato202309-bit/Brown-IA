@@ -240,7 +240,7 @@ function handleMessageAction(event) {
 function localReply(input) { const text = input.toLowerCase().trim(); if (/^(oi|olá|ola|hello|hi|hola|e aí|e ai|bom dia|boa tarde|boa noite)[!. ]*$/.test(text)) return t('greeting'); if (/^(tudo bem|how are you|todo bien)/.test(text)) return t('wellbeing'); if (text.includes('gemini')) return lang() === 'en' ? 'The Gemini connector is not active yet. The interface is ready for a secure backend without exposing the key in the browser.' : lang() === 'es' ? 'El conector Gemini aún no está activo. La interfaz está preparada para un backend seguro sin exponer la clave.' : 'O conector Gemini ainda não está ativo nesta versão. A interface está preparada para receber um backend seguro sem expor a chave no navegador.'; if (text.includes(t('fileFallback')) || text.includes('html') || text.includes('código') || text.includes('codigo') || text.includes('file') || text.includes('code')) return t('demo'); return t('generic', state.profile); }
 function sanitizeErrorMessage(value) { return String(value || 'Erro desconhecido').replace(/AIza[0-9A-Za-z_-]{20,}/g, '[credencial omitida]').replace(/AQ\.[0-9A-Za-z_-]{20,}/g, '[credencial omitida]').slice(0, 1000); }
 function fetchWithTimeout(url, options = {}, ms = 30000) { const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), ms); return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(timer)).catch(error => { if (error.name === 'AbortError') throw new Error(`A Gemini demorou mais de ${Math.round(ms / 1000)} segundos para responder.`); throw new Error('Não foi possível alcançar a Gemini. Verifique sua conexão e as permissões da chave.'); }); }
-async function validateGeminiKey(key) { const response = await fetchWithTimeout('https://generativelanguage.googleapis.com/v1beta/models', { headers: { 'x-goog-api-key': key } }, 10000); let payload = {}; try { payload = await response.json(); } catch {} if (!response.ok) { const message = payload?.error?.message || `HTTP ${response.status}`; throw new Error(sanitizeErrorMessage(message)); } const models = (payload.models || []).filter(model => (model.supportedGenerationMethods || []).includes('generateContent')); const names = models.map(model => String(model.name || '').replace(/^models\//, '')); const selected = pickModel(names, 'fast'); if (!selected) throw new Error('A chave é válida, mas nenhum modelo de texto compatível foi encontrado.'); const selectedInfo = models.find(model => String(model.name || '').replace(/^models\//, '') === selected) || {}; return { selected, available: names, limits: { input: Number(selectedInfo.inputTokenLimit) || 32768, output: Number(selectedInfo.outputTokenLimit) || 65536 } }; }
+async function validateGeminiKey(key) { const response = await fetchWithTimeout('https://generativelanguage.googleapis.com/v1beta/models', { headers: { 'x-goog-api-key': key } }, 10000); let payload = {}; try { payload = await response.json(); } catch {} if (!response.ok) { const message = payload?.error?.message || `HTTP ${response.status}`; throw new Error(sanitizeErrorMessage(message)); } const models = (payload.models || []).filter(model => (model.supportedGenerationMethods || []).includes('generateContent')); const names = models.map(model => String(model.name || '').replace(/^models\//, '')); const selected = pickModel(names, 'max'); if (!selected) throw new Error('A chave é válida, mas nenhum modelo de texto compatível foi encontrado.'); const selectedInfo = models.find(model => String(model.name || '').replace(/^models\//, '') === selected) || {}; return { selected, available: names, limits: { input: Number(selectedInfo.inputTokenLimit) || 32768, output: Number(selectedInfo.outputTokenLimit) || 65536 } }; }
 function decodeTextAttachment(file) { try { const binary = atob(file.base64 || ''); const bytes = Uint8Array.from(binary, char => char.charCodeAt(0)); return new TextDecoder('utf-8', { fatal: false }).decode(bytes); } catch { return ''; } }
 async function geminiReply(input, file = null, onChunk = null) {
   const promptStarted = performance.now();
@@ -254,8 +254,7 @@ async function geminiReply(input, file = null, onChunk = null) {
   const visualTask = Boolean(file && /^image\//i.test(file.mimeType));
   const modelInput = Math.max(16000, Number(state.modelLimits?.input) || 32768);
   // Orçamento real em caracteres (~2,4 por token), aproveitando a janela grande dos modelos Gemini 3.
-  // Contexto menor reduz o tempo de upload e o trabalho de leitura do modelo.
-  const historyBudget = Math.min(180000, Math.max(30000, Math.round(modelInput * 0.7)));
+  const historyBudget = Math.min(600000, Math.max(60000, Math.round(modelInput * 2.4)));
   let used = 0;
   const history = [];
   const dropped = [];
@@ -270,9 +269,7 @@ async function geminiReply(input, file = null, onChunk = null) {
     history[history.length - 1].parts[0].text += `\n\n[Arquivo anexado: ${file.name} | MIME: ${file.mimeType} | tamanho: ${file.size || 'desconhecido'} bytes]`;
     if (file.base64 && isTextAttachment(file)) { const decoded = decodeTextAttachment(file); history[history.length - 1].parts.push({ text: `\n[CONTEÚDO DECODIFICADO DE ${file.name}]\n${decoded.slice(0, MAX_TEXT_ATTACHMENT_CHARS) || '[conteúdo vazio ou ilegível]'}` }); } else if (file.base64 && (/^image\//i.test(file.mimeType) || /^application\/pdf$/i.test(file.mimeType))) { history[history.length - 1].parts.push({ inlineData: { mimeType: file.mimeType, data: file.base64 } }); }
   }
-  // O resumo exigia uma segunda chamada ao Gemini antes da resposta. No modo rápido,
-  // só o executamos para conversas realmente extensas e em modelos que não sejam lite.
-  const summaryText = dropped.length >= 12 && !/lite/i.test(String(state.model || '')) ? await chatSummary(dropped) : '';
+  const summaryText = dropped.length >= 4 ? await chatSummary(dropped) : '';
   if (summaryText) history.unshift({ role: 'user', parts: [{ text: `[RESUMO DAS PARTES ANTERIORES DESTA CONVERSA — use como contexto, não como pedido]\n${summaryText}` }] }, { role: 'model', parts: [{ text: 'Contexto registrado.' }] });
   const thinkingGuide = {
     LEVE: 'Resolva rapidamente e mantenha a resposta direta. Use o orçamento padrão, mas nunca abandone uma instrução essencial.',
@@ -389,7 +386,7 @@ Links detectados: ${links.join(', ') || 'nenhum'}.`;
     if (!text.trim()) throw new Error(t('responseEmpty'));
     return { text: text.trim(), truncated: finishReason === 'MAX_TOKENS' };
   };
-  const timeout = expansion || codeTask || fileTask ? 60000 : 20000;
+  const timeout = expansion || codeTask || fileTask ? 90000 : 35000;
   state.metrics = { ...(state.metrics || {}), promptPrepMs: performance.now() - promptStarted }; const first = await request(history, timeout, onChunk);
   if (!first.truncated || (!codeTask && !expansion)) return first.text;
   const continuationHistory = [...history, { role: 'model', parts: [{ text: first.text }] }, { role: 'user', parts: [{ text: 'Continue exatamente do ponto em que a resposta foi interrompida. Não repita o conteúdo anterior. Entregue apenas a continuação completa.' }] }];
