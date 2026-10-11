@@ -50,7 +50,7 @@ async function chatSummary(dropped) {
   const prompt = `Resuma o trecho de conversa abaixo em no máximo 130 palavras, em ${language}. Preserve: assunto principal, decisões já tomadas, preferências do usuário, nomes de arquivos ou projetos, restrições e pendências. Não invente nada e não responda ao conteúdo.${previous ? `\n\nResumo anterior (incorpore e atualize, sem repetir):\n${previous}` : ''}\n\nTrecho:\n${transcript}`;
   try {
     const cheap = pickModel(state.availableModels || [], 'fast') || state.model;
-    const response = await fetchWithTimeout(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(cheap)}:generateContent`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': state.apiKey }, body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig: { temperature: 1.0, maxOutputTokens: 512 } }) }, 25000);
+    const response = await fetchWithTimeout(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(cheap)}:generateContent`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': state.apiKey }, body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig: { temperature: 0.2, maxOutputTokens: 512 } }) }, 25000);
     if (!response.ok) return previous;
     const payload = await response.json();
     const text = (payload?.candidates?.[0]?.content?.parts || []).map(part => part.text || '').join('').trim();
@@ -340,11 +340,10 @@ Links detectados: ${links.join(', ') || 'nenhum'}.`;
   const expandedOutput = codeTask ? 65536 : 24576;
   const desiredOutput = expansion ? expandedOutput : standardOutput;
   const outputLimit = Math.min(desiredOutput, Number(state.modelLimits?.output) || 8192);
-  const generationConfig = { temperature: 1.0, topP: 0.95, maxOutputTokens: outputLimit };
-  // Gemini 3 aceita thinkingLevel (low/medium/high) sem alterar os parâmetros solicitados.
+  const generationConfig = { temperature: visualTask ? 0.15 : state.thinking === 'LEVE' ? 0.75 : state.thinking === 'MEDIO' ? 0.6 : state.thinking === 'ALTO' ? 0.45 : 0.3, topP: visualTask ? 0.8 : 0.95, maxOutputTokens: outputLimit };
+  // Gemini 3 aceita thinkingLevel (low/medium/high). Isso é o que realmente muda a profundidade.
   if (/^gemini-3/i.test(String(state.model || ''))) generationConfig.thinkingConfig = { thinkingLevel: THINKING_LEVELS[state.thinking] || 'MEDIUM' };
   const request = async (contents, timeout, streamCallback = null) => {
-    // Uma única configuração integrada por requisição; mantém as proteções padrão do provedor.
     const body = JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents, generationConfig });
     const headers = { 'Content-Type': 'application/json', 'x-goog-api-key': state.apiKey };
     const standardRequest = async () => {
