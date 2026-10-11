@@ -386,7 +386,7 @@ Links detectados: ${links.join(', ') || 'nenhum'}.`;
     if (!text.trim()) throw new Error(t('responseEmpty'));
     return { text: text.trim(), truncated: finishReason === 'MAX_TOKENS' };
   };
-  const timeout = expansion || codeTask || fileTask ? 90000 : 35000;
+  const timeout = expansion || codeTask || fileTask ? 120000 : 90000;
   state.metrics = { ...(state.metrics || {}), promptPrepMs: performance.now() - promptStarted }; const first = await request(history, timeout, onChunk);
   if (!first.truncated || (!codeTask && !expansion)) return first.text;
   const continuationHistory = [...history, { role: 'model', parts: [{ text: first.text }] }, { role: 'user', parts: [{ text: 'Continue exatamente do ponto em que a resposta foi interrompida. Não repita o conteúdo anterior. Entregue apenas a continuação completa.' }] }];
