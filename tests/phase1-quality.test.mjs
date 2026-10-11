@@ -61,3 +61,10 @@ test('download de resposta usa Blob e não data: URL', () => {
   assert.doesNotMatch(app, /href="data:text\/markdown/);
   assert.match(app, /if \(action === 'download'\) \{ downloadBlob\(new Blob\(\[message\.content\]/);
 });
+
+test('streaming atualiza apenas o conteúdo e não repinta a conversa inteira', () => {
+  assert.match(app, /const paintStreamingText = \(\) => \{/);
+  assert.match(app, /streaming-cursor/);
+  assert.match(app, /requestAnimationFrame\(paintStreamingText\)/);
+  assert.doesNotMatch(app, /requestAnimationFrame\(\(\) => \{ renderQueued = false; if \(state\.chatId === requestChatId\) renderMessages\(\); \}\)/);
+});

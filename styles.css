@@ -824,3 +824,23 @@ body { font-family: var(--sans); }
   .composer { padding: 12px; }.send-btn { min-width: 78px; }
   .privacy-banner { bottom: 10px; width: calc(100% - 20px); display: block; }.privacy-banner-actions { justify-content: flex-start; margin-top: 8px; }
 }
+
+/* Streaming fluido — atualiza apenas o corpo da resposta, sem repintar a conversa inteira. */
+.streaming-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 4px;
+  vertical-align: -0.14em;
+  border-radius: 2px;
+  background: var(--red-bright);
+  box-shadow: 0 0 10px rgba(220, 62, 77, .75);
+  animation: streaming-cursor-blink .8s steps(1, end) infinite;
+}
+@keyframes streaming-cursor-blink {
+  0%, 48% { opacity: 1; }
+  49%, 100% { opacity: .15; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .streaming-cursor { animation: none; opacity: .75; }
+}

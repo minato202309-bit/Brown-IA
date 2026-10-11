@@ -521,7 +521,28 @@ $('#composer').addEventListener('submit', async e => {
   input.value = ''; clearPendingFile(); renderMessages(); $('#statusText').textContent = state.connection === 'ready' ? `${t('gemini')} ${t('processingStatus')}` : t('processingStatus'); $('#latencyLabel').textContent = t('processing');
   const sendButton = document.querySelector('.send-btn'); if (sendButton) sendButton.disabled = true;
   let renderQueued = false;
-  const updateStreamingMessage = text => { if (requestId !== state.requestSeq) return; const target = state.messages[state.messages.length - 1]; if (!target || target.role !== 'assistant') return; target.content = text; target.streaming = true; if (!renderQueued) { renderQueued = true; requestAnimationFrame(() => { renderQueued = false; if (state.chatId === requestChatId) renderMessages(); }); } };
+  let streamingFrame = 0;
+  let streamText = '';
+  let streamShown = 0;
+  const paintStreamingText = () => {
+    renderQueued = false;
+    if (requestId !== state.requestSeq || state.chatId !== requestChatId) return;
+    const messageContent = document.querySelector(`.message[data-message-index="${state.messages.length - 1}"] .message-content`);
+    if (!messageContent) return;
+    const remaining = streamText.length - streamShown;
+    streamShown = Math.min(streamText.length, streamShown + Math.max(2, Math.ceil(remaining * 0.36)));
+    messageContent.innerHTML = `${formatContent(streamText.slice(0, streamShown))}<span class="streaming-cursor" aria-hidden="true"></span>`;
+    if (streamShown < streamText.length) streamingFrame = requestAnimationFrame(paintStreamingText);
+  };
+  const updateStreamingMessage = text => {
+    if (requestId !== state.requestSeq) return;
+    const target = state.messages[state.messages.length - 1];
+    if (!target || target.role !== 'assistant') return;
+    target.content = text;
+    target.streaming = true;
+    streamText = text;
+    if (!renderQueued) { renderQueued = true; streamingFrame = requestAnimationFrame(paintStreamingText); }
+  };
   try {
     const answer = state.apiKey ? await geminiReply(messageText, file, updateStreamingMessage) : await Promise.resolve(file ? t('localAttachment', file.name) : localReply(content));
     if (requestId !== state.requestSeq) return;
@@ -530,6 +551,7 @@ $('#composer').addEventListener('submit', async e => {
   } catch (error) {
     if (requestId !== state.requestSeq) return; const quotaError = /429|quota|rate limit|resource exhausted|limit exceeded/i.test(error.message); if (quotaError) showQuotaFallback(error.message); setConnectionStatus('error', quotaError ? t('providerUnavailable') : t('noProviderError')); state.lastRequestStatus = 'error'; const target = state.messages[state.messages.length - 1]; const errorText = `${t('errorProcess')}: ${error.message}`; if (target?.role === 'assistant') { target.content = errorText; delete target.streaming; } else appendMessageToChat(requestChatId, { role: 'assistant', content: errorText, at: new Date().toISOString() });
   } finally {
+    if (streamingFrame) cancelAnimationFrame(streamingFrame);
     if (requestId === state.requestSeq) { state.busy = false; if (sendButton) sendButton.disabled = false; if (state.connection === 'ready') $('#statusText').textContent = state.lastRequestStatus === 'error' ? t('geminiError') : t('geminiReady'); else if (state.connection !== 'error') $('#statusText').textContent = t('localReady'); state.metrics = { ...(state.metrics || {}), totalMs: performance.now() - started, renderMs: performance.now() - started }; window.__BROWN_LAST_METRICS__ = state.metrics; $('#latencyLabel').textContent = `${(state.metrics.totalMs / 1000).toFixed(1)}s`; if (state.chatId === requestChatId) { const responseIndex = state.messages.length - 1; renderMessages(); if (state.messages[responseIndex]?.role === 'assistant') validateMessageFiles(responseIndex); } else persist(); }
   }
 });
