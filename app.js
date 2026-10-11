@@ -395,11 +395,25 @@ Links detectados: ${links.join(', ') || 'nenhum'}.`;
   try {
     first = await request(history, timeout, onChunk, activeModel);
   } catch (error) {
-    const fallbackModel = pickModel(state.availableModels || [], 'fast');
-    if (!isTransientGeminiError(error) || !fallbackModel || fallbackModel === state.model) throw error;
-    activeModel = fallbackModel;
-    state.metrics = { ...(state.metrics || {}), fallbackModel };
-    first = await request(history, timeout, onChunk, activeModel);
+    if (!isTransientGeminiError(error)) throw error;
+    const available = new Set(state.availableModels || []);
+    const fallbackModels = [...MODEL_TIERS.fast, ...MODEL_TIERS.balanced]
+      .filter(model => available.has(model) && model !== state.model);
+    if (!fallbackModels.length) throw error;
+    let lastError = error;
+    for (const fallbackModel of fallbackModels) {
+      try {
+        activeModel = fallbackModel;
+        state.metrics = { ...(state.metrics || {}), fallbackModel, fallbackAttempts: (state.metrics?.fallbackAttempts || 0) + 1 };
+        first = await request(history, timeout, onChunk, activeModel);
+        lastError = null;
+        break;
+      } catch (fallbackError) {
+        lastError = fallbackError;
+        if (!isTransientGeminiError(fallbackError)) throw fallbackError;
+      }
+    }
+    if (lastError) throw lastError;
   }
   if (!first.truncated || (!codeTask && !expansion)) return first.text;
   const continuationHistory = [...history, { role: 'model', parts: [{ text: first.text }] }, { role: 'user', parts: [{ text: 'Continue exatamente do ponto em que a resposta foi interrompida. Não repita o conteúdo anterior. Entregue apenas a continuação completa.' }] }];
