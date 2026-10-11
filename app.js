@@ -390,14 +390,15 @@ Links detectados: ${links.join(', ') || 'nenhum'}.`;
   const timeout = expansion || codeTask || fileTask ? 120000 : 90000;
   const requestSameModelWithRetry = async (contents, streamCallback = null) => {
     let lastError;
-    for (let attempt = 0; attempt < 2; attempt += 1) {
+    for (let attempt = 0; attempt < 3; attempt += 1) {
       const attemptStarted = performance.now();
       try { return await request(contents, timeout, streamCallback); } catch (error) {
         lastError = error;
         // Retry somente para uma rejeição imediata de sobrecarga. Nunca repita um timeout longo.
         const fastFailure = performance.now() - attemptStarted < 12000;
-        if (!isRetryableGeminiError(error) || !fastFailure || attempt === 1) throw error;
-        await new Promise(resolve => setTimeout(resolve, 1200));
+        if (!isRetryableGeminiError(error) || !fastFailure || attempt === 2) throw error;
+        const retryDelay = attempt === 0 ? 1200 : 3200;
+        await new Promise(resolve => setTimeout(resolve, retryDelay));
       }
     }
     throw lastError;
