@@ -60,7 +60,7 @@ async function chatSummary(dropped) {
     return text;
   } catch { return previous; }
 }
-function normalizeThinking(value) { return SUPPORTED_THINKING.includes(value) ? value : 'MEDIO'; }
+function normalizeThinking(value) { return SUPPORTED_THINKING.includes(value) ? value : 'LEVE'; }
 function normalizeLanguage(value) { return SUPPORTED_LANGUAGES.includes(value) ? value : 'pt-BR'; }
 function validMessage(message) { return message && (message.role === 'user' || message.role === 'assistant') && typeof message.content === 'string'; }
 function normalizeMessages(messages) { return Array.isArray(messages) ? messages.filter(validMessage).map(message => ({ role: message.role, content: message.content, ...(message.attachmentName ? { attachmentName: String(message.attachmentName).slice(0, 240) } : {}), ...(message.feedback === 'up' || message.feedback === 'down' ? { feedback: message.feedback } : {}), ...(message.fileOnly ? { fileOnly: true } : {}), ...(Array.isArray(message.validation) ? { validation: message.validation.slice(0, 20) } : {}), ...(message.at ? { at: String(message.at) } : {}) })) : []; }
@@ -527,14 +527,21 @@ $('#composer').addEventListener('submit', async e => {
   let streamingFrame = 0;
   let streamText = '';
   let streamShown = 0;
+  let streamLastPaint = 0;
   const paintStreamingText = () => {
     renderQueued = false;
+    const now = performance.now();
+    if (streamLastPaint && now - streamLastPaint < 24) {
+      streamingFrame = requestAnimationFrame(paintStreamingText);
+      return;
+    }
+    streamLastPaint = now;
     if (requestId !== state.requestSeq || state.chatId !== requestChatId) return;
     const messageContent = document.querySelector(`.message[data-message-index="${state.messages.length - 1}"] .message-content`);
     if (!messageContent) return;
     const remaining = streamText.length - streamShown;
     // Ritmo constante: evita saltos grandes quando o provedor entrega vários tokens de uma vez.
-    streamShown = Math.min(streamText.length, streamShown + Math.min(4, Math.max(1, Math.ceil(remaining / 140))));
+    streamShown = Math.min(streamText.length, streamShown + Math.min(8, Math.max(1, Math.ceil(remaining / 90))));
     messageContent.innerHTML = `${formatContent(streamText.slice(0, streamShown))}<span class="streaming-cursor" aria-hidden="true"></span>`;
     if (streamShown < streamText.length) streamingFrame = requestAnimationFrame(paintStreamingText);
   };
@@ -555,8 +562,19 @@ $('#composer').addEventListener('submit', async e => {
   } catch (error) {
     if (requestId !== state.requestSeq) return; const quotaError = /429|quota|rate limit|resource exhausted|limit exceeded/i.test(error.message); if (quotaError) showQuotaFallback(error.message); setConnectionStatus('error', quotaError ? t('providerUnavailable') : t('noProviderError')); state.lastRequestStatus = 'error'; const target = state.messages[state.messages.length - 1]; const errorText = `${t('errorProcess')}: ${error.message}`; if (target?.role === 'assistant') { target.content = errorText; delete target.streaming; } else appendMessageToChat(requestChatId, { role: 'assistant', content: errorText, at: new Date().toISOString() });
   } finally {
-    if (streamingFrame) cancelAnimationFrame(streamingFrame);
-    if (requestId === state.requestSeq) { state.busy = false; if (sendButton) sendButton.disabled = false; if (state.connection === 'ready') $('#statusText').textContent = state.lastRequestStatus === 'error' ? t('geminiError') : t('geminiReady'); else if (state.connection !== 'error') $('#statusText').textContent = t('localReady'); state.metrics = { ...(state.metrics || {}), totalMs: performance.now() - started, renderMs: performance.now() - started }; window.__BROWN_LAST_METRICS__ = state.metrics; $('#latencyLabel').textContent = `${(state.metrics.totalMs / 1000).toFixed(1)}s`; if (state.chatId === requestChatId) { const responseIndex = state.messages.length - 1; renderMessages(); if (state.messages[responseIndex]?.role === 'assistant') validateMessageFiles(responseIndex); } else persist(); }
+    const finishConversation = () => {
+      if (streamingFrame) cancelAnimationFrame(streamingFrame);
+      if (requestId === state.requestSeq) { state.busy = false; if (sendButton) sendButton.disabled = false; if (state.connection === 'ready') $('#statusText').textContent = state.lastRequestStatus === 'error' ? t('geminiError') : t('geminiReady'); else if (state.connection !== 'error') $('#statusText').textContent = t('localReady'); state.metrics = { ...(state.metrics || {}), totalMs: performance.now() - started, renderMs: performance.now() - started }; window.__BROWN_LAST_METRICS__ = state.metrics; $('#latencyLabel').textContent = `${(state.metrics.totalMs / 1000).toFixed(1)}s`; if (state.chatId === requestChatId) { const responseIndex = state.messages.length - 1; renderMessages(); if (state.messages[responseIndex]?.role === 'assistant') validateMessageFiles(responseIndex); } else persist(); }
+    };
+    // A resposta pode chegar antes de a animação alcançar o último trecho.
+    // Aguarde apenas o buffer visual restante, sem repetir a chamada à API.
+    if (state.lastRequestStatus === 'success' && streamShown < streamText.length) {
+      const settleStreaming = () => {
+        if (streamShown < streamText.length) streamingFrame = requestAnimationFrame(settleStreaming);
+        else finishConversation();
+      };
+      streamingFrame = requestAnimationFrame(settleStreaming);
+    } else finishConversation();
   }
 });
 $('#promptInput').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('#composer').requestSubmit(); } });

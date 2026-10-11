@@ -72,5 +72,17 @@ test('streaming atualiza apenas o conteúdo e não repinta a conversa inteira', 
 test('retry não repete timeouts longos e mantém o ritmo de streaming', () => {
   assert.match(app, /for \(let attempt = 0; attempt < 2; attempt \+= 1\)/);
   assert.match(app, /const fastFailure = performance\.now\(\) - attemptStarted < 12000/);
-  assert.match(app, /Math\.min\(4, Math\.max\(1, Math\.ceil\(remaining \/ 140\)\)\)/);
+  assert.match(app, /Math\.min\(8, Math\.max\(1, Math\.ceil\(remaining \/ 90\)\)\)/);
+});
+
+
+test('novo usuário começa no raciocínio leve e a animação mantém um intervalo visível', () => {
+  assert.match(app, /function normalizeThinking\(value\) \{ return SUPPORTED_THINKING\.includes\(value\) \? value : 'LEVE'; \}/);
+  assert.match(app, /now - streamLastPaint < 24/);
+});
+
+test('finalização aguarda o buffer visual antes do repaint final', () => {
+  assert.match(app, /const settleStreaming = \(\) => \{/);
+  assert.match(app, /if \(streamShown < streamText\.length\) streamingFrame = requestAnimationFrame\(settleStreaming\)/);
+  assert.match(app, /else finishConversation\(\);/);
 });
