@@ -531,7 +531,7 @@ $('#composer').addEventListener('submit', async e => {
   const paintStreamingText = () => {
     renderQueued = false;
     const now = performance.now();
-    if (streamLastPaint && now - streamLastPaint < 24) {
+    if (streamLastPaint && now - streamLastPaint < 16) {
       streamingFrame = requestAnimationFrame(paintStreamingText);
       return;
     }
@@ -540,9 +540,13 @@ $('#composer').addEventListener('submit', async e => {
     const messageContent = document.querySelector(`.message[data-message-index="${state.messages.length - 1}"] .message-content`);
     if (!messageContent) return;
     const remaining = streamText.length - streamShown;
-    // Ritmo constante: evita saltos grandes quando o provedor entrega vários tokens de uma vez.
-    streamShown = Math.min(streamText.length, streamShown + Math.min(8, Math.max(1, Math.ceil(remaining / 90))));
-    messageContent.innerHTML = `${formatContent(streamText.slice(0, streamShown))}<span class="streaming-cursor" aria-hidden="true"></span>`;
+    // O streaming usa um nó de texto único: não reprocessa Markdown nem recria a árvore HTML.
+    streamShown = Math.min(streamText.length, streamShown + Math.min(20, Math.max(2, Math.ceil(remaining / 60))));
+    const visibleText = document.createTextNode(streamText.slice(0, streamShown));
+    const cursor = document.createElement('span');
+    cursor.className = 'streaming-cursor';
+    cursor.setAttribute('aria-hidden', 'true');
+    messageContent.replaceChildren(visibleText, cursor);
     if (streamShown < streamText.length) streamingFrame = requestAnimationFrame(paintStreamingText);
   };
   const updateStreamingMessage = text => {
