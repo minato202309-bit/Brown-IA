@@ -68,3 +68,9 @@ test('streaming atualiza apenas o conteúdo e não repinta a conversa inteira', 
   assert.match(app, /requestAnimationFrame\(paintStreamingText\)/);
   assert.doesNotMatch(app, /requestAnimationFrame\(\(\) => \{ renderQueued = false; if \(state\.chatId === requestChatId\) renderMessages\(\); \}\)/);
 });
+
+test('retry não repete timeouts longos e mantém o ritmo de streaming', () => {
+  assert.match(app, /for \(let attempt = 0; attempt < 2; attempt \+= 1\)/);
+  assert.match(app, /const fastFailure = performance\.now\(\) - attemptStarted < 12000/);
+  assert.match(app, /Math\.min\(4, Math\.max\(1, Math\.ceil\(remaining \/ 140\)\)\)/);
+});

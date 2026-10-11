@@ -390,11 +390,14 @@ Links detectados: ${links.join(', ') || 'nenhum'}.`;
   const timeout = expansion || codeTask || fileTask ? 120000 : 90000;
   const requestSameModelWithRetry = async (contents, streamCallback = null) => {
     let lastError;
-    for (let attempt = 0; attempt < 3; attempt += 1) {
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+      const attemptStarted = performance.now();
       try { return await request(contents, timeout, streamCallback); } catch (error) {
         lastError = error;
-        if (!isRetryableGeminiError(error) || attempt === 2) throw error;
-        await new Promise(resolve => setTimeout(resolve, attempt === 0 ? 1200 : 3000));
+        // Retry somente para uma rejeição imediata de sobrecarga. Nunca repita um timeout longo.
+        const fastFailure = performance.now() - attemptStarted < 12000;
+        if (!isRetryableGeminiError(error) || !fastFailure || attempt === 1) throw error;
+        await new Promise(resolve => setTimeout(resolve, 1200));
       }
     }
     throw lastError;
@@ -530,7 +533,8 @@ $('#composer').addEventListener('submit', async e => {
     const messageContent = document.querySelector(`.message[data-message-index="${state.messages.length - 1}"] .message-content`);
     if (!messageContent) return;
     const remaining = streamText.length - streamShown;
-    streamShown = Math.min(streamText.length, streamShown + Math.max(2, Math.ceil(remaining * 0.36)));
+    // Ritmo constante: evita saltos grandes quando o provedor entrega vários tokens de uma vez.
+    streamShown = Math.min(streamText.length, streamShown + Math.min(4, Math.max(1, Math.ceil(remaining / 140))));
     messageContent.innerHTML = `${formatContent(streamText.slice(0, streamShown))}<span class="streaming-cursor" aria-hidden="true"></span>`;
     if (streamShown < streamText.length) streamingFrame = requestAnimationFrame(paintStreamingText);
   };
