@@ -239,6 +239,7 @@ function handleMessageAction(event) {
 }
 function localReply(input) { const text = input.toLowerCase().trim(); if (/^(oi|olá|ola|hello|hi|hola|e aí|e ai|bom dia|boa tarde|boa noite)[!. ]*$/.test(text)) return t('greeting'); if (/^(tudo bem|how are you|todo bien)/.test(text)) return t('wellbeing'); if (text.includes('gemini')) return lang() === 'en' ? 'The Gemini connector is not active yet. The interface is ready for a secure backend without exposing the key in the browser.' : lang() === 'es' ? 'El conector Gemini aún no está activo. La interfaz está preparada para un backend seguro sin exponer la clave.' : 'O conector Gemini ainda não está ativo nesta versão. A interface está preparada para receber um backend seguro sem expor a chave no navegador.'; if (text.includes(t('fileFallback')) || text.includes('html') || text.includes('código') || text.includes('codigo') || text.includes('file') || text.includes('code')) return t('demo'); return t('generic', state.profile); }
 function sanitizeErrorMessage(value) { return String(value || 'Erro desconhecido').replace(/AIza[0-9A-Za-z_-]{20,}/g, '[credencial omitida]').replace(/AQ\.[0-9A-Za-z_-]{20,}/g, '[credencial omitida]').slice(0, 1000); }
+function isRetryableGeminiError(error) { return /high demand|temporarily unavailable|service unavailable|overloaded|resource exhausted|HTTP 429|HTTP 500|HTTP 503/i.test(String(error?.message || error || '')); }
 function fetchWithTimeout(url, options = {}, ms = 30000) { const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), ms); return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(timer)).catch(error => { if (error.name === 'AbortError') throw new Error(`A Gemini demorou mais de ${Math.round(ms / 1000)} segundos para responder.`); throw new Error('Não foi possível alcançar a Gemini. Verifique sua conexão e as permissões da chave.'); }); }
 async function validateGeminiKey(key) { const response = await fetchWithTimeout('https://generativelanguage.googleapis.com/v1beta/models', { headers: { 'x-goog-api-key': key } }, 10000); let payload = {}; try { payload = await response.json(); } catch {} if (!response.ok) { const message = payload?.error?.message || `HTTP ${response.status}`; throw new Error(sanitizeErrorMessage(message)); } const models = (payload.models || []).filter(model => (model.supportedGenerationMethods || []).includes('generateContent')); const names = models.map(model => String(model.name || '').replace(/^models\//, '')); const selected = pickModel(names, 'max'); if (!selected) throw new Error('A chave é válida, mas nenhum modelo de texto compatível foi encontrado.'); const selectedInfo = models.find(model => String(model.name || '').replace(/^models\//, '') === selected) || {}; return { selected, available: names, limits: { input: Number(selectedInfo.inputTokenLimit) || 32768, output: Number(selectedInfo.outputTokenLimit) || 65536 } }; }
 function decodeTextAttachment(file) { try { const binary = atob(file.base64 || ''); const bytes = Uint8Array.from(binary, char => char.charCodeAt(0)); return new TextDecoder('utf-8', { fatal: false }).decode(bytes); } catch { return ''; } }
@@ -387,10 +388,21 @@ Links detectados: ${links.join(', ') || 'nenhum'}.`;
     return { text: text.trim(), truncated: finishReason === 'MAX_TOKENS' };
   };
   const timeout = expansion || codeTask || fileTask ? 120000 : 90000;
-  state.metrics = { ...(state.metrics || {}), promptPrepMs: performance.now() - promptStarted }; const first = await request(history, timeout, onChunk);
+  const requestSameModelWithRetry = async (contents, streamCallback = null) => {
+    let lastError;
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      try { return await request(contents, timeout, streamCallback); } catch (error) {
+        lastError = error;
+        if (!isRetryableGeminiError(error) || attempt === 2) throw error;
+        await new Promise(resolve => setTimeout(resolve, attempt === 0 ? 1200 : 3000));
+      }
+    }
+    throw lastError;
+  };
+  state.metrics = { ...(state.metrics || {}), promptPrepMs: performance.now() - promptStarted }; const first = await requestSameModelWithRetry(history, onChunk);
   if (!first.truncated || (!codeTask && !expansion)) return first.text;
   const continuationHistory = [...history, { role: 'model', parts: [{ text: first.text }] }, { role: 'user', parts: [{ text: 'Continue exatamente do ponto em que a resposta foi interrompida. Não repita o conteúdo anterior. Entregue apenas a continuação completa.' }] }];
-  const second = await request(continuationHistory, timeout, onChunk ? (partial) => onChunk(`${first.text}\n\n${partial}`) : null);
+  const second = await requestSameModelWithRetry(continuationHistory, onChunk ? (partial) => onChunk(`${first.text}\n\n${partial}`) : null);
   return second.truncated ? `${first.text}\n\n${second.text}\n\n[Resposta interrompida pelo limite do provedor. Peça 'continue' para receber o restante.]` : `${first.text}\n\n${second.text}`;
 }
 
