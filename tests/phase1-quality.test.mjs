@@ -6,11 +6,11 @@ import path from 'node:path';
 const root = path.resolve(new URL('..', import.meta.url).pathname);
 const app = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
 
-test('o modelo rápido é o padrão e nomes mortos foram removidos', () => {
+test('o modelo mais capaz é o padrão e nomes mortos foram removidos', () => {
   assert.match(app, /const MODEL_TIERS = \{/);
   assert.match(app, /max: \['gemini-3\.8-flash'/);
   assert.match(app, /function pickModel\(names, tier = 'max'\)/);
-  assert.match(app, /pickModel\(names, 'fast'\)/);
+  assert.match(app, /pickModel\(names, 'max'\)/);
   // nomes desligados ou inexistentes não podem voltar
   assert.doesNotMatch(app, /gemini-1\.5-flash/);
   assert.doesNotMatch(app, /'gemini-2\.0-flash'/);
@@ -32,16 +32,16 @@ test('o prompt de sistema define identidade, voz e continuidade', () => {
   assert.match(app, /CÓDIGO E ARQUIVOS/);
 });
 
-test('a memória da conversa é resumida apenas quando realmente extensa', () => {
+test('a memória da conversa é resumida em vez de descartada', () => {
   assert.match(app, /const SUMMARY_KEY = 'brown-ia-summaries-v1'/);
   assert.match(app, /async function chatSummary\(dropped\)/);
-  assert.match(app, /const summaryText = dropped\.length >= 12 && !\/lite\/i\.test\(String\(state\.model \|\| ''\)\) \? await chatSummary\(dropped\) : ''/);
+  assert.match(app, /const summaryText = dropped\.length >= 4 \? await chatSummary\(dropped\) : ''/);
   assert.match(app, /RESUMO DAS PARTES ANTERIORES DESTA CONVERSA/);
   assert.match(app, /async function deleteAllLocalData\(\) \{ storageRemove\(SUMMARY_KEY\);/);
 });
 
-test('orçamento de histórico é limitado para reduzir latência', () => {
-  assert.match(app, /const historyBudget = Math\.min\(180000, Math\.max\(30000, Math\.round\(modelInput \* 0\.7\)\)\)/);
+test('orçamento de histórico usa caracteres reais e não corta mensagens cedo', () => {
+  assert.match(app, /const historyBudget = Math\.min\(600000, Math\.max\(60000, Math\.round\(modelInput \* 2\.4\)\)\)/);
   assert.doesNotMatch(app, /\(modelInput - 7000\) \* 3\.2/);
   assert.doesNotMatch(app, /slice\(0, codeTask \? 24000 : 9000\)/);
 });
