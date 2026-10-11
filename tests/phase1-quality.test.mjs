@@ -70,9 +70,9 @@ test('streaming atualiza apenas o conteúdo e não repinta a conversa inteira', 
 });
 
 test('retry não repete timeouts longos e mantém o ritmo de streaming', () => {
-  assert.match(app, /for \(let attempt = 0; attempt < 3; attempt \+= 1\)/);
+  assert.match(app, /for \(let attempt = 0; attempt < 2; attempt \+= 1\)/);
   assert.match(app, /const fastFailure = performance\.now\(\) - attemptStarted < 12000/);
-  assert.match(app, /const retryDelay = attempt === 0 \? 1200 : 3200/);
+  assert.match(app, /setTimeout\(resolve, 250\)/);
   assert.match(app, /Math\.min\(20, Math\.max\(2, Math\.ceil\(remaining \/ 60\)\)\)/);
 });
 
