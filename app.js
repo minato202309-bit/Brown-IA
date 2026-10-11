@@ -239,13 +239,12 @@ function handleMessageAction(event) {
 }
 function localReply(input) { const text = input.toLowerCase().trim(); if (/^(oi|olá|ola|hello|hi|hola|e aí|e ai|bom dia|boa tarde|boa noite)[!. ]*$/.test(text)) return t('greeting'); if (/^(tudo bem|how are you|todo bien)/.test(text)) return t('wellbeing'); if (text.includes('gemini')) return lang() === 'en' ? 'The Gemini connector is not active yet. The interface is ready for a secure backend without exposing the key in the browser.' : lang() === 'es' ? 'El conector Gemini aún no está activo. La interfaz está preparada para un backend seguro sin exponer la clave.' : 'O conector Gemini ainda não está ativo nesta versão. A interface está preparada para receber um backend seguro sem expor a chave no navegador.'; if (text.includes(t('fileFallback')) || text.includes('html') || text.includes('código') || text.includes('codigo') || text.includes('file') || text.includes('code')) return t('demo'); return t('generic', state.profile); }
 function sanitizeErrorMessage(value) { return String(value || 'Erro desconhecido').replace(/AIza[0-9A-Za-z_-]{20,}/g, '[credencial omitida]').replace(/AQ\.[0-9A-Za-z_-]{20,}/g, '[credencial omitida]').slice(0, 1000); }
-function isTransientGeminiError(error) { return /high demand|temporarily unavailable|service unavailable|overloaded|resource exhausted|HTTP 429|HTTP 503|HTTP 500/i.test(String(error?.message || error || '')); }
 function fetchWithTimeout(url, options = {}, ms = 30000) { const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), ms); return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(timer)).catch(error => { if (error.name === 'AbortError') throw new Error(`A Gemini demorou mais de ${Math.round(ms / 1000)} segundos para responder.`); throw new Error('Não foi possível alcançar a Gemini. Verifique sua conexão e as permissões da chave.'); }); }
 async function validateGeminiKey(key) { const response = await fetchWithTimeout('https://generativelanguage.googleapis.com/v1beta/models', { headers: { 'x-goog-api-key': key } }, 10000); let payload = {}; try { payload = await response.json(); } catch {} if (!response.ok) { const message = payload?.error?.message || `HTTP ${response.status}`; throw new Error(sanitizeErrorMessage(message)); } const models = (payload.models || []).filter(model => (model.supportedGenerationMethods || []).includes('generateContent')); const names = models.map(model => String(model.name || '').replace(/^models\//, '')); const selected = pickModel(names, 'max'); if (!selected) throw new Error('A chave é válida, mas nenhum modelo de texto compatível foi encontrado.'); const selectedInfo = models.find(model => String(model.name || '').replace(/^models\//, '') === selected) || {}; return { selected, available: names, limits: { input: Number(selectedInfo.inputTokenLimit) || 32768, output: Number(selectedInfo.outputTokenLimit) || 65536 } }; }
 function decodeTextAttachment(file) { try { const binary = atob(file.base64 || ''); const bytes = Uint8Array.from(binary, char => char.charCodeAt(0)); return new TextDecoder('utf-8', { fatal: false }).decode(bytes); } catch { return ''; } }
 async function geminiReply(input, file = null, onChunk = null) {
   const promptStarted = performance.now();
-  const endpointForModel = modelName => `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelName)}:generateContent`;
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(state.model)}:generateContent`;
   const codeTask = /(c[oó]digo|programa|script|html|css|javascript|python|bash|terminal|fun[cç][aã]o|bug|erro|arquivo|documento|jogo)/i.test(input);
   const correctionTask = /(corrija|corrigir|conserte|ajuste|melhore|melhoria|não funciona|nao funciona|ficou ruim|erro|bug|quebrou)/i.test(input);
   const researchTask = /(pesquise|pesquisa|compare|fontes|referências|hist[oó]ria|dados|atual|link)/i.test(input);
@@ -344,8 +343,7 @@ Links detectados: ${links.join(', ') || 'nenhum'}.`;
   const generationConfig = { temperature: visualTask ? 0.15 : state.thinking === 'LEVE' ? 0.75 : state.thinking === 'MEDIO' ? 0.6 : state.thinking === 'ALTO' ? 0.45 : 0.3, topP: visualTask ? 0.8 : 0.95, maxOutputTokens: outputLimit };
   // Gemini 3 aceita thinkingLevel (low/medium/high). Isso é o que realmente muda a profundidade.
   if (/^gemini-3/i.test(String(state.model || ''))) generationConfig.thinkingConfig = { thinkingLevel: THINKING_LEVELS[state.thinking] || 'MEDIUM' };
-  const request = async (contents, timeout, streamCallback = null, modelName = state.model) => {
-    const endpoint = endpointForModel(modelName);
+  const request = async (contents, timeout, streamCallback = null) => {
     const body = JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents, generationConfig });
     const headers = { 'Content-Type': 'application/json', 'x-goog-api-key': state.apiKey };
     const standardRequest = async () => {
@@ -389,35 +387,10 @@ Links detectados: ${links.join(', ') || 'nenhum'}.`;
     return { text: text.trim(), truncated: finishReason === 'MAX_TOKENS' };
   };
   const timeout = expansion || codeTask || fileTask ? 90000 : 35000;
-  state.metrics = { ...(state.metrics || {}), promptPrepMs: performance.now() - promptStarted };
-  let first;
-  let activeModel = state.model;
-  try {
-    first = await request(history, timeout, onChunk, activeModel);
-  } catch (error) {
-    if (!isTransientGeminiError(error)) throw error;
-    const available = new Set(state.availableModels || []);
-    const fallbackModels = [...MODEL_TIERS.fast, ...MODEL_TIERS.balanced]
-      .filter(model => available.has(model) && model !== state.model);
-    if (!fallbackModels.length) throw error;
-    let lastError = error;
-    for (const fallbackModel of fallbackModels) {
-      try {
-        activeModel = fallbackModel;
-        state.metrics = { ...(state.metrics || {}), fallbackModel, fallbackAttempts: (state.metrics?.fallbackAttempts || 0) + 1 };
-        first = await request(history, timeout, onChunk, activeModel);
-        lastError = null;
-        break;
-      } catch (fallbackError) {
-        lastError = fallbackError;
-        if (!isTransientGeminiError(fallbackError)) throw fallbackError;
-      }
-    }
-    if (lastError) throw lastError;
-  }
+  state.metrics = { ...(state.metrics || {}), promptPrepMs: performance.now() - promptStarted }; const first = await request(history, timeout, onChunk);
   if (!first.truncated || (!codeTask && !expansion)) return first.text;
   const continuationHistory = [...history, { role: 'model', parts: [{ text: first.text }] }, { role: 'user', parts: [{ text: 'Continue exatamente do ponto em que a resposta foi interrompida. Não repita o conteúdo anterior. Entregue apenas a continuação completa.' }] }];
-  const second = await request(continuationHistory, timeout, onChunk ? (partial) => onChunk(`${first.text}\n\n${partial}`) : null, activeModel);
+  const second = await request(continuationHistory, timeout, onChunk ? (partial) => onChunk(`${first.text}\n\n${partial}`) : null);
   return second.truncated ? `${first.text}\n\n${second.text}\n\n[Resposta interrompida pelo limite do provedor. Peça 'continue' para receber o restante.]` : `${first.text}\n\n${second.text}`;
 }
 
