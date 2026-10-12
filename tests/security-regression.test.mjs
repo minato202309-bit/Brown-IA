@@ -56,6 +56,14 @@ test('seletor de modelo fica junto do raciocínio e o perfil não ocupa mais o m
   assert.match(app, /ensureLocalModel\(\)\.catch/);
 });
 
+test('banner de privacidade registra o listener antes da renderização final', () => {
+  const listener = app.indexOf('initPrivacyControls();');
+  const finalRender = app.indexOf('applyTranslations();');
+  assert.ok(listener >= 0 && finalRender > listener);
+  assert.match(app, /function applyPrivacyChoice\(choice\).*hidePrivacyBanner\(\)/);
+  assert.match(app, /PRIVACY_CONSENT_KEY/);
+});
+
 test('URLs externas aceitam somente HTTP e HTTPS', () => {
   assert.match(app, /function safeExternalUrl\(value\)/);
   assert.match(app, /\['http:', 'https:'\]\.includes\(url\.protocol\)/);

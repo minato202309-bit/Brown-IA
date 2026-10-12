@@ -428,6 +428,7 @@ function initPrivacyControls() {
   $('#deleteConversationsBtn')?.addEventListener('click', deleteAllConversations);
   $('#deleteAllLocalBtn')?.addEventListener('click', deleteAllLocalData);
 }
+initPrivacyControls();
 
 function revealKeyFallback() { /* A conexão é automática; nenhuma chave é exibida na interface. */ }
 function showQuotaFallback(message) { const notice = $('#modeNotice'); notice.hidden = false; $('#modeTitle').textContent = t('providerUnavailable'); const detail = message && /limit|quota|429|resource exhausted/i.test(message) ? sanitizeErrorMessage(message).slice(0, 180) : t('noProviderError'); $('#modeDescription').textContent = `${t('automaticConnection')} ${detail}`; }
@@ -625,4 +626,4 @@ $('#composer').addEventListener('submit', async e => {
   }
 });
 $('#promptInput').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('#composer').requestSubmit(); } });
-applyTranslations(); setActive('.profile-btn','profile',state.profile); renderChatList(); renderProjects(); updateTags(); renderMessages(); initPrivacyControls();
+applyTranslations(); setActive('.profile-btn','profile',state.profile); renderChatList(); renderProjects(); updateTags(); renderMessages();
