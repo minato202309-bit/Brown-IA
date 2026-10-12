@@ -38,6 +38,8 @@ test('modelo local é explícito, executa via WebGPU e não substitui o Gemini',
   assert.match(html, /local-model\.js/);
   assert.match(localModel, /@mlc-ai\/web-llm/);
   assert.match(localModel, /Qwen2\.5-Coder-7B-Instruct-q4f16_1-MLC/);
+  assert.match(localModel, /Qwen2\.5-Coder-7B-Instruct-q4f32_1-MLC/);
+  assert.match(localModel, /shader-f16/);
   assert.match(localModel, /'gpu' in navigator/);
   assert.match(localModel, /requestAdapter\(\)/);
   assert.match(app, /state\.provider === 'local' \? await localModelReply/);
