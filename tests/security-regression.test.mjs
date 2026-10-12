@@ -43,8 +43,8 @@ test('modelo local é explícito, executa via WebGPU e não substitui o Gemini',
   assert.match(localModel, /'gpu' in navigator/);
   assert.match(localModel, /powerPreference: mobile \? 'low-power' : 'high-performance'/);
   assert.match(localModel, /isMobileDevice/);
-  assert.match(localModel, /safeHistory = mobile \? history\.slice\(-6\)/);
-  assert.match(localModel, /Math\.min\(maxTokens, 768\)/);
+  assert.match(localModel, /\.\.\.history\.map\(message =>/);
+  assert.match(localModel, /max_tokens: maxTokens/);
   assert.match(app, /state\.provider === 'local' \? await localModelReply/);
   assert.match(app, /window\.BrownLocalModel\.reply/);
   assert.match(app, /if \(window\.BrownLocalModel\.isLoaded\?\.\(\)\)/);
