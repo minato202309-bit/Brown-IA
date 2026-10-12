@@ -30,38 +30,20 @@ test('CSP principal restringe origem e conexão ao provedor conhecido', () => {
   assert.match(html, /referrer/);
 });
 
-test('modelo local é explícito, executa via WebGPU e não substitui o Gemini', () => {
-  const localModel = fs.readFileSync(path.join(root, 'local-model.js'), 'utf8');
-  assert.match(html, /data-model-provider="local"/);
-  assert.match(html, /Brown Local/);
-  assert.match(html, /local-model-panel/);
-  assert.match(html, /local-model\.js/);
-  assert.match(localModel, /@mlc-ai\/web-llm/);
-  assert.match(localModel, /Qwen2\.5-Coder-7B-Instruct-q4f16_1-MLC/);
-  assert.match(localModel, /Qwen2\.5-Coder-7B-Instruct-q4f32_1-MLC/);
-  assert.match(localModel, /shader-f16/);
-  assert.match(localModel, /'gpu' in navigator/);
-  assert.match(localModel, /powerPreference: mobile \? 'low-power' : 'high-performance'/);
-  assert.match(localModel, /isMobileDevice/);
-  assert.match(localModel, /\.\.\.history\.map\(message =>/);
-  assert.match(localModel, /max_tokens: maxTokens/);
-  assert.match(app, /state\.provider === 'local' \? await localModelReply/);
-  assert.match(app, /window\.BrownLocalModel\.reply/);
-  assert.match(app, /if \(window\.BrownLocalModel\.isLoaded\?\.\(\)\)/);
-  assert.match(app, /Modelo carregado e mantido ativo/);
+test('somente Gemini permanece como provedor de IA', () => {
+  assert.doesNotMatch(html, /data-model-provider/);
+  assert.doesNotMatch(html, /local-model\.js|local-model-panel|Brown Local|WebGPU/);
+  assert.doesNotMatch(app, /BrownLocalModel|localModelReply|ensureLocalModel|selectModelProvider/);
+  assert.match(app, /state\.apiKey \? await geminiReply/);
+  assert.match(app, /x-goog-api-key/);
+  assert.match(app, /generateContent/);
 });
 
-test('seletor de modelo fica junto do raciocínio e o perfil não ocupa mais o menu', () => {
-  assert.match(html, /class="model-picker"/);
-  assert.match(html, /id="modelButton"/);
-  assert.match(html, /id="modelMenu"/);
-  assert.match(html, /data-model-provider="gemini"/);
-  assert.match(html, /data-model-provider="local"/);
+test('configuração continua sem seletor de modelo e preserva perfil e raciocínio', () => {
+  assert.doesNotMatch(html, /class="model-picker"/);
+  assert.doesNotMatch(html, /id="modelButton"|id="modelMenu"/);
   assert.doesNotMatch(html, /01 \/ (?:PERFIL|PROFILE)/);
   assert.doesNotMatch(html, /id="profileList"/);
-  assert.match(app, /\$\('#profileList'\)\?\.addEventListener/);
-  assert.match(app, /selectModelProvider\(provider, autoLoad = false\)/);
-  assert.match(app, /ensureLocalModel\(\)\.catch/);
 });
 
 test('banner de privacidade registra o listener antes da renderização final', () => {
