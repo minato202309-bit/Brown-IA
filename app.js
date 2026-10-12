@@ -481,8 +481,8 @@ function selectModelProvider(provider, autoLoad = false) {
   document.querySelectorAll('#modelMenu [data-model-provider]').forEach(button => button.classList.toggle('active', button.dataset.modelProvider === state.provider));
   const mode = $('#channelMode'); if (mode) mode.textContent = state.provider === 'local' ? 'BROWN LOCAL · WEBGPU' : t('gemini');
   const notice = $('#modeNotice'); if (notice) { notice.hidden = false; $('#modeTitle').textContent = state.provider === 'local' ? 'Modelo local no navegador' : (state.apiKey ? t('connectionActive') : t('localMode')); $('#modeDescription').textContent = state.provider === 'local' ? 'Execução local: os pesos e a conversa permanecem neste navegador.' : (state.apiKey ? t('readyToAnswer') : t('noProvider')); }
-  if (state.provider === 'local') { setConnectionStatus('connected'); updateLocalModelUI({ status: window.BrownLocalModel?.isLoaded() ? 'ready' : 'idle' }); }
-  else if (state.apiKey) setConnectionStatus('connected'); else setConnectionStatus('idle');
+  if (state.provider === 'local') { setConnectionStatus('connected'); $('#statusText').textContent = window.BrownLocalModel?.isLoaded() ? 'LOCAL READY' : 'LOCAL MODE'; updateLocalModelUI({ status: window.BrownLocalModel?.isLoaded() ? 'ready' : 'idle' }); }
+  else if (state.apiKey) setConnectionStatus('connected'); else { setConnectionStatus('idle'); showProviderSetup(); }
   syncSettingsPanel();
   if (state.provider === 'local' && autoLoad && !window.BrownLocalModel?.isLoaded()) ensureLocalModel().catch(error => updateLocalModelUI({ status: 'error', error: error.message }));
 }
