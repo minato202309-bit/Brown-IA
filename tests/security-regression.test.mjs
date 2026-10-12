@@ -24,7 +24,22 @@ test('CSP principal restringe origem e conexão ao provedor conhecido', () => {
   assert.match(html, /default-src 'self'/);
   assert.match(html, /object-src 'none'/);
   assert.match(html, /connect-src 'self' https:\/\/generativelanguage\.googleapis\.com/);
+  assert.match(html, /https:\/\/esm\.run/);
+  assert.match(html, /https:\/\/huggingface\.co/);
   assert.match(html, /referrer/);
+});
+
+test('modelo local é explícito, executa via WebGPU e não substitui o Gemini', () => {
+  const localModel = fs.readFileSync(path.join(root, 'local-model.js'), 'utf8');
+  assert.match(html, /data-model-provider="local"/);
+  assert.match(html, /Brown Local/);
+  assert.match(html, /local-model-panel/);
+  assert.match(html, /local-model\.js/);
+  assert.match(localModel, /@mlc-ai\/web-llm/);
+  assert.match(localModel, /Qwen2\.5-Coder-7B-Instruct-q4f16_1-MLC/);
+  assert.match(localModel, /'gpu' in navigator/);
+  assert.match(app, /state\.provider === 'local' \? await localModelReply/);
+  assert.match(app, /window\.BrownLocalModel\.reply/);
 });
 
 test('URLs externas aceitam somente HTTP e HTTPS', () => {
