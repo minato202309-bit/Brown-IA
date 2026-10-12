@@ -54,6 +54,7 @@ test('seletor de modelo fica junto do raciocínio e o perfil não ocupa mais o m
   assert.match(html, /data-model-provider="local"/);
   assert.doesNotMatch(html, /01 \/ (?:PERFIL|PROFILE)/);
   assert.doesNotMatch(html, /id="profileList"/);
+  assert.match(app, /\$\('#profileList'\)\?\.addEventListener/);
   assert.match(app, /selectModelProvider\(provider, autoLoad = false\)/);
   assert.match(app, /ensureLocalModel\(\)\.catch/);
 });
