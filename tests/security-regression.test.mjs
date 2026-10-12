@@ -26,6 +26,7 @@ test('CSP principal restringe origem e conexão ao provedor conhecido', () => {
   assert.match(html, /connect-src 'self' https:\/\/generativelanguage\.googleapis\.com/);
   assert.match(html, /https:\/\/esm\.run/);
   assert.match(html, /https:\/\/huggingface\.co/);
+  assert.match(html, /wasm-unsafe-eval/);
   assert.match(html, /referrer/);
 });
 
@@ -38,8 +39,21 @@ test('modelo local é explícito, executa via WebGPU e não substitui o Gemini',
   assert.match(localModel, /@mlc-ai\/web-llm/);
   assert.match(localModel, /Qwen2\.5-Coder-7B-Instruct-q4f16_1-MLC/);
   assert.match(localModel, /'gpu' in navigator/);
+  assert.match(localModel, /requestAdapter\(\)/);
   assert.match(app, /state\.provider === 'local' \? await localModelReply/);
   assert.match(app, /window\.BrownLocalModel\.reply/);
+});
+
+test('seletor de modelo fica junto do raciocínio e o perfil não ocupa mais o menu', () => {
+  assert.match(html, /class="model-picker"/);
+  assert.match(html, /id="modelButton"/);
+  assert.match(html, /id="modelMenu"/);
+  assert.match(html, /data-model-provider="gemini"/);
+  assert.match(html, /data-model-provider="local"/);
+  assert.doesNotMatch(html, /01 \/ (?:PERFIL|PROFILE)/);
+  assert.doesNotMatch(html, /id="profileList"/);
+  assert.match(app, /selectModelProvider\(provider, autoLoad = false\)/);
+  assert.match(app, /ensureLocalModel\(\)\.catch/);
 });
 
 test('URLs externas aceitam somente HTTP e HTTPS', () => {

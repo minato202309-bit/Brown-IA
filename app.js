@@ -452,7 +452,8 @@ $('#settingsClose').addEventListener('click', () => { $('#settingsPanel').hidden
 $('#providerApplyBtn').addEventListener('click', async () => { const input = $('#providerKeyInput'); const button = $('#providerApplyBtn'); const value = input.value.trim(); const status = $('#providerSettingsStatus'); if (!value) { status.textContent = t('keyPaste'); return; } button.disabled = true; button.textContent = t('validating'); const ok = await connectGemini(value, false); if (ok) { selectModelProvider('gemini'); if ($('#providerSaveKey').checked) storageSet(KEY_STORAGE, value); else storageRemove(KEY_STORAGE); input.value = ''; status.textContent = t('connected', state.model); $('#modeNotice').hidden = true; $('#channelMode').textContent = t('gemini'); hideProviderSetup(); } else { status.textContent = t('invalidKey'); } button.disabled = false; button.textContent = t('validateUse'); });
 $('#providerClearBtn').addEventListener('click', () => { storageRemove(KEY_STORAGE); state.apiKey = null; state.model = null; state.textModel = null; setConnectionStatus('idle'); $('#channelMode').textContent = t('localDemo'); $('#modeNotice').hidden = false; $('#modeTitle').textContent = t('localMode'); $('#modeDescription').textContent = t('noProvider'); $('#providerKeyInput').value = ''; showProviderSetup(); syncSettingsPanel(); });
 $('#initialConnectBtn').addEventListener('click', async () => { const input = $('#initialKeyInput'); const button = $('#initialConnectBtn'); const status = $('#initialProviderStatus'); const value = input.value.trim(); if (!value) { status.textContent = t('connectBefore'); return; } button.disabled = true; button.textContent = t('validating'); status.textContent = t('connectingProvider'); const ok = await connectGemini(value, false); if (ok) { selectModelProvider('gemini'); if ($('#initialSaveKey')?.checked) storageSet(KEY_STORAGE, value); else storageRemove(KEY_STORAGE); input.value = ''; $('#modeNotice').hidden = true; $('#channelMode').textContent = t('gemini'); hideProviderSetup(); syncSettingsPanel(); } else { status.textContent = t('connectFailed'); } button.disabled = false; button.textContent = t('connect'); });
-document.querySelectorAll('[data-model-provider]').forEach(button => button.addEventListener('click', () => selectModelProvider(button.dataset.modelProvider)));
+document.querySelectorAll('[data-model-provider]').forEach(button => button.addEventListener('click', () => { selectModelProvider(button.dataset.modelProvider, button.dataset.modelProvider === 'local'); $('#modelMenu').hidden = true; $('#modelButton').setAttribute('aria-expanded', 'false'); }));
+$('#modelButton').addEventListener('click', () => { const menu = $('#modelMenu'); const open = menu.hidden; menu.hidden = !open; $('#modelButton').setAttribute('aria-expanded', String(open)); });
 $('#localModelLoadBtn').addEventListener('click', async () => { try { await ensureLocalModel(); } catch (error) { updateLocalModelUI({ status: 'error', error: error.message }); } });
 $('#settingsLanguageSelect').addEventListener('change', e => { state.language = e.target.value; updateTags(); renderMessages(); persist(); syncSettingsPanel(); });
 document.querySelectorAll('[data-settings-profile]').forEach(button => button.addEventListener('click', () => { state.profile = button.dataset.settingsProfile; setActive('.profile-btn','profile',state.profile); updateTags(); persist(); syncSettingsPanel(); }));
@@ -460,7 +461,7 @@ document.querySelectorAll('[data-settings-thinking]').forEach(button => button.a
 $('#profileList').addEventListener('click', e => { const btn = e.target.closest('[data-profile]'); if (!btn) return; state.profile = btn.dataset.profile; setActive('.profile-btn','profile',state.profile); updateTags(); persist(); });
 $('#thinkingButton').addEventListener('click', () => { const menu = $('#thinkingMenu'); const open = menu.hidden; menu.hidden = !open; $('#thinkingButton').setAttribute('aria-expanded', String(open)); });
 $('#thinkingMenu').addEventListener('click', e => { const btn = e.target.closest('[data-thinking]'); if (!btn) return; state.thinking = btn.dataset.thinking; updateTags(); persist(); $('#thinkingMenu').hidden = true; $('#thinkingButton').setAttribute('aria-expanded', 'false'); });
-document.addEventListener('click', e => { if (!e.target.closest('.reasoning-picker')) { $('#thinkingMenu').hidden = true; $('#thinkingButton').setAttribute('aria-expanded', 'false'); } });
+document.addEventListener('click', e => { if (!e.target.closest('.reasoning-picker')) { $('#thinkingMenu').hidden = true; $('#thinkingButton').setAttribute('aria-expanded', 'false'); } if (!e.target.closest('.model-picker')) { $('#modelMenu').hidden = true; $('#modelButton').setAttribute('aria-expanded', 'false'); } });
 $('#languageSelect').addEventListener('change', e => { state.language = normalizeLanguage(e.target.value); updateTags(); renderMessages(); persist(); });
 function updateLocalModelUI(detail = {}) {
   const panel = $('#localModelPanel'); const bar = $('#localModelProgressBar'); const text = $('#localModelProgressText'); const status = $('#localModelStatus'); const button = $('#localModelLoadBtn');
@@ -471,15 +472,18 @@ function updateLocalModelUI(detail = {}) {
   if (button) { button.disabled = detail.status === 'loading'; button.innerHTML = detail.status === 'loading' ? 'CARREGANDO…' : detail.status === 'ready' ? 'MODELO PRONTO <span>✓</span>' : 'CARREGAR MODELO LOCAL <span>↗</span>'; }
   if (detail.status === 'ready') { state.connection = 'ready'; if (state.provider === 'local') { $('#statusText').textContent = 'LOCAL READY'; $('#modeTitle').textContent = 'Brown Local ativo'; $('#modeDescription').textContent = 'Qwen2.5-Coder 7B rodando na GPU deste navegador.'; } }
 }
-function selectModelProvider(provider) {
+function selectModelProvider(provider, autoLoad = false) {
   state.provider = provider === 'local' ? 'local' : 'gemini';
   document.querySelectorAll('[data-model-provider]').forEach(button => { const active = button.dataset.modelProvider === state.provider; button.classList.toggle('active', active); button.setAttribute('aria-selected', String(active)); });
   const panel = $('#localModelPanel'); if (panel) panel.hidden = state.provider !== 'local';
+  const modelLabel = $('#modelButtonLabel'); if (modelLabel) modelLabel.textContent = state.provider === 'local' ? 'BROWN LOCAL' : 'GEMINI';
+  document.querySelectorAll('#modelMenu [data-model-provider]').forEach(button => button.classList.toggle('active', button.dataset.modelProvider === state.provider));
   const mode = $('#channelMode'); if (mode) mode.textContent = state.provider === 'local' ? 'BROWN LOCAL · WEBGPU' : t('gemini');
   const notice = $('#modeNotice'); if (notice) { notice.hidden = false; $('#modeTitle').textContent = state.provider === 'local' ? 'Modelo local no navegador' : (state.apiKey ? t('connectionActive') : t('localMode')); $('#modeDescription').textContent = state.provider === 'local' ? 'Execução local: os pesos e a conversa permanecem neste navegador.' : (state.apiKey ? t('readyToAnswer') : t('noProvider')); }
   if (state.provider === 'local') { setConnectionStatus('connected'); updateLocalModelUI({ status: window.BrownLocalModel?.isLoaded() ? 'ready' : 'idle' }); }
   else if (state.apiKey) setConnectionStatus('connected'); else setConnectionStatus('idle');
   syncSettingsPanel();
+  if (state.provider === 'local' && autoLoad && !window.BrownLocalModel?.isLoaded()) ensureLocalModel().catch(error => updateLocalModelUI({ status: 'error', error: error.message }));
 }
 async function ensureLocalModel() {
   if (!window.BrownLocalModel) throw new Error('O adaptador do modelo local não foi carregado.');

@@ -874,3 +874,18 @@ body { font-family: var(--sans); }
 .local-model-load:disabled { cursor: wait; opacity: .68; }
 @media (max-width: 1120px) { .model-choice { min-width: 74px; padding-right: 6px; padding-left: 6px; }.model-choice small { display: none; }.model-choice-dot { grid-row: auto; } }
 @media (max-width: 760px) { .model-switcher { order: 3; width: 100%; margin: 9px 0 0; }.chat-header { flex-wrap: wrap; }.model-choice { flex: 1; min-width: 0; grid-template-columns: auto 1fr; }.model-choice small { display: block; grid-column: 2; }.local-model-panel { padding: 15px; }.local-model-head strong { font-size: 15px; } }
+
+/* Seletor de modelo no compositor: troca explícita, sem esconder o provedor ativo. */
+.model-picker { position: relative; }
+.model-trigger { display: grid; grid-template-columns: auto auto; align-items: center; column-gap: 6px; min-height: 35px; padding: 0 10px; border: 1px solid rgba(112,215,162,.3); border-radius: 9px; color: var(--green); background: rgba(112,215,162,.06); cursor: pointer; font: 9px var(--mono); letter-spacing: .05em; white-space: nowrap; transition: .2s ease; }
+.model-trigger strong { color: var(--text); font-size: 9px; }
+.model-trigger:hover, .model-trigger[aria-expanded="true"] { border-color: var(--green); background: rgba(112,215,162,.13); box-shadow: 0 0 18px rgba(112,215,162,.1); }
+.model-menu { position: absolute; right: 0; bottom: calc(100% + 9px); z-index: 35; display: grid; min-width: 205px; gap: 3px; padding: 6px; border: 1px solid rgba(112,215,162,.45); border-radius: 11px; background: #10171a; box-shadow: var(--shadow-xl); animation: panel-in .16s ease both; }
+.model-menu[hidden] { display: none; }
+.model-menu button { display: flex; align-items: center; gap: 9px; width: 100%; padding: 9px; border: 1px solid transparent; border-radius: 8px; color: var(--muted); background: transparent; cursor: pointer; text-align: left; transition: .18s ease; }
+.model-menu button:hover, .model-menu button.active { border-color: rgba(112,215,162,.3); color: var(--text); background: rgba(112,215,162,.1); }
+.model-menu button span { display: grid; gap: 3px; }
+.model-menu button b { font: 600 11px var(--sans); }
+.model-menu button small { color: var(--muted-2); font: 8px var(--mono); letter-spacing: .06em; }
+.model-menu-dot { display: block; flex: none; width: 7px; height: 7px; border-radius: 50%; }
+@media (max-width: 760px) { .model-trigger { min-width: 103px; padding: 0 8px; font-size: 8px; }.model-menu { right: -45px; } }
