@@ -471,7 +471,7 @@ function updateLocalModelUI(detail = {}) {
   if (text) text.textContent = `${Math.round(progress)}%`;
   if (status) status.textContent = detail.status === 'ready' ? 'Modelo carregado e pronto' : detail.status === 'error' ? `Falha: ${String(detail.error || 'WebGPU indisponível').slice(0, 100)}` : detail.text || (detail.status === 'loading' ? 'Baixando e preparando o modelo…' : 'Pronto para carregar');
   if (button) { button.disabled = detail.status === 'loading'; button.innerHTML = detail.status === 'loading' ? 'CARREGANDO…' : detail.status === 'ready' ? 'MODELO PRONTO <span>✓</span>' : 'CARREGAR MODELO LOCAL <span>↗</span>'; }
-  if (detail.status === 'ready') { state.connection = 'ready'; if (state.provider === 'local') { $('#statusText').textContent = 'LOCAL READY'; $('#modeTitle').textContent = 'Brown Local ativo'; $('#modeDescription').textContent = `${window.BrownLocalModel?.displayName || 'Modelo local'} rodando na GPU deste navegador.`; } }
+  if (detail.status === 'ready') { state.connection = 'ready'; if (state.provider === 'local') { $('#statusText').textContent = 'LOCAL READY'; $('#modeTitle').textContent = 'Brown Local ativo'; $('#modeDescription').textContent = 'Qwen2.5-Coder 7B rodando na GPU deste navegador.'; } }
 }
 function selectModelProvider(provider, autoLoad = false) {
   state.provider = provider === 'local' ? 'local' : 'gemini';
