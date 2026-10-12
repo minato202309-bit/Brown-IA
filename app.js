@@ -488,6 +488,10 @@ function selectModelProvider(provider, autoLoad = false) {
 }
 async function ensureLocalModel() {
   if (!window.BrownLocalModel) throw new Error('O adaptador do modelo local não foi carregado.');
+  if (window.BrownLocalModel.isLoaded?.()) {
+    updateLocalModelUI({ status: 'ready', progress: 100, text: 'Modelo carregado e mantido ativo.' });
+    return window.BrownLocalModel.load();
+  }
   updateLocalModelUI({ status: 'loading', progress: state.localModelProgress });
   return window.BrownLocalModel.load();
 }

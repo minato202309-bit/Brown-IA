@@ -46,6 +46,8 @@ test('modelo local é explícito, executa via WebGPU e não substitui o Gemini',
   assert.match(localModel, /desativado no celular/);
   assert.match(app, /state\.provider === 'local' \? await localModelReply/);
   assert.match(app, /window\.BrownLocalModel\.reply/);
+  assert.match(app, /if \(window\.BrownLocalModel\.isLoaded\?\.\(\)\)/);
+  assert.match(app, /Modelo carregado e mantido ativo/);
 });
 
 test('seletor de modelo fica junto do raciocínio e o perfil não ocupa mais o menu', () => {
